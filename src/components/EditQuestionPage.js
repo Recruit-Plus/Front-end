@@ -1,4 +1,6 @@
 import * as React from "react";
+import axios from "axios";
+import questionlist from "./questionlist";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -95,6 +97,7 @@ const headCells = [
     numeric: false,
     disablePadding: true,
     label: 'Select All Questions',
+    
   }
 ];
 
@@ -106,22 +109,27 @@ function EnhancedTableHead(props) {
   };
 
   return (
-    <TableHead>
-      <TableRow>
-      <TableCell padding="checkbox">
+    <div  >
+      <div   >
+        <Stack spacing={2} direction='row'>
+      <div padding="checkbox" >
           <Checkbox
             color="primary"
+            
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
+          
             inputProps={{
+               
               'aria-label': 'select all questions',
             }}
+           
           />
-        </TableCell>
+        </div>
         {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
+          <div 
+            
             align={headCell.numeric ? "right" : "left"}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
@@ -138,10 +146,11 @@ function EnhancedTableHead(props) {
                 </Box>
               ) : null}
             </TableSortLabel>
-          </TableCell>
+          </div>
         ))}
-      </TableRow>
-    </TableHead>
+        </Stack>
+      </div>
+    </div>
   );
 }
 
@@ -256,8 +265,16 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
-
+  const [Questions, setQuestions]=React.useState([]);
   const [open, setOpen] = React.useState(false);
+  React.useEffect(() => { 
+    const url='http://localhost:8081/recruitPlus/questions'; // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
+    fetch(url).then(result => result.json()).then(result => setQuestions(result))
+    .catch(err=>{
+      console.log(err.message)
+    })
+  },[])
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -359,12 +376,12 @@ export default function EnhancedTable() {
             <img src={img1} style={{ width:"40px",height:"40px"}}/>
           </IconButton> <table> 
             <tr>
-              <td><div className='abc'align="centre" style={{fontSize:'1.2rem'}}>
+              <td><div className='abc'align="centre" style={{fontSize:'1.3rem'}}>
                                                                      RECRUIT+
              </div> </td>
             </tr>
             <tr>
-              <td><div className='abc'align="centre" style={{fontSize:'1.2rem'}}>
+              <td><div className='abc'align="centre" style={{fontSize:'0.9rem'}}>
               ONE DAY TO DAY ONE
               </div></td>
             </tr>
@@ -381,8 +398,8 @@ export default function EnhancedTable() {
     <div style={{paddingTop:70}}>
   <PrimarySearchAppBar />
 </div>
-
-    <Box sx={{ width: "100%" ,paddingTop:4}}>
+     
+    <Box sx={{ width: "94%" ,paddingTop:4,paddingLeft:4}}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
@@ -402,50 +419,29 @@ export default function EnhancedTable() {
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.name)}
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.name}
-                      selected={isItemSelected}
-                    >
-                        <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            "aria-labelledby": labelId
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                      >
-                        {row.name}
-                      </TableCell>
-                      <TableCell >
-                      <Stack spacing={2} direction="row">
-                      <FullScreenDialog></FullScreenDialog>
-                       
-                        <Button variant="contained" color="error" onClick={handleClickOpen}>
-                          <DeleteIcon/>
-                          </Button>
-                        </Stack>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                 {Questions.map(questions=>(
+                  <TableRow key={questions.id}
+ >           
+                    <TableCell style={{width:'100%'}} >
+                     
+                    {questions.question}
+                  </TableCell>
+                
+                  <TableCell >
+                  <Stack spacing={2} direction="row">
+                  <FullScreenDialog></FullScreenDialog>
+                   
+                    <Button variant="contained" color="error" onClick={handleClickOpen}>
+                      <DeleteIcon/>
+                      </Button>
+                    </Stack>
+                  </TableCell>
+                </TableRow>
+                 ))}
+             
+                  
+              
               {emptyRows > 0 && (
                 <TableRow
                   style={{

@@ -270,7 +270,7 @@ const Leftbar= () => {
     style={{borderRight:'4px solid #d50000',paddingTop:90,backgroundColor:'#f8f8f8',height:'100%'}}
    >
   <Item>
-        <div className='container my-3' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'black'}} >Category</div>
+        <div className='container my-3' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Category</div>
         <div align='left' >
     <Root>
       <div {...getRootProps()}>
@@ -305,7 +305,7 @@ const Leftbar= () => {
     </Item>
 
     <Item>
-            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'black'}} >Difficulty level</div>
+            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Difficulty level</div>
             <div align='left' >
                 <FormControl>
                     
@@ -323,7 +323,7 @@ const Leftbar= () => {
             </Item>
 
             <Item>
-            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'black'}} >Type</div>
+            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Type</div>
             <div align='left' >
                 <FormControl>
                     
@@ -340,14 +340,14 @@ const Leftbar= () => {
             </Item>
 
             <Item>
-            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'black'}} >Max Duration</div>
+            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Max Duration</div>
             <div align='left' >
             <TextField inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} />
             </div>
             </Item>
        
             <Item>
-            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'b'}} >Max Score </div>
+            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Max Score </div>
             <div align='left' >
             <TextField inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} />
             </div>

@@ -81,15 +81,15 @@ const Feed= (props) => {
    <div style={{paddingTop:30,paddingBottom:10}}>
     <Box>
         <Stack spacing={40} direction='row'>
-    <Button variant="contained" style={{backgroundColor:'black'}} 
+    <Button variant="contained" style={{backgroundColor:'#696969'}} 
      
        ><VisibilityIcon /></Button>
       <Link to='/Home'>
       <Button variant="contained" 
-      style={{backgroundColor:'black'}}
+      style={{backgroundColor:'#696969'}}
        >Close</Button>
 </Link>
-      <Button variant="contained"  style={{backgroundColor:'black'}} onClick={handleonchange} >SAVE&NEXT</Button>
+      <Button variant="contained"  style={{backgroundColor:'#696969'}} onClick={handleonchange} >SAVE&NEXT</Button>
       </Stack>
       </Box>
       </div>
@@ -99,15 +99,15 @@ const Feed= (props) => {
     <Container styles={{borderRight:'2px solid black'}}>
        
   <Stack>
-  <p  style={{color:'white',border:'2px solid black',backgroundColor:'black',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Question</p>
-  <p style={{color:'white',border:'2px solid black',backgroundColor:'black',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Option 1</p>
+  <p  style={{fontSize:'1.1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Question</p>
+  <p style={{color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Option 1</p>
 
-  <p style={{color:'white',border:'2px solid black',backgroundColor:'black',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Option 2</p>
+  <p style={{color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Option 2</p>
 
-  <p style={{color:'white',border:'2px solid black',backgroundColor:'black',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Option 3</p>
+  <p style={{color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Option 3</p>
 
-  <p style={{color:'white',border:'2px solid black',backgroundColor:'black',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Option 4</p>
-  <p style={{color:'white',border:'2px solid black',backgroundColor:'black',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Answer</p>
+  <p style={{color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Option 4</p>
+  <p style={{color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Answer</p>
   </Stack>
  
        

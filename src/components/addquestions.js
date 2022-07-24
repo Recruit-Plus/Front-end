@@ -38,12 +38,12 @@ const Addquestions = () => {
             <img src={img1} style={{ width:"50px",height:"50px"}}/>
           </IconButton> <table> 
             <tr>
-              <td><div className='abc'align="centre" style={{fontSize:'1.2rem',color:'white'}}>
+              <td><div className='abc'align="centre" style={{fontSize:'1.3rem',color:'white'}}>
                                                                      RECRUIT+
              </div> </td>
             </tr>
             <tr>
-              <td><div className='abc'align="centre" style={{fontSize:'1.2rem',color:'white'}}>
+              <td><div className='abc'align="centre" style={{fontSize:'0.9rem',color:'white'}}>
                ONE DAY TO DAY ONE
               </div></td>
             </tr>

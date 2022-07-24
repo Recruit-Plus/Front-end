@@ -73,7 +73,7 @@ export default function PrimarySearchAppBar() {
     
       <AppBar position="static" style={{ background: '#D3D3D3' }}>
         <Toolbar>
-            <Stack Stack spacing={40} direction='row'>
+            <Stack Stack spacing={55} direction='row'>
                 <div>
 
                <Stack Stack spacing={4} direction='row'>
@@ -149,7 +149,7 @@ export default function PrimarySearchAppBar() {
     <div className="container" align='right'>
         <Link to='/'>
     <Button variant="contained" onClick={handleClickOpen} style={{backgroundColor: "#000000",}} >
-          Add Question
+          Add  Question
         </Button>
         </Link>
     </div>
