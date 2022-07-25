@@ -80,7 +80,7 @@ const Feed= (props) => {
    <Container style={{paddingTop:60,height:'100%'}}>
    <div style={{paddingTop:30,paddingBottom:10}}>
     <Box>
-        <Stack spacing={40} direction='row'>
+        <Stack spacing={24} direction='row'>
     <Button variant="contained" style={{backgroundColor:'#696969'}} 
      
        ><VisibilityIcon /></Button>
@@ -89,7 +89,9 @@ const Feed= (props) => {
       style={{backgroundColor:'#696969'}}
        >Close</Button>
 </Link>
-      <Button variant="contained"  style={{backgroundColor:'#696969'}} onClick={handleonchange} >SAVE&NEXT</Button>
+<Button variant="contained"  style={{backgroundColor:'#696969'}} >SAVE</Button>
+      <Button variant="contained"  style={{backgroundColor:'#696969'}} onClick={handleonchange} >NEXT</Button>
+      
       </Stack>
       </Box>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import Leftbar from './Leftbar';
+import Leftbar from './Left_partof_addQuestion_page';
 import Rightpart_addqpage
  from './Rightpart_addqpage';
  import img1 from '../images/recruit+logo.png';
@@ -10,6 +10,7 @@ import Toolbar from '@mui/material/Toolbar';
 //import { makeStyles } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import Addquestions from './add_new_questions_page';
 import {Typography,Button,CssBaseline,Container,Grid,Stack,RadioGroup,Radio,Box,makeStyles} from '@mui/material';
 import {
     BrowserRouter as Router,
@@ -20,7 +21,7 @@ import {
     Routes
   } from "react-router-dom";
  
-const Addquestions = () => {
+const Navbar = () => {
  
   return (
     <>
@@ -57,20 +58,11 @@ const Addquestions = () => {
     </Box>
     
   
-  <Grid container >
-  <Grid item xs={3.25}>
-  <Leftbar/>
-  </Grid>
-  <Grid item xs={8.75}>
-<Rightpart_addqpage/>
-</Grid>
-
-</Grid>
-  
+ 
     
     </>
    
   );
 }
 
-export default Addquestions;
+export default Navbar;

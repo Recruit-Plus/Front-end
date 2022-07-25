@@ -1,6 +1,6 @@
 import * as React from "react";
 import axios from "axios";
-import questionlist from "./questionlist";
+
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -35,8 +35,9 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Link,AppBar } from "@mui/material";
 import PrimarySearchAppBar from "./Subnav";
-import FullScreenDialog from "./FullScreenDialog";
-
+import FullScreenDialog from "./editbutton_popup";
+import Navbar from "./Navbar";
+import Sign_up from "./Sign_up";
 function createData(name) {
   return {
     name
@@ -44,19 +45,7 @@ function createData(name) {
 }
 
 const rows = [
-  createData("Number of primitive data types in Java are?"),
-  createData("What is the size of float and double in java?"),
-  createData("When is the object created with new keyword?"),
-  createData("Identify the keyword among the following that makes a variable belong to a class,rather than being defined for each instance of the class."),
-  createData("In which of the following is toString() method defined?"),
-  createData("compareTo() returns"),
-  createData("Total constructor string class have?"),
-  createData("Identify the return type of a method that does not return any value"),
-  createData("Where does the system stores parameters and local variables whenever a method is invoked?"),
-  createData("Identify the modifier which cannot be used for constructor."),
-  createData("What is the variables declared in a class for the use of all methods of the class called?"),
-  createData("What is the implicit return type of constructor?"),
-  createData("When is the finalize() method called?")
+    
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -364,46 +353,18 @@ export default function EnhancedTable() {
       </Button>
     </DialogActions>
   </Dialog>
-    <AppBar position="fixed"  style={{backgroundColor:'#d50000'}}>
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <img src={img1} style={{ width:"40px",height:"40px"}}/>
-          </IconButton> <table> 
-            <tr>
-              <td><div className='abc'align="centre" style={{fontSize:'1.3rem'}}>
-                                                                     RECRUIT+
-             </div> </td>
-            </tr>
-            <tr>
-              <td><div className='abc'align="centre" style={{fontSize:'0.9rem'}}>
-              ONE DAY TO DAY ONE
-              </div></td>
-            </tr>
-           </table>
-        <Typography variant="h6" 
-            component="div" sx={{ flexGrow: 1 }}>
-          </Typography>
-          <Link to='/' >
-          <Button  style={{color:'white'}}>Login</Button>
-          </Link>
-        </Toolbar>
-      </AppBar>
+  <Navbar/>
 
-    <div style={{paddingTop:70}}>
+    <div style={{paddingTop:80}}>
   <PrimarySearchAppBar />
 </div>
      
     <Box sx={{ width: "94%" ,paddingTop:4,paddingLeft:4}}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
+      <Paper sx={{ width: "100%", mb: 2 , border:'1px solid black'}}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
+         
             sx={{ minWidth: 1000 , maxwidth :1000 }}
             aria-labelledby="tableTitle"
             size={dense ? "small" : "medium"}
@@ -457,7 +418,7 @@ export default function EnhancedTable() {
         <TablePagination
           rowsPerPageOptions={[10, 20, 30]}
           component="div"
-          count={rows.length}
+          count={Questions.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
