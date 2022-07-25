@@ -1,3 +1,5 @@
+
+
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -18,10 +20,11 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import {Link} from 'react-router-dom';
-import EditQuestionPage from './EditQuestionPage';
+import { Grid,Select,MenuItem,TextField,Stack,Container } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+import EnhancedTable from './Question_List_Page';
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   'label + &': {
     marginTop: theme.spacing(3),
@@ -72,12 +75,20 @@ export default function FullScreenDialog() {
   const handleClose = () => {
     setOpen(false);
   };
+  
+  const [age1, setAge1] = React.useState('');
+
+  const handleChange1 = (event) => {
+    setAge1(event.target.value);
+  };
+  const [age2, setAge2] = React.useState('');
   const ariaLabel = { 'aria-label': 'description' };
   return (
+    /* This page is for pop of edit button */ 
         <div align="center">
         
         <Button variant="outlined" onClick={handleClickOpen} style={{backgroundColor:'black',color:'white'}}>
-           <EditIcon/>
+           <EditIcon/>   {/* This you can see infront of every question */ }
         </Button>
         <Dialog
             fullScreen
@@ -101,8 +112,36 @@ export default function FullScreenDialog() {
                 
             </Toolbar>
             </AppBar>
+             <div  align="center" style={{paddingBottom:15,paddingTop:6}}>
+                <Link to='/Home'>
+                   <Button style={{backgroundColor:'black',color:'white'}} >Update </Button>
+                </Link>
+
+        </div>
+        <Box style={{paddingTop:0}}>
+        <Grid container >
+        <Grid item xs={2.5} style={{paddingLeft:30 ,borderRight:'3px solid black'}}>
+        <Box sx={{ minWidth: 110 , maxHeight:47,paddingRight:0 }}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label" style={{color:'black'}}>Difficulty level</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={age1}
+          label=" Difficulty level"
+          onChange={handleChange1}
+        >
+          <MenuItem value={10}>Easy</MenuItem>
+          <MenuItem value={20}>Medium</MenuItem>
+          <MenuItem value={30}>Hard</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
+        </Grid>
+    <Grid item xs={9.5}>
         <Box
-            alignItems="center"
+        
+       alignItems="center"
         component="form"
         sx={{
             '& > :not(style)': { m:1},
@@ -114,72 +153,37 @@ export default function FullScreenDialog() {
         <Input TextField style ={{width: '100%'}} 
         defaultValue=" Which keyword is used for accessing the features of a package? " inputProps={ariaLabel} />
         </div>
-        </Box>
-        <Box
-        component="form"
-        noValidate
-        sx={{
-            display: 'grid',
-            gridTemplateColumns: { sm: '1fr 1fr' },
-            gap: 1,
-        }}
-        >
-        <div className='container my-2 mx-3'>
-        <FormControl variant="standard">
-            <InputLabel shrink htmlFor="bootstrap-input">
-            </InputLabel>
-            <BootstrapInput defaultValue="import" id="bootstrap-input" />
-            <FormControl variant="standard">
-            <InputLabel shrink htmlFor="bootstrap-input">
-            </InputLabel>
-            <BootstrapInput defaultValue="export" id="bootstrap-input" />
-            <FormControl variant="standard">
-            <InputLabel shrink htmlFor="bootstrap-input">
-            </InputLabel>
-            <BootstrapInput defaultValue="extends" id="bootstrap-input" />
-        </FormControl>
-        <FormControl variant="standard">
-            <InputLabel shrink htmlFor="bootstrap-input">
-            </InputLabel>
-            <BootstrapInput defaultValue="package" id="bootstrap-input" />
-        </FormControl>
-        <div className='my-3'></div>
-            <h5> correct answer: </h5>
-        <FormControl variant="standard">
-            <InputLabel shrink htmlFor="bootstrap-input"> 
-            </InputLabel>
-            <BootstrapInput defaultValue="import" id="bootstrap-input" />
-        </FormControl>
-        </FormControl>
-        </FormControl>
-
-        </div>
         
-        </Box>
-        <div className='container my-3 mx-3' >
-        <h4>Difficulty Level</h4>
-        <RadioGroup
-            row
-            aria-labelledby="demo-row-radio-buttons-group-label"
-            name="row-radio-buttons-group"
-        >
-            <FormControlLabel value="Easy" control={<Radio />} label="Easy" />
-            <FormControlLabel value="medium" control={<Radio />} label="Medium" />
-            <FormControlLabel value="hard" control={<Radio />} label="Hard" />
+        
+       
             
-        </RadioGroup>
-        </div>
+             <Container styles={{borderRight:'2px solid black'}}>
+            
+            <Stack>
+           
+            <TextField fullWidth label="Option 1" 
+             style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+            <TextField fullWidth label="Option 2" 
+             style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+            <TextField fullWidth label="Option 3" 
+             style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+            <TextField fullWidth label="Option 4" 
+             style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+            <TextField fullWidth label="Answer" 
+             style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+           
+            </Stack>
+           
+                 
+            </Container>
+        </Box>
+        </Grid>
         
+        </Grid>
+        </Box>
         <DialogActions>
     </DialogActions>
-    <div className='abc' align="center">
-    <Link to="/Home">
-    <Button style={{backgroundColor:'black',color:'white'}} >
-            Update
-    </Button>
-    </Link>
-
-        </div>
+   
         </Dialog>
         </div>
   );

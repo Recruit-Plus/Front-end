@@ -207,7 +207,7 @@ import {
     }
   `,
   );
-const Leftbar= () => {
+const Left_partof_addQuestion_page= () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -374,7 +374,7 @@ const Leftbar= () => {
   );
 }
 
-export default Leftbar;
+export default Left_partof_addQuestion_page;
 
 const Category = [
   { title: 'C' },
