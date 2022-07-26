@@ -3,8 +3,10 @@ import Addquestions from './components/add_new_questions_page';
 import Question_List_Page from './components/Question_List_Page';
 import FullScreenDialog from './components/editbutton_popup';
 import {Typography,Button,CssBaseline,Grid,Container} from '@mui/material';
+import HomePage from './components/HomePage';
+import AdminLogin from './components/AdminLogin';
 import Sign_up from './components/Sign_up';
-
+import Login from './components/Login';
 import {
   BrowserRouter as Router,
   
@@ -28,7 +30,26 @@ function App() {
      
     </Route>
    
+    <Route path='/AdminLogin' element={ <AdminLogin/>}>
+    </Route>
    
+   <Route path='/Home' element={ <FullScreenDialog/>}>
+
+     
+</Route>
+<Route path='/Sign_up' element={ <Sign_up/>}>
+
+     
+</Route>
+<Route path='/HomePage' element={ <HomePage/>}>
+
+     
+</Route>
+<Route path='/Login' element={ <Login/>}>
+
+     
+</Route>
+
   </Routes>
  
     </>

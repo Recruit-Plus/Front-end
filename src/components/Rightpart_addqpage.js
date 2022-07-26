@@ -95,21 +95,21 @@ const Feed= (props) => {
       </Stack>
       </Box>
       </div>
-   <Box style={{border:'2px solid black',height:'70%',backgroundColor:'#f8f8f8',margin:'0.6rem auto 0 auto',padding:'37px 2px'}}>
+   <Box style={{border:'2px solid black',height:'70%',backgroundColor:'#f8f8f8',margin:'0.6rem auto 0 auto',padding:'15px 2px'}}>
     <Grid container>
     <Grid item xs={2} >
     <Container styles={{borderRight:'2px solid black'}}>
        
   <Stack>
-  <p  style={{fontSize:'1.1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Question</p>
-  <p style={{color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Option 1</p>
+  <p  style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'1rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'100%'}}>Question</p>
+  <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'100%'}}>Option 1</p>
 
-  <p style={{color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Option 2</p>
+  <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'100%'}}>Option 2</p>
 
-  <p style={{color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Option 3</p>
+  <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'100%'}}>Option 3</p>
 
-  <p style={{color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Option 4</p>
-  <p style={{color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.4rem 0.4rem ',transition:'0.3s linear all',padding:'1.4rem',width:'80%'}}>Answer</p>
+  <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'100%'}}>Option 4</p>
+  <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'100%'}}>Answer</p>
   </Stack>
  
        
@@ -123,15 +123,15 @@ const Feed= (props) => {
        <TextField fullWidth label="Question " value={Questionnext} onChange={handleonchange}
        style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
        <TextField fullWidth label="Option 1" value={op1next} onChange={oneonchange}
-        style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+        style={{margin:'0.7rem auto ',color:'black',backgroundColor:'white'}}></TextField>
        <TextField fullWidth label="Option 2" value={op2next} onChange={twoonchange}
-        style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+        style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
        <TextField fullWidth label="Option 3" value={op3next} onChange={threeonchange}
-        style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+        style={{margin:'0.7rem auto ',color:'black',backgroundColor:'white'}}></TextField>
        <TextField fullWidth label="Option 4" value={op4next} onChange={fouronchange}
-        style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+        style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
        <TextField fullWidth label="Answer" value={Answernext} onChange={ansonchange}
-        style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+        style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
       
        </Stack>
       

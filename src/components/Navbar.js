@@ -11,6 +11,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Addquestions from './add_new_questions_page';
+import Sign_up from './Sign_up';
 import {Typography,Button,CssBaseline,Container,Grid,Stack,RadioGroup,Radio,Box,makeStyles} from '@mui/material';
 import {
     BrowserRouter as Router,
@@ -49,9 +50,19 @@ const Navbar = () => {
               </div></td>
             </tr>
            </table>
+           
         <Typography variant="h6" 
             component="div" sx={{ flexGrow: 1 }}>
           </Typography>
+          <Link to='/HomePage'>
+          <Button  style={{color:'white'}}>Home</Button>
+          </Link>
+          <Link to='/Sign_up'>
+         
+           <Button style={{color:'white'}}> Sign Up</Button></Link>
+           <Link to='/Login'>
+           <Button  style={{color:'white'}}>Login</Button>
+           </Link>
          <PeopleIcon style={{color:'white'}}/>
         </Toolbar>
       </AppBar>

@@ -38,6 +38,7 @@ import PrimarySearchAppBar from "./Subnav";
 import FullScreenDialog from "./editbutton_popup";
 import Navbar from "./Navbar";
 import Sign_up from "./Sign_up";
+
 function createData(name) {
   return {
     name
@@ -359,7 +360,7 @@ export default function EnhancedTable() {
   <PrimarySearchAppBar />
 </div>
      
-    <Box sx={{ width: "94%" ,paddingTop:4,paddingLeft:4}}>
+    <Box sx={{ width: "98%" ,paddingTop:4,paddingLeft:5}}>
       <Paper sx={{ width: "100%", mb: 2 , border:'1px solid black'}}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>

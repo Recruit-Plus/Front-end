@@ -1,35 +1,72 @@
 import React from 'react';
-import Left_partof_addQuestion_page from './Left_partof_addQuestion_page';
-import Rightpart_addqpage
- from './Rightpart_addqpage';
- import img1 from '../images/recruit+logo.png';
- import PeopleIcon from '@mui/icons-material/People';
- import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import Navbar from './Navbar';
-import {Typography,Button,CssBaseline,Container,Grid,Stack,RadioGroup,Radio,Box,makeStyles} from '@mui/material';
+import img1 from '../images/recruit+logo.png';
+import { Stack,Box, Select} from '@mui/material';
+import { Container } from '@mui/system';
 import {
-    BrowserRouter as Router,
-    
-    Route,
-    Link,
-    NavLink,
-    Routes
-  } from "react-router-dom";
- 
+  BrowserRouter as Router,
+  
+  Route,
+  Link,
+  NavLink,
+  Routes
+} from "react-router-dom";
 const Sign_up = () => {
+  return <>
+    <Navbar></Navbar>
+    <Container style={{paddingTop:120}}>
+   <Box style={{}}>
+    <div>
+    <form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Name</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your name" style={{width:'50%'}}/>
+    <small id="emailHelp" class="form-text text-muted">Enter your first and last name .</small>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Email address</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Email" style={{width:'50%'}}/>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">College</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter your college name" style={{width:'50%'}}/>
+  </div>
+  <div class="form-group">
+    <label for="degree">Degree</label>
+    <div>
+    <select type="password" class="form-control" id="exampleInputPassword1" style={{width:'50%'}}>
+      <option value='Degree'>Select Degree</option>
+      <option value='B.tech'>B.tech</option>
+      <option value='M.tech'>M.tech</option>
+      <option value='Bca'>BCA</option>
+      <option value='MCA'>MCA</option>
+    </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Branch</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter your Branch" style={{width:'50%'}}/>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Experience</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter your experience" style={{width:'50%'}}/>
+  </div>
  
-  return (
-      <>
-   
-       
-    
-    </>
-   
-  );
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1"/>
+    <label class="form-check-label" for="exampleCheck1">All the information I  have filled is correct </label>
+  </div>
+  <div style={{paddingTop:15}}>
+    <Link to='/Home'>
+  <button type="submit" class="btn btn-primary" style={{backgroundColor:'black'}}>Sign up</button>
+  </Link>
+  </div>
+</form>
+    </div>
+    </Box>
+    </Container>
+  </>
 }
 
-export default Sign_up
-;
+
+export default Sign_up;
