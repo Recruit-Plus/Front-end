@@ -15,9 +15,14 @@ import FullScreenDialog from "./FullScreenDialog";
 =======
 import EditQuestionPage from './Question_List_Page.js';
 import FullScreenDialog from "./editbutton_popup";
+<<<<<<< HEAD
 >>>>>>> c579309dc3a531e9830199a3656d7373a75cb439
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+=======
+
+>>>>>>> eeed1aeac222337ef84331eb5eea966aae9d4964
 import { Stack } from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
     BrowserRouter as Router,
     
@@ -78,12 +83,13 @@ export default function PrimarySearchAppBar() {
     
       <AppBar position="static" style={{ background: '#D3D3D3' }}>
         <Toolbar>
-            <Stack Stack spacing={55} direction='row'>
+            <Stack Stack spacing={40} direction='row'>
                 <div>
 
                <Stack Stack spacing={4} direction='row'>
-          
-           
+            <Link to='/AdminLogin'>
+           <Button style={{color:'black'}}><ArrowBackIcon /></Button>
+           </Link>
         <div className="mx-3">
     <Box sx={{ minWidth: 200 , maxHeight:47}}>
     <FormControl sx={{  width: 250 }}>

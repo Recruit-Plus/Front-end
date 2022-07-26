@@ -19,9 +19,15 @@ import Addquestions from './components/add_new_questions_page';
 import Question_List_Page from './components/Question_List_Page';
 import FullScreenDialog from './components/editbutton_popup';
 import {Typography,Button,CssBaseline,Grid,Container} from '@mui/material';
+import HomePage from './components/HomePage';
+import AdminLogin from './components/AdminLogin';
 import Sign_up from './components/Sign_up';
+<<<<<<< HEAD
 >>>>>>> c579309dc3a531e9830199a3656d7373a75cb439
 
+=======
+import Login from './components/Login';
+>>>>>>> eeed1aeac222337ef84331eb5eea966aae9d4964
 import {
   BrowserRouter as Router,
   
@@ -50,10 +56,33 @@ function App() {
     </Route>
    
 <<<<<<< HEAD
+<<<<<<< HEAD
     <Route path="/FullScreenDialog" element={<FullScreenDialog />} />
 =======
    
 >>>>>>> c579309dc3a531e9830199a3656d7373a75cb439
+=======
+    <Route path='/AdminLogin' element={ <AdminLogin/>}>
+    </Route>
+   
+   <Route path='/Home' element={ <FullScreenDialog/>}>
+
+     
+</Route>
+<Route path='/Sign_up' element={ <Sign_up/>}>
+
+     
+</Route>
+<Route path='/HomePage' element={ <HomePage/>}>
+
+     
+</Route>
+<Route path='/Login' element={ <Login/>}>
+
+     
+</Route>
+
+>>>>>>> eeed1aeac222337ef84331eb5eea966aae9d4964
   </Routes>
  
     </>
