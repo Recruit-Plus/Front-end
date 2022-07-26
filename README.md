@@ -1,4 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 957485058d54838f4634c7483606cdb38d5ce888
+=======
+>>>>>>> c579309dc3a531e9830199a3656d7373a75cb439
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -69,6 +75,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<<<<<<< HEAD
+<<<<<<< HEAD
 =======
 # Front-end
 >>>>>>> 8082a7769250ac0d307ab079a1cca58a0532d91a
+=======
+>>>>>>> 957485058d54838f4634c7483606cdb38d5ce888
+=======
+>>>>>>> c579309dc3a531e9830199a3656d7373a75cb439
