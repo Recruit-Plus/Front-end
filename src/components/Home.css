@@ -1,0 +1,46 @@
+/* .HomePage img
+{
+    width: 30%;
+}
+.HomePage container{
+    display: flex;
+    align-items: center;
+} */
+
+p {
+    float: right;
+    margin-top: 15%;
+    /* margin-left: 10%; */
+    /* margin-right: 90%; */
+    /* align-items:flex-start; */
+    margin-inline:10%;
+   
+    text-align: left;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 100%;
+    font-size: 80%;
+    
+    /* line-height: 1.5; */
+    display: inline-block;
+}
+
+img {
+    /* height: 110px; */
+    width: 120px;
+    margin-left: 5%;
+    display: inline-block;
+    
+}
+
+.container {
+    display: grid;
+    gap: 50px;
+    columns:10rem;
+    box-shadow: black;
+   
+}
+.row{
+   
+    margin-top: 120px;
+}
+
