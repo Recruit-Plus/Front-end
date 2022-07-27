@@ -6,19 +6,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { useTheme } from '@mui/material/styles';
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Stack } from "@mui/material";
-import {
-    BrowserRouter as Router,
-    
-    Route,
-    Link,
-    NavLink,
-    Routes
-  } from "react-router-dom";
+import {Link} from "react-router-dom";
 const names = [
   'C',
   'C++',
@@ -34,7 +26,6 @@ const names = [
 
 
 export default function PrimarySearchAppBar() {
-  const theme = useTheme();
     const [personName, setPersonName] = React.useState([]);
   
     const handleChange = (event) => {
@@ -53,10 +44,7 @@ export default function PrimarySearchAppBar() {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+  
   const [age1, setAge1] = React.useState('');
 
   const handleChange1 = (event) => {
@@ -71,7 +59,7 @@ export default function PrimarySearchAppBar() {
     
       <AppBar position="static" style={{ background: '#D3D3D3' }}>
         <Toolbar>
-            <Stack Stack spacing={40} direction='row'>
+            <Stack Stack spacing={60} direction='row'>
                 <div>
 
                <Stack Stack spacing={4} direction='row'>
@@ -146,8 +134,8 @@ export default function PrimarySearchAppBar() {
     </Stack>
     </div>
     <div className="container" align='right'>
-        <Link to='/'>
-    <Button variant="contained" onClick={handleClickOpen} style={{backgroundColor: "#000000",}} >
+        <Link to='/Home'>
+    <Button variant="contained" alignItems="right" onClick={handleClickOpen} style={{backgroundColor: "#000000",}} >
           Add  Question
         </Button>
         </Link>

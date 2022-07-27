@@ -21,7 +21,7 @@ const AdminLogin = () => {
             <span align='center' className='text'>Easily create quizzes to test <br></br>student's knowledge and track their performance</span>
         <div className='wrapper'>
             <div className='icon'>
-            <Link to='/Home'>
+            <Link to='/AdminHome'>
                 <span><Button variant ='outlined' className='button' style={{backgroundColor:'black',color:'white',fontSize:'1rem'}} >Question Bank</Button></span>
                 </Link>
                 <div className='tooltip' style={{width:230}}><p style={{fontSize:'1rem'}}>Add Question<br></br>View All Questions<br></br>Edit Question</p></div>

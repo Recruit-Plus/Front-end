@@ -2,17 +2,13 @@ import React from 'react';
 
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import {Typography,Button,CssBaseline, Container,Radio,RadioGroup,FormControl,Stack,FormControlLabel,Box,TextField,Grid} from '@mui/material';
+import {Button, Container,Stack,Box,TextField,Grid} from '@mui/material';
 import {
-    BrowserRouter as Router,
-    
-    Route,
     Link,
-    NavLink,
-    Routes
   } from "react-router-dom";
-import { borderLeft } from '@mui/system';
+
 const Feed= (props) => {
+
   const [Questionnext,setqNext]=React.useState("");
   const [op1next,set1Next]=React.useState("");
   const [op2next,set2Next]=React.useState("");
@@ -20,59 +16,24 @@ const Feed= (props) => {
   const [op4next,set4Next]=React.useState("");
   const [Answernext,setaNext]=React.useState("");
 
-  const onchange=()=>{
-   
-  
-   
-
-     
-  }
   const oneonchange=(event)=>{
-   
-   
     set1Next(event.target.value)
     ;
-    
- 
-      
    }
    const twoonchange=(event)=>{
-   
-   
     set2Next(event.target.value);
-    
-    
- 
-      
    }
    const threeonchange=(event)=>{
-   
-    set3Next(event.target.value);
- 
-      
+    set3Next(event.target.value); 
    }
    const fouronchange=(event)=>{
-   
     set4Next(event.target.value);
-    
- 
-      
    }
    function ansonchange (event){
-    
-    
-   
-  
-   
     setaNext(event.target.value)
   }
   function handleonchange (event){
     setqNext(event.target.value);
-    
-   
-  
-   
-    
   }
   
   return (
@@ -81,26 +42,28 @@ const Feed= (props) => {
    <div style={{paddingTop:30,paddingBottom:10}}>
     <Box>
 
-        <Stack spacing={40} direction='row'>
-        <Stack spacing={24} direction='row'>
-    <Button variant="contained" style={{backgroundColor:'#696969'}} 
+        <Stack spacing={30} direction='row'>
+        <Stack spacing={20} direction='row'>
+        <Link to='/AdminHome'>
+        <Button variant="contained" style={{backgroundColor:'#696969'}} 
      
-       ><VisibilityIcon /></Button>
-      <Link to='/Home'>
+     ><VisibilityIcon /></Button>
+      </Link>
+      <Link to='/AdminLogin'>
       <Button variant="contained" 
       style={{backgroundColor:'#696969'}}
        >Close</Button>
-</Link>
+    </Link>
 
-      <Button variant="contained"  style={{backgroundColor:'#696969'}} onClick={handleonchange} >SAVE&NEXT</Button>
-<Button variant="contained"  style={{backgroundColor:'#696969'}} >SAVE</Button>
-      <Button variant="contained"  style={{backgroundColor:'#696969'}} onClick={handleonchange} >NEXT</Button>
+      <Button variant="contained"  style={{backgroundColor:'#696969',paddingTop:'10px'}} onClick={handleonchange} >SAVE&NEXT</Button>
+    <Button variant="contained"  style={{backgroundColor:'#696969',paddingTop:'10px'}} >SAVE</Button>
+      <Button variant="contained"  style={{backgroundColor:'#696969',paddingTop:'10px'}} onClick={handleonchange} >NEXT</Button>
       
       </Stack>
       </Stack>
       </Box>
       </div>
-   <Box style={{border:'2px solid black',height:'70%',backgroundColor:'#f8f8f8',margin:'0.6rem auto 0 auto',padding:'15px 2px'}}>
+   <Box style={{border:'2px solid black',height:'80%',backgroundColor:'#f8f8f8',margin:'0.6rem auto 0 auto',padding:'25px 2px'}}>
     <Grid container>
     <Grid item xs={2} >
     <Container styles={{borderRight:'2px solid black'}}>

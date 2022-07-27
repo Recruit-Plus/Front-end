@@ -28,7 +28,7 @@ function App() {
     <Route path='/' element={ <Addquestions />}>
     </Route>
     <Route path='/Home' element={ <Addquestions/>}/>
-    <Route path='/Home' element={ <Question_List_Page/>}>
+    <Route path='/AdminHome' element={ <Question_List_Page/>}>
     </Route>
    <Route path="/FullScreenDialog" element={<FullScreenDialog />} />
     <Route path='/AdminLogin' element={ <AdminLogin/>}>

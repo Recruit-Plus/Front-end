@@ -1,20 +1,14 @@
 import React from 'react';
 import Navbar from './Navbar';
-import img1 from '../images/recruit+logo.png';
-import { Stack,Box, Select} from '@mui/material';
+import { Box} from '@mui/material';
 import { Container } from '@mui/system';
 import {
-  BrowserRouter as Router,
-  
-  Route,
-  Link,
-  NavLink,
-  Routes
+  Link
 } from "react-router-dom";
 const Sign_up = () => {
   return <>
     <Navbar></Navbar>
-    <Container style={{paddingTop:120}}>
+    <Container style={{paddingTop:80}}>
    <Box style={{}}>
     <div>
     <form>
@@ -57,7 +51,7 @@ const Sign_up = () => {
     <label class="form-check-label" for="exampleCheck1">All the information I  have filled is correct </label>
   </div>
   <div style={{paddingTop:15}}>
-    <Link to='/Home'>
+    <Link to='/Login'>
   <button type="submit" class="btn btn-primary" style={{backgroundColor:'black'}}>Sign up</button>
   </Link>
   </div>
