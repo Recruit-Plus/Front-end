@@ -1,5 +1,5 @@
 import React from 'react';
-import Left_partof_addQuestion_page from './Left_partof_addQuestion_page';
+
 import Rightpart_addqpage
  from './Rightpart_addqpage';
  import img1 from '../images/recruit+logo.png';
@@ -26,17 +26,8 @@ const Addquestions = () => {
    
          <Navbar />      {/* imported Navbar componemt */}
     
-  
-    <Grid container >       {/* After navbar you can see two part left and right
-                            imported that component in grid  so you want to change something go to that component*/ }
-         <Grid item xs={3.25}>
-           <Left_partof_addQuestion_page/>       
-         </Grid>
-         <Grid item xs={8.75}>
-          <Rightpart_addqpage/>
-         </Grid>
-
-    </Grid>
+       <Rightpart_addqpage/>
+   
   
     
     </>
