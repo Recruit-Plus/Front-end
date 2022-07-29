@@ -1,5 +1,5 @@
 import React from 'react';
-import Leftbar from './Left_partof_addQuestion_page';
+
 import Rightpart_addqpage
  from './Rightpart_addqpage';
  import img1 from '../images/recruit+logo.png';

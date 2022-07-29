@@ -13,6 +13,7 @@ import IconButton from '@mui/material/IconButton';
 import { useAutocomplete } from '@mui/base/AutocompleteUnstyled';
 import axios from "axios";
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import addq from './addq';
 import {Typography,Button,CssBaseline, Container,Radio,RadioGroup,FormControl,Stack,FormControlLabel,Box,TextField,Grid} from '@mui/material';
 import {
     BrowserRouter as Router,
@@ -210,16 +211,17 @@ const Listbox = styled('ul')(
   }
 `,
 );
-const Feed= (props) => {
+const Feed= (props) => {     //main function
   const[choices,setchoice] = React.useState([]);
   const[option1,setoption1] = React.useState('');
   const[option2,setoption2] = React.useState('');
   const[option3,setoption3] = React.useState('');
   const[option4,setoption4] = React.useState('');
-  const[Answer,setanswer] = React.useState([]);
+  
   const[topics,settopics] = React.useState([]);
-
-  const [data,setData]=React.useState(
+  const options = [option1, option2, option3, option4]
+  const [data,setData]=React.useState
+  (    
     {
       question:"",
        choices:choices,
@@ -227,42 +229,20 @@ const Feed= (props) => {
       type:"",
       duration:"",
       score:"",
+      answer:[],
+      created_by:"Ritika",
+      last_modified_by:"Srinu"
     }
   )
  
- function handlechoice(e)
-
-{
-
- 
-
- }
-function handleClick(e){
-   
-    const newdata={...data}
-    newdata[e.target.id]=e.target.value;
-    setData(newdata);
-    console.log(newdata);
-   
-  
- }
- function handlepost(e){
-  console.log(data);
-  let choice={
-    option1,
-    option2,
-    option3,
-    option4
-  }
-    setchoice([...choices,choice])
+ function handlepost(e)
+ {
+    const requestBody = {...data,choices: options}
+        console.log(requestBody)
     
-  console.log(choices);
-
-   e.preventDefault();
-  axios.post("http://localhost:8081/recruitPlus/questions",data,choices).then(result => console.log(result))
- 
- 
+    axios.post("http://localhost:8081/recruitPlus/questions",requestBody).then(result => console.log(result))
 }
+
  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -318,19 +298,18 @@ function handleClick(e){
           </Button>
         </DialogActions>
       </BootstrapDialog>
-   <Container style={{paddingTop:60,height:'100%'}}>
+ 
    
-      <Grid container >       {/* After navbar you can see two part left and right
+          <Grid container style={{paddingTop:60}} spacing={2}>       {/* After navbar you can see two part left and right
                           imported that component in grid  so you want to change something go to that component*/ }
-         <Grid item xs={3.25} style={{width:'100%'}}>
+         <Grid item lg={3.25} >
         
 
 
 
-   <Box
-    style={{borderRight:'4px solid #d50000',paddingTop:90,backgroundColor:'#f8f8f8',height:'100%',paddingLeft:40}}
-   >
-  <Item>
+   <Box style={{borderRight:'4px solid #d50000',paddingTop:44,backgroundColor:'#f8f8f8',height:'100%',paddingRight:20,width:'100%'}} >
+    
+     <Item  >
         <div className='container my-3' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Topic</div>
         <div align='left' >
     <Root>
@@ -375,12 +354,11 @@ function handleClick(e){
                             defaultValue="female"
                             name="radio-buttons-group"
                             id='  difficulty_level'
-                            value={data.difficulty_level}
-                            onChange={(e)=>handleClick(e)} 
+                           
                     >
-                    <FormControlLabel value="female" control={<Radio />} label="Easy" style={{color:'black'}}/>
-                    <FormControlLabel value="male" control={<Radio />} label="Medium" style={{color:'black'}}/>
-                    <FormControlLabel value="other" control={<Radio />} label="Hard" style={{color:'black'}}/>
+                    <FormControlLabel  value='easy' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Easy" style={{color:'black'}}/>
+                    <FormControlLabel  value='medium' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Medium" style={{color:'black'}}/>
+                    <FormControlLabel   value='hard' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Hard" style={{color:'black'}}/>
                         </RadioGroup>
                     </FormControl>
                     </div>
@@ -398,8 +376,8 @@ function handleClick(e){
                             id='type'
                            
                     >
-                    <FormControlLabel  value={data.type}   onChange={(e)=>handleClick(e)}  control={<Radio />} label="MCQ" style={{color:'black'}}/>
-                    <FormControlLabel  value={data.type}  onChange={(e)=>handleClick(e)} control={<Radio 
+                    <FormControlLabel value='mcq' onChange={(event) => setData({...data,type:event.target.value})}   control={<Radio />} label="MCQ" style={{color:'black'}}/>
+                    <FormControlLabel value='descriptive' onChange={(event) => setData({...data,type:event.target.value})}   control={<Radio 
                     />} label="Descriptive" style={{color:'black'}}/>
                         </RadioGroup>
                     </FormControl>
@@ -408,15 +386,15 @@ function handleClick(e){
 
             <Item>
             <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Max Duration</div>
-            <div align='left' >
-            <TextField id ='duration' inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} value={data.duration}  onChange={(e)=>handleClick(e)}  />
+            <div align='center' >
+            <TextField id ='duration' inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} onChange={(event) => setData({...data,duration: event.target.value})} />
             </div>
             </Item>
        
             <Item>
             <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Max Score </div>
-            <div align='left' >
-            <TextField id ='score' inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} value={data.score}  onChange={(e)=>handleClick(e)} />
+            <div align='center' >
+            <TextField id ='score' inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} onChange={(event) => setData({...data,score: event.target.value})} />
             </div>
             </Item>
 
@@ -436,13 +414,11 @@ function handleClick(e){
   
    </Box> 
          </Grid>
-         <Grid item xs={8.75}>
+         <Grid item lg={8.75}>
          <div style={{paddingTop:30,paddingBottom:10}}>
     <Box>
-        <Stack spacing={24} direction='row'>
-    <Button variant="contained" style={{backgroundColor:'#696969'}} 
-     
-       ><VisibilityIcon /></Button>
+        <Stack spacing={36} direction='row'>
+       <div></div>
       <Link to='/Home'>
       <Button variant="contained" 
       style={{backgroundColor:'#696969'}}
@@ -450,16 +426,15 @@ function handleClick(e){
 </Link>
 <Button variant="contained"  style={{backgroundColor:'#696969'}} onClick={(e)=>handlepost(e)}
      >SAVE</Button>
-      <Button variant="contained"  style={{backgroundColor:'#696969'}} 
-        >NEXT</Button>
+    
       
       </Stack>
       </Box>
       </div>
-         <Box style={{border:'2px solid black',height:'70%',backgroundColor:'#f8f8f8',margin:'0.9rem auto 0 auto',padding:'15px 2px'}}>
+ <Box style={{width:'90%',border:'2px solid black',height:'63%',backgroundColor:'#f8f8f8',margin:'0.8rem auto 0 auto',paddingLeft:5,paddingRight:5,paddingBottom:3,paddingTop:10}}>
     <Grid container>
     <Grid item xs={2} >
-    <Container styles={{borderRight:'2px solid black'}}>
+    <Container >
        
   <Stack>
   <p  style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'1rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'100%'}}>Question</p>
@@ -478,21 +453,22 @@ function handleClick(e){
 
         </Grid>
         <Grid item xs={10}>
-        <Container styles={{borderRight:'2px solid black'}}>
+        <Container styles={{borderRight:'2px solid black',paddingLeft:60}}>
        
        <Stack>
         <form>
-       <TextField id ='question' fullWidth label="Question " variant='outlined' value={data.question}  onChange={(e)=>handleClick(e)}
+       <TextField id ='question' fullWidth label="Question " variant='outlined'  onChange={(event) => setData({...data,question: event.target.value})}
        style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
-       <TextField  fullWidth label="Option 1" value={option1} onChange={(e)=>setoption1(e.target.value)}
+       <TextField  fullWidth label="Option 1"   onChange={(event) => setoption1(event.target.value)}
         style={{margin:'0.7rem auto ',color:'black',backgroundColor:'white'}}></TextField>
-       <TextField  fullWidth label="Option 2"   value={option2} onChange={(e)=>setoption2(e.target.value)}
+       <TextField  fullWidth label="Option 2"   onChange={(event) => setoption2(event.target.value)}
         style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
-       <TextField  fullWidth label="Option 3"  value={option3}  onChange={(e)=>setoption3(e.target.value)}
+       <TextField  fullWidth label="Option 3"   onChange={(event) => setoption3(event.target.value)}
         style={{margin:'0.7rem auto ',color:'black',backgroundColor:'white'}}></TextField>
-       <TextField  fullWidth label="Option 4" value={option4}  onChange={(e)=>setoption4(e.target.value)}
+       <TextField  fullWidth label="Option 4"   onChange={(event) => setoption4(event.target.value)}
         style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
-       <TextField id ='answer' fullWidth label="Answer"    onChange={(e)=>handlechoice(e)}
+       <TextField  fullWidth label="Answer"   value={data.answer}  onChange={(event) => setData({...data,answer: [event.target.value]})}
+       
         style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
       </form>
        </Stack>
@@ -508,7 +484,7 @@ function handleClick(e){
   
        
 
-      </Container>
+     
     </>
     
    

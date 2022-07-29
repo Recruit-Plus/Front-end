@@ -57,7 +57,7 @@ const Sign_up = () => {
     <label class="form-check-label" for="exampleCheck1">All the information I  have filled is correct </label>
   </div>
   <div style={{paddingTop:15}}>
-    <Link to='/Home'>
+    <Link to='/Login'>
   <button type="submit" class="btn btn-primary" style={{backgroundColor:'black'}}>Sign up</button>
   </Link>
   </div>

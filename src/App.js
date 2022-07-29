@@ -7,6 +7,7 @@ import HomePage from './components/HomePage';
 import AdminLogin from './components/AdminLogin';
 import Sign_up from './components/Sign_up';
 import Login from './components/Login';
+import addq from './components/addq';
 import {
   BrowserRouter as Router,
   
@@ -46,6 +47,10 @@ function App() {
      
 </Route>
 <Route path='/Login' element={ <Login/>}>
+
+     
+</Route>
+<Route path='/addq' element={ <addq/>}>
 
      
 </Route>

@@ -36,7 +36,7 @@ const HomePage = () => {
 <div className="container" >
         <div className="row">
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridGap: 10 , marginLeft: "-15%"}}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridGap: 10, marginLeft: "-10%"}}>
                 <div><img src={TimeLogo} style={{ width:"45%",height:"25%", marginTop: "10%", marginLeft:"40%"}}></img>
                     <p style={{fontSize:25, marginLeft: "20%"}}><b>
                         Reduce time to hire</b>
@@ -77,7 +77,7 @@ const HomePage = () => {
         </div>
 
         <div className="footer">
-            <p style={{fontSize:15, marginLeft:"35%", marginTop:"5%", textAlign: "center", marginRight: " 40%"}}> Copyright © 2022 Recruit+  |  Careers</p>
+            <p style={{fontSize:15, marginLeft:"25%", marginTop:"5%", textAlign: "center", marginRight: " 40%"}}> Copyright © 2022 Recruit+  |  Careers</p>
         </div>
         
 </div> 

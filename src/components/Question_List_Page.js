@@ -1,6 +1,4 @@
 import * as React from "react";
-import axios from "axios";
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -13,22 +11,17 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Paper from "@mui/material/Paper";
-import img1 from '../images/recruit+logo.png';
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from '@mui/icons-material/Edit';
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import Stack from '@mui/material/Stack';
@@ -37,17 +30,7 @@ import { Link,AppBar } from "@mui/material";
 import PrimarySearchAppBar from "./Subnav";
 import FullScreenDialog from "./editbutton_popup";
 import Navbar from "./Navbar";
-import Sign_up from "./Sign_up";
-
-function createData(name) {
-  return {
-    name
-  };
-}
-
-const rows = [
-    
-];
+import axios from 'axios';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -81,6 +64,10 @@ function stableSort(array, comparator) {
 
 
 
+
+// This method is created for cross-browser compatibility, if you don't
+// need to support IE11, you can use Array.prototype.sort() directly
+
 const headCells = [
   {
     id: 'name',
@@ -97,7 +84,6 @@ function EnhancedTableHead(props) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-
   return (
     <div  >
       <div   >
@@ -143,6 +129,7 @@ function EnhancedTableHead(props) {
     </div>
   );
 }
+
 
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
@@ -220,18 +207,14 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       )}
 
-      {numSelected > 0 ? (
+{numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton>
-
-
           <Button variant="contained" color="error" onClick={handleClickOpen1}>
-                          <DeleteIcon/>
-                          </Button>
-
-          
-          </IconButton>
-        </Tooltip>
+           <DeleteIcon/>
+           </Button>
+           </IconButton>
+          </Tooltip>
       ) : (
         <Tooltip title="Filter list">
           <IconButton>
@@ -239,6 +222,8 @@ const EnhancedTableToolbar = (props) => {
           </IconButton>
         </Tooltip>
       )}
+
+      
     </Toolbar>
     </>
   );
@@ -250,22 +235,38 @@ EnhancedTableToolbar.propTypes = {
 
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(6);
-  const [Questions, setQuestions]=React.useState([]);
   const [open, setOpen] = React.useState(false);
+  const [dense, setDense] = React.useState(false);
+  const [page, setPage] = React.useState(0);
+  const [questionsPerPage, setQuestionsPerPage] = React.useState(5);
+  const [Questions, setQuestions]=React.useState([]);
+  const[currentPage,setCurrentPage] = React.useState(1);
+
+  const lastIndex = currentPage * questionsPerPage;
+  const firstIndex = lastIndex - questionsPerPage;
+  const currentQuestions = Questions && Questions.slice(firstIndex, lastIndex);
+  const totalPages = Questions && Questions.length/questionsPerPage;
+  
   React.useEffect(() => { 
     const url='http://localhost:8081/recruitPlus/questions'; // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
-    fetch(url).then(result => result.json()).then(result => setQuestions(result))
+    axios.get(url).then(result => setQuestions(result.data))
     .catch(err=>{
       console.log(err.message)
     })
   },[])
 
+  const PreviousPage= (event) =>{
+      if(currentPage>1){
+        setCurrentPage(currentPage-1);
+      }
+  }
 
+  const NextPage = (event) =>{
+    if(currentPage < Math.ceil(Questions.length/questionsPerPage)){
+      setCurrentPage(Math.ceil(Questions.length/questionsPerPage));
+    }
+  }
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -275,15 +276,9 @@ export default function EnhancedTable() {
   };
 
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
-
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = Questions.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -310,30 +305,24 @@ export default function EnhancedTable() {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
 
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
   };
-  
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * questionsPerPage - Questions.length) : 0;
 
    
-    
   return (
     <>
-     <Dialog
+         <div>
+        <Navbar></Navbar>
+        <PrimarySearchAppBar></PrimarySearchAppBar>
+         <Dialog
     open={open}
     onClose={handleClose}
     aria-labelledby="alert-dialog-title"
@@ -354,18 +343,16 @@ export default function EnhancedTable() {
       </Button>
     </DialogActions>
   </Dialog>
-  <Navbar/>
+  {/*<Navbar/>*/}
 
-    <div style={{paddingTop:80}}>
+    <div style={{paddingTop:16}}>
   <PrimarySearchAppBar />
 </div>
-     
-    <Box sx={{ width: "98%" ,paddingTop:4,paddingLeft:5}}>
-      <Paper sx={{ width: "100%", mb: 2 , border:'1px solid black'}}>
+    <Box sx={{ width: "94%" ,paddingTop:3,paddingLeft:10}}>
+      <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
-         
             sx={{ minWidth: 1000 , maxwidth :1000 }}
             aria-labelledby="tableTitle"
             size={dense ? "small" : "medium"}
@@ -373,64 +360,62 @@ export default function EnhancedTable() {
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
-              orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={Questions.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
 
-                 {Questions.map(questions=>(
-                  <TableRow key={questions.id}
- >           
-                    <TableCell style={{width:'100%'}} >
+               
+                {Questions.length===0 ?
+                <TableCell scope="questions" style={{width:'100%'}} >
                      
-                    {questions.question}
-                  </TableCell>
+                <h5>No data Available!!!</h5>
+              </TableCell>
+              :
                 
-                  <TableCell >
-                  <Stack spacing={2} direction="row">
-                  <FullScreenDialog></FullScreenDialog>
-                   
-                    <Button variant="contained" color="error" onClick={handleClickOpen}>
-                      <DeleteIcon/>
-                      </Button>
-                    </Stack>
-                  </TableCell>
-                </TableRow>
-                 ))}
-             
-                  
+                currentQuestions.map((questions,index) => (
+              <TableRow key={index}
+              >          
+                <TableCell scope="questions" style={{width:'100%'}} >
+                 
+                {questions.question}
+              </TableCell>
+            
+              <TableCell >
+              <Stack spacing={2} direction="row">
+              <FullScreenDialog></FullScreenDialog>
+               
+                <Button variant="contained" color="error" onClick={handleClickOpen}>
+                  <DeleteIcon/>
+                  </Button>
+                </Stack>
+              </TableCell>
+            </TableRow>
+            
+             ),)  
+              }
+                 
               
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: (dense ? 53 : 73) * emptyRows
-                  }}
-                >
-                  <TableCell colSpan={10} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 20, 30]}
-          component="div"
-          count={Questions.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        <div style={{ float: "right" }}>
+
+        <Button onClick={PreviousPage}>Prev</Button>
+        Page {currentPage} of {totalPages}
+        <Button onClick={NextPage}>Next</Button>
+        </div>
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
+
+      
     </Box>
+         </div>
     </>
   );
 }

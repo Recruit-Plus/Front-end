@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
 import GoogleIcon from "@mui/icons-material/Google";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -13,6 +12,12 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import validator from 'validator';
 import Checkbox from '@mui/material/Checkbox';
 import Navbar from './Navbar';
+import { Stack } from '@mui/material';
+import {
+  Link,
+  } from "react-router-dom";
+
+
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const Login = () => {
     const [values, setValues] = React.useState({
@@ -36,10 +41,6 @@ const Login = () => {
       };
       const [open, setOpen] = React.useState(false);
     
-      const handleClickOpen = () => {
-        setOpen(true);
-      };
-    
       const handleClose = () => {
         setOpen(false);
       };
@@ -55,22 +56,14 @@ const Login = () => {
     }
   }
 
-    return<>  <div>
-          <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-
-            <div className="conatiner mt-5" align="center" style={{height: '54vh',width:'54vh'}}>
+    return <>  
+    <Navbar></Navbar>
+    <div align = "center" style={{paddingTop:'80px'}}>
+            <div className="conatiner mt-5" align="center" style={{height: '75vh',width:'84vh', background:'#EEEDE7',paddingTop:'50px'}}>
 
               <h4>Welcome Back!! Login to your account</h4>
-                <div className="conatiner" align="center" style={{paddingTop:'8px',paddingBottom:'8px'}}>
-                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+                <div className="conatiner" align="center" style={{paddingTop:'8px',width:'80%'}}>
+                <FormControl sx={{ m: 1, width: "42ch" }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-email">
                 Email
                 </InputLabel>
@@ -91,8 +84,10 @@ const Login = () => {
               </div>
               </FormControl>
                 </div>
-                <div className="conatiner my-3 " align="center" style={{paddingBottom:'8px'}}>
-                <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+               
+                <div className="conatiner my-3 " align="center" style={{paddingBottom:'4px'}}>
+               
+                <FormControl sx={{ m: 1, width: "42ch" }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password">
                   Password
                 </InputLabel>
@@ -115,40 +110,40 @@ const Login = () => {
                   }
                   label="Password"
                 />
-                <div align="right" >
+               
+                <div align="right" style={{paddingTop:12}}>
 
-                <a href='/forget'>Forget password?</a>
+                <a href='/forget'>Forgot password?</a>
               </div>
               </FormControl>
-                </div>
+            
                 
-                <div style={{paddingBottom:'12px'}} align="left">
+                <div style={{paddingBottom:'8px'}} align="left">
                 
                 <Checkbox style={{}} {...label} />Remember me
                 </div>
-               
-                <div className="conatiner my-3" align="center" style={{paddingBottom:'12px'}}>
-                <Button variant="contained" onClick={handleClose}>
+              
+                <div className="conatiner" align="center" style={{paddingBottom:'8px'}}>
+                  <Link to="/AdminLogin">
+                  <Button variant="contained" style={{backgroundColor:'black'}} >
                 Login
               </Button>
+                  </Link>
+                
                 </div>
-                <div class="space">
-                        </div>
-                <div className="conatiner my-5" align="center"></div>
+                <div className="conatiner " align="center"></div>
                 <Button onClick={handleClose} autoFocus>
                 <GoogleIcon />
                 Sign in with google
               </Button>
-              <div align="left" >
+              <div align="center" style={{paddingTop:'18px'}}>
 
-                <h4>Don't have an account?<a href='/signup'>SignUp</a></h4>
+                <h6>Don't have an account?<Link to='/Sign_up'>SignUp</Link></h6>
               </div>
 
             </div>
-            
-            </Dialog>
+            </div>
         </div>
-
     </>;
 }
 
