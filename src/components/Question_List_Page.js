@@ -246,7 +246,7 @@ export default function EnhancedTable() {
   const lastIndex = currentPage * questionsPerPage;
   const firstIndex = lastIndex - questionsPerPage;
   const currentQuestions = Questions && Questions.slice(firstIndex, lastIndex);
-  const totalPages = Questions && Questions.length/questionsPerPage;
+  const totalPages = Math.ceil(Questions.length/questionsPerPage);
   
   React.useEffect(() => { 
     const url='http://localhost:8081/recruitPlus/questions'; // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
@@ -263,11 +263,12 @@ export default function EnhancedTable() {
   }
 
   const NextPage = (event) =>{
-    if(currentPage < Math.ceil(Questions.length/questionsPerPage)){
-      setCurrentPage(Math.ceil(Questions.length/questionsPerPage));
+    if(currentPage < currentPage+1){
+      setCurrentPage(currentPage+1);
     }
   }
   const handleClickOpen = () => {
+    
     setOpen(true);
   };
 
@@ -385,7 +386,9 @@ export default function EnhancedTable() {
             
               <TableCell >
               <Stack spacing={2} direction="row">
-              <FullScreenDialog></FullScreenDialog>
+              <FullScreenDialog>
+                {questions.questionId}
+              </FullScreenDialog>
                
                 <Button variant="contained" color="error" onClick={handleClickOpen}>
                   <DeleteIcon/>
@@ -401,12 +404,18 @@ export default function EnhancedTable() {
             </TableBody>
           </Table>
         </TableContainer>
+        {Questions.length===0 ?
         <div style={{ float: "right" }}>
+
+        <Button onClick={PreviousPage}>Prev</Button>
+        Page {totalPages} of {totalPages}
+        <Button onClick={NextPage}>Next</Button>
+        </div>:<div style={{ float: "right" }}>
 
         <Button onClick={PreviousPage}>Prev</Button>
         Page {currentPage} of {totalPages}
         <Button onClick={NextPage}>Next</Button>
-        </div>
+        </div>}
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}

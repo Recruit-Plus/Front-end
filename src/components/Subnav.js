@@ -59,7 +59,7 @@ export default function PrimarySearchAppBar() {
     
       <AppBar position="static" style={{ background: '#D3D3D3' }}>
         <Toolbar>
-            <Stack Stack spacing={60} direction='row'>
+            <Stack Stack spacing={65} direction='row'>
                 <div>
 
                <Stack Stack spacing={4} direction='row'>

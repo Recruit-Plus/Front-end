@@ -29,9 +29,14 @@ const Addquestions = () => {
   
     <Grid container >       {/* After navbar you can see two part left and right
                             imported that component in grid  so you want to change something go to that component*/ }
-         <Grid item xs={3.25}>
+        
+           {/**
+            * <Grid item xs={3.25}>
            <Left_partof_addQuestion_page/>       
          </Grid>
+            */}
+         
+          
          <Grid item xs={8.75}>
           <Rightpart_addqpage/>
          </Grid>

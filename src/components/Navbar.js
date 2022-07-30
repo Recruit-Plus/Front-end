@@ -32,12 +32,12 @@ const Navbar = () => {
           </IconButton>
              <table> 
             <tr>
-              <td><div className='abc'align="centre" style={{fontSize:'1.3rem',color:'white'}}>
-                                                                     RECRUIT+
+              <td><div className='abc'align="centre" style={{fontSize:'1.5rem',color:'white'}}>
+              <b>                                                       RECRUIT+</b>
              </div> </td>
             </tr>
             <tr>
-              <td><div className='abc'align="centre" style={{fontSize:'0.9rem',color:'white'}}>
+              <td><div className='abc'align="centre" style={{fontSize:'0.8rem',color:'white'}}>
                ONE DAY TO DAY ONE
               </div></td>
             </tr>

@@ -75,7 +75,7 @@ import {
   
   const InputWrapper = styled('div')(
     ({ theme }) => `
-    width: 300px;
+    width: 260px;
     border: 1px solid ${theme.palette.mode === 'dark' ? 'black' : '#d9d9d9'};
     background-color: ${theme.palette.mode === 'dark' ? '#141414' : '#fff'};
     border-radius: 4px;
@@ -163,7 +163,7 @@ import {
   
   const Listbox = styled('ul')(
     ({ theme }) => `
-    width: 300px;
+    width: 260px;
     margin: 2px 0 0;
     padding: 0;
     position: absolute;
@@ -270,8 +270,8 @@ const Left_partof_addQuestion_page= () => {
     style={{borderRight:'4px solid #d50000',paddingTop:90,backgroundColor:'#f8f8f8',height:'100%'}}
    >
   <Item>
-        <div className='container my-3' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Category</div>
-        <div align='left' >
+        <div className='container my-3' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Topic</div>
+        <div align='center' >
     <Root>
       <div {...getRootProps()}>
         
@@ -292,7 +292,7 @@ const Left_partof_addQuestion_page= () => {
           {groupedOptions.map((option, index) => (
             <li {...getOptionProps({ option, index })}>
               <span>{option.title}</span>
-              <CheckIcon fontSize="small" />
+            
             </li>
           ))}
     
@@ -340,32 +340,18 @@ const Left_partof_addQuestion_page= () => {
             </Item>
 
             <Item>
-            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Max Duration</div>
-            <div align='left' >
+            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Max Duration in Minutes</div>
+            <div align='center'>
             <TextField inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} />
             </div>
             </Item>
        
             <Item>
             <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Max Score </div>
-            <div align='left' >
+            <div align='center' >
             <TextField inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} />
             </div>
             </Item>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   
    </Container>
     </>

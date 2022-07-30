@@ -25,7 +25,7 @@ function App() {
   <>
    
   <Routes>
-    <Route path='/' element={ <Addquestions />}>
+    <Route path='/' element={ <HomePage />}>
     </Route>
     <Route path='/Home' element={ <Addquestions/>}/>
     <Route path='/AdminHome' element={ <Question_List_Page/>}>
