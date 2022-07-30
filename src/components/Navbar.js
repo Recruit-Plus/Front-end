@@ -1,20 +1,14 @@
 import React from 'react';
- import img1 from '../images/recruit+logo.png';
- import PeopleIcon from '@mui/icons-material/People';
- import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import {Typography,Button} from '@mui/material';
 import {
-    Link,
-    } from "react-router-dom";
- 
-const Navbar = () => {
+  Link,
+  } from "react-router-dom";
+import img1 from '../images/recruit+logo.png';
+import {Box,Toolbar,Typography,Button,IconButton,AppBar} from '@mui/material'
+import PeopleIcon from '@mui/icons-material/People';
 
+const Navbar = () => {
   return (
     <>
-   
      <Box  style={{ }}>
      <AppBar position="fixed"  style={{backgroundColor:'#d50000',minHeight: 40}}>
         <Toolbar>
@@ -25,9 +19,8 @@ const Navbar = () => {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <Link to='/HomePage'>
+          <Link to='/homepage'>
             <img src={img1} style={{ width:"50px",height:"50px"}} alt="img"/>
-          
           </Link>
           </IconButton>
              <table> 
@@ -41,27 +34,19 @@ const Navbar = () => {
                ONE DAY TO DAY ONE
               </div></td>
             </tr>
-           </table>
-           
+           </table> 
         <Typography variant="h6" 
             component="div" sx={{ flexGrow: 1 }}>
           </Typography>
-          <Link to='/Sign_up'>
-         
+          <Link to='/signup'>
            <Button style={{color:'white'}}> Sign Up</Button></Link>
-          <Link to='/Login'> 
+          <Link to='/login'> 
           <Button  style={{color:'white'}} >Login</Button>
           </Link>
-         
-          
          <PeopleIcon style={{color:'white'}}/>
         </Toolbar>
       </AppBar>
     </Box>
-    
-  
- 
-    
     </>
    
   );

@@ -1,31 +1,10 @@
-
-
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import Box from '@mui/material/Box';
-import Input from '@mui/material/Input';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import CloseIcon from '@mui/icons-material/Close';
-import Slide from '@mui/material/Slide';
-import { alpha, styled } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import DialogActions from '@mui/material/DialogActions';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import {Link} from 'react-router-dom';
-import { Grid,Select,MenuItem,TextField,Stack,Container } from '@mui/material';
+import axios from 'axios';
+import { alpha, styled ,Button,Dialog,Box,Input,AppBar,Toolbar,IconButton,Typography,Slide,InputBase,InputLabel,FormControl,DialogActions, Grid,Select,MenuItem,TextField,Stack,Container} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import axios from 'axios'
 
-import EnhancedTable from './Question_List_Page';
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   'label + &': {
     marginTop: theme.spacing(3),
@@ -76,7 +55,7 @@ export default function FullScreenDialog(props) {
   const [Questions, setQuestions]=React.useState([]);
 
   React.useEffect(() => { 
-    const url='http://localhost:8081/recruitPlus/questions/'+props.children; // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
+    const url='http://localhost:8081/questions/v1/'; // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
     axios.get(url).then(result =>  setQuestions(result.data) (console.log(result.data) )
     
     )
@@ -104,26 +83,16 @@ export default function FullScreenDialog(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  
   const [age1, setAge1] = React.useState('');
-
   const handleChange1 = (event) => {
     setAge1(event.target.value);
   };
-
-  console.log(props.key)
-
-  const [age2, setAge2] = React.useState('');
   const ariaLabel = { 'aria-label': 'description' };
- 
-
-    const[choices,setchoice] = React.useState([]);
+  const[choices,setchoice] = React.useState([]);
     const[option1,setoption1] = React.useState('');
     const[option2,setoption2] = React.useState('');
     const[option3,setoption3] = React.useState('');
     const[option4,setoption4] = React.useState('');
-    const[Answer,setanswer] = React.useState([]);
-  
     const [data,setData]=React.useState(
       {
         question:"",
@@ -131,26 +100,12 @@ export default function FullScreenDialog(props) {
 
       }
     )
-   
-   function handlechoice(e)
-  
-  {
-  
-   
-  
-   }
-  function handleClick(e){
-     
+    function handleClick(e){
       const newdata={...data}
       newdata[e.target.id]=e.target.value;
       setData(newdata);
-      console.log(newdata);
-     
-    
    }
    function handleput(e){
-    console.log(data);
-    console.log(choices);
      e.preventDefault();
     axios.put("http://localhost:8081/recruitPlus/questions",data,choices).then(result => console.log(result))
     let choice={
@@ -160,17 +115,11 @@ export default function FullScreenDialog(props) {
       option4
     }
       setchoice([...choices,choice])
-      
-   
   }
   
   return (
     /* This page is for pop of edit button */ 
         <div align="center">
-        
-        
-
-
         <Button variant="outlined" onClick={handleClickOpen} style={{backgroundColor:'black',color:'white'}}>
            <EditIcon/>   {/* This you can see infront of every question */ }
         </Button>
@@ -197,34 +146,33 @@ export default function FullScreenDialog(props) {
             </Toolbar>
             </AppBar>
              <div  align="center" style={{paddingBottom:15,paddingTop:6}}>
-                <Link to='/Home'>
+                <Link to='/home'>
                    <Button style={{backgroundColor:'black',color:'white'}} onClick={(e)=>handleput(e)}>Update </Button>
                 </Link>
 
         </div>
-        <Box style={{paddingTop:0}}>
-        <Grid container >
+    <Box style={{paddingTop:0}}>
+      <Grid container >
         <Grid item xs={2.5} style={{paddingLeft:30 ,borderRight:'3px solid black'}}>
-        <Box sx={{ minWidth: 110 , maxHeight:47,paddingRight:0 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label" style={{color:'black'}} value={data.difficulty_level}  onChange={(e)=>handleClick(e)}>{Questions.difficulty_level} </InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age1}
-          label=" Difficulty level"
-          onChange={handleChange1}
-        >
-          <MenuItem value={10}>Easy</MenuItem>
-          <MenuItem value={20}>Medium</MenuItem>
-          <MenuItem value={30}>Hard</MenuItem>
-        </Select>
-      </FormControl>
-    </Box>
+          <Box sx={{ minWidth: 110 , maxHeight:47,paddingRight:0 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label" style={{color:'black'}} value={data.difficulty_level}  onChange={(e)=>handleClick(e)}>{Questions.difficulty_level} </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={age1}
+              label=" Difficulty level"
+              onChange={handleChange1}
+            >
+            <MenuItem value={10}>Easy</MenuItem>
+            <MenuItem value={20}>Medium</MenuItem>
+            <MenuItem value={30}>Hard</MenuItem>
+            </Select>
+          </FormControl>
+          </Box>
         </Grid>
     <Grid item xs={9.5}>
-        <Box
-        
+      <Box  
        alignItems="center"
         component="form"
         sx={{
@@ -236,39 +184,26 @@ export default function FullScreenDialog(props) {
         <div >
         <Input TextField style ={{width: '100%'}} defaultValue={Questions.question} inputProps={ariaLabel}  onChange={(e)=>handleClick(e)}   />
         </div>
-        
-        
-       
-            
-             <Container styles={{borderRight:'2px solid black'}}>
-            
+          <Container styles={{borderRight:'2px solid black'}}>
             <Stack>
-           
-            <TextField fullWidth label="Option 1" 
-             style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}} defaultValue={optionlist[0]}  onChange={(e)=>handleClick(e)}></TextField>
-            <TextField fullWidth label="Option 2" 
-             style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}} defaultValue={optionlist[1]}   onChange={(e)=>handleClick(e)}></TextField>
-            <TextField fullWidth label="Option 3" 
-             style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}} defaultValue={optionlist[2]}   onChange={(e)=>handleClick(e)}></TextField>
-            <TextField fullWidth label="Option 4" 
-             style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}} defaultValue={optionlist[3]}   onChange={(e)=>handleClick(e)}></TextField>
-            <TextField fullWidth label="Answer" 
-             style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}} defaultValue={Questions.answer}  onChange={(e)=>handleClick(e)}></TextField>
-           
-            </Stack>
-          
-                 
-            </Container>
+              <TextField fullWidth label="Option 1" 
+              style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}} defaultValue={optionlist[0]}  onChange={(e)=>handleClick(e)}></TextField>
+              <TextField fullWidth label="Option 2" 
+              style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}} defaultValue={optionlist[1]}   onChange={(e)=>handleClick(e)}></TextField>
+              <TextField fullWidth label="Option 3" 
+              style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}} defaultValue={optionlist[2]}   onChange={(e)=>handleClick(e)}></TextField>
+              <TextField fullWidth label="Option 4" 
+              style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}} defaultValue={optionlist[3]}   onChange={(e)=>handleClick(e)}></TextField>
+              <TextField fullWidth label="Answer" 
+              style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}} defaultValue={Questions.answer}  onChange={(e)=>handleClick(e)}></TextField>
+            </Stack>  
+          </Container>
         </Box>
-        </Grid>
-        
-        </Grid>
-        </Box>
-        <DialogActions>
-    </DialogActions>
-   
-        </Dialog>
-        </div>
+      </Grid>
+    </Grid>
+  </Box>
+</Dialog>
+</div>
   );
       
 }
