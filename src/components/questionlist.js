@@ -181,11 +181,12 @@ export default function EnhancedTable() {
   const firstIndex = lastIndex - questionsPerPage;
   const currentQuestions = Questions && Questions.slice(firstIndex,lastIndex);
   const totalPages = Math.ceil(Questions.length/questionsPerPage);
+  const QuestionIdRef =React.useRef();
   
   React.useEffect(() => {  
     // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
     console.log(Questions)
-    axios.get('http://localhost:8081/questions/v1/').then(result => setQuestions(result?.data?.content))
+    axios.get('http://localhost:8080/questions/v1/').then(result => setQuestions(result?.data?.content))
     .catch(err=>{
       console.log(err.message)
     })
@@ -217,9 +218,23 @@ export default function EnhancedTable() {
     }
     setSelected([]);
   };
-   const handleChangeDense = (event) => {
+  const handleChangeDense = (event) => {
     setDense(event.target.checked);
   };
+  const handleDelete= id =>{
+    setOpen(true);
+    QuestionIdRef.current = id; 
+  }
+  const DeleteHandleFromDialogue= (choose)=>{
+    setOpen(false);
+    if(choose){
+      axios.delete(`http://localhost:8080/questions/v1/question/${QuestionIdRef.current}`) //if you are running backend on port 8081 change the port number in url to 8081
+        .then((res)=> {
+          console.warn(res)
+        })
+      // setQuestions(Questions.filters(Questions => Questions.id !== QuestionIdRef.current));
+    }
+  }
   return (
     <>
          <div>
@@ -241,9 +256,7 @@ export default function EnhancedTable() {
     </DialogContent>
     <DialogActions>
       <Button onClick={handleClose} variant="contained" style={{backgroundColor:'black'}}>Cancel</Button>
-      <Button onClick={handleClose} variant="contained" color="error"autoFocus>
-        Delete
-      </Button>
+      <Button onClick={() =>DeleteHandleFromDialogue(true)} variant="contained" color="error"autoFocus>Delete</Button>
     </DialogActions>
   </Dialog>
   {/*<Navbar/>*/}
@@ -273,25 +286,20 @@ export default function EnhancedTable() {
               </TableCell>
               :
               currentQuestions.map((questions,index) => (
-              <TableRow key={index}
-              >          
+              <TableRow key={index}>          
                 <TableCell scope="questions" style={{width:'100%'}} >
                 {questions?.question}
               </TableCell>
               <TableCell >
               <Stack spacing={2} direction="row">
-              <FullScreenDialog>
-                {questions?.questionId}
-              </FullScreenDialog>
-                <Button variant="contained" color="error" onClick={handleClickOpen}>
+                <FullScreenDialog>{questions?.questionId}</FullScreenDialog>
+                <Button variant="contained" color="error" onClick={handleDelete(questions.questionId)}>
                   <DeleteIcon/>
-                  </Button>
-                </Stack>
+                </Button>
+              </Stack>
               </TableCell>
-            </TableRow>
-                
-            
-             ),) } 
+              </TableRow>
+              ),) } 
               
             </TableBody>
           </Table>
