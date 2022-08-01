@@ -184,7 +184,7 @@ export default function EnhancedTable() {
   
   React.useEffect(() => {  
     // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
-    console.log(Questions)
+
     axios.get('http://localhost:8081/questions/v1/').then(result => setQuestions(result?.data?.content))
     .catch(err=>{
       console.log(err.message)
@@ -278,10 +278,12 @@ export default function EnhancedTable() {
                 <TableCell scope="questions" style={{width:'100%'}} >
                 {questions?.question}
               </TableCell>
+              <TableCell scope="questions" style={{width:'100%'}} >
+                {questions?.questionId}
+              </TableCell>
               <TableCell >
               <Stack spacing={2} direction="row">
               <FullScreenDialog>
-                {questions?.questionId}
               </FullScreenDialog>
                 <Button variant="contained" color="error" onClick={handleClickOpen}>
                   <DeleteIcon/>
