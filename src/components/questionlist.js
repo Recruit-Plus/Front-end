@@ -1,5 +1,6 @@
 
 import * as React from "react";
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {Dialog,DialogTitle,DialogContent,DialogContentText,DialogActions,IconButton ,Paper,Box,Table,TableBody,TableCell,TableContainer,alpha,
         TableRow,TableSortLabel,Toolbar,Typography,Checkbox,Tooltip,FormControlLabel,Switch,Stack,Button} from "@mui/material";
@@ -8,8 +9,10 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import PropTypes from "prop-types";
 import PrimarySearchAppBar from "./SubNav";
+import EditIcon from '@mui/icons-material/Edit';
 import FullScreenDialog from "./EditButtonPopup";
 import Navbar from "./Navbar";
+import EditButtonPopup from "./EditButtonPopup";
 
 const headCells = [
   {
@@ -172,6 +175,7 @@ export default function EnhancedTable() {
   const [order, setOrder] = React.useState("asc");
   const [selected, setSelected] = React.useState([]);
   const [open, setOpen] = React.useState(false);
+  const [open1, setOpen1] = React.useState(false);
   const [dense, setDense] = React.useState(false);
   const [page, setPage] = React.useState(0);
   const [questionsPerPage, setQuestionsPerPage] = React.useState(5);
@@ -181,6 +185,8 @@ export default function EnhancedTable() {
   const firstIndex = lastIndex - questionsPerPage;
   const currentQuestions = Questions && Questions.slice(firstIndex,lastIndex);
   const totalPages = Math.ceil(Questions.length/questionsPerPage);
+  const [questionProps, setQuestionProps] =React.useState(false);
+  const [editopen, setEditOpen] = React.useState(false);
   
   React.useEffect(() => {  
     // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
@@ -206,9 +212,17 @@ export default function EnhancedTable() {
     
     setOpen(true);
   };
+  
   const handleClose = () => {
     setOpen(false);
   };
+  const handleUpdate= question =>{
+    setEditOpen(true);
+    setQuestionProps(question);
+     
+  }
+ 
+ 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = Questions.map((n) => n.name);
@@ -222,6 +236,10 @@ export default function EnhancedTable() {
   };
   return (
     <>
+      {
+      editopen?<EditButtonPopup question={questionProps} />:
+   
+      
          <div>
         <Navbar></Navbar>
         <PrimarySearchAppBar></PrimarySearchAppBar>
@@ -277,14 +295,16 @@ export default function EnhancedTable() {
               >          
                 <TableCell scope="questions" style={{width:'100%'}} >
                 {questions?.question}
+                
               </TableCell>
-              <TableCell scope="questions" style={{width:'100%'}} >
-                {questions?.questionId}
-              </TableCell>
+              
               <TableCell >
               <Stack spacing={2} direction="row">
-              <FullScreenDialog>
-              </FullScreenDialog>
+               
+              <Button variant="outlined" style={{backgroundColor:'black',color:'white'}} onClick={() =>{handleUpdate(questions)}}>
+                <EditIcon/>   {/* This you can see infront of every question */ }
+              </Button>
+              
                 <Button variant="contained" color="error" onClick={handleClickOpen}>
                   <DeleteIcon/>
                   </Button>
@@ -316,6 +336,7 @@ export default function EnhancedTable() {
       />
     </Box>
   </div>
+}
 </>
   );
 }

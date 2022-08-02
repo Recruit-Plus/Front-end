@@ -210,7 +210,7 @@ const Feed= (props) => {     //main function
  function handlepost(e)
  {
   const requestBody = {...data,choices: options}
-  axios.post("http://localhost:8081/questions/v1/",requestBody).then(result=>{console.log(result.data)})
+  axios.post("http://localhost:8081/questions/v1/question",requestBody).then(result=>{console.log(result.data)})
 }
 
 const [open, setOpen] = React.useState(false);
@@ -347,16 +347,16 @@ const [open, setOpen] = React.useState(false);
           </Box> 
         </Grid>
         <Grid item lg={9}>
-         <div style={{paddingTop:30,paddingBottom:10}}>
-        <Box>
-              <Stack spacing={50} direction='row'>
-            <div></div>
+          <div style={{paddingTop:30,paddingBottom:10}}>
+          <Box>
+                <Stack spacing={50} direction='row'>
+              <div></div>
+                <Link to='/questionlist'>
+                  <Button variant="contained" 
+                  style={{backgroundColor:'#696969'}}
+                  >Close</Button>
+                </Link>
               <Link to='/questionlist'>
-                <Button variant="contained" 
-                style={{backgroundColor:'#696969'}}
-                >Close</Button>
-              </Link>
-            <Link to='/questionlist'>
               <Button variant="contained"  style={{backgroundColor:'#696969'}} onClick={(e)=>handlepost(e)}
                   >SAVE</Button>
             </Link>
