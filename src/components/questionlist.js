@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import PropTypes from "prop-types";
-import PrimarySearchAppBar from "./SubNav";
+import PrimarySearchAppBar from "./Subnav";
 import FullScreenDialog from "./EditButtonPopup";
 import Navbar from "./Navbar";
 
@@ -176,28 +176,28 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [questionsPerPage, setQuestionsPerPage] = React.useState(5);
   const [Questions, setQuestions]=React.useState([]);
-  const[currentPage,setCurrentPage] = React.useState(1);
+  const [currentPage,setCurrentPage] = React.useState(1);
   const lastIndex = currentPage * questionsPerPage;
   const firstIndex = lastIndex - questionsPerPage;
   const currentQuestions = Questions && Questions.slice(firstIndex,lastIndex);
   const totalPages = Math.ceil(Questions.length/questionsPerPage);
-  const QuestionIdRef =React.useRef();
+  const [QuestionIdRef, setQuestionIdRef] =React.useState();
   
   React.useEffect(() => {  
+    questionHandle()
+  },[])
+  const questionHandle= () => {
     // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
-    console.log(Questions)
-    axios.get('http://localhost:8080/questions/v1/').then(result => setQuestions(result?.data?.content))
+    axios.get('http://localhost:8080/questions/v1/').then(result => setQuestions(result?.data.content))
     .catch(err=>{
       console.log(err.message)
     })
-  },[])
-
+  }
   const PreviousPage= (event) =>{
       if(currentPage>1){
         setCurrentPage(currentPage-1);
       }
   }
-
   const NextPage = (event) =>{
     if(currentPage < currentPage+1){
       setCurrentPage(currentPage+1);
@@ -223,15 +223,17 @@ export default function EnhancedTable() {
   };
   const handleDelete= id =>{
     setOpen(true);
-    QuestionIdRef.current = id; 
+    console.log(id);
+    setQuestionIdRef(id); 
   }
   const DeleteHandleFromDialogue= (choose)=>{
     setOpen(false);
     if(choose){
-      axios.delete(`http://localhost:8080/questions/v1/question/${QuestionIdRef.current}`) //if you are running backend on port 8081 change the port number in url to 8081
+      axios.delete(`http://localhost:8080/questions/v1/question/${QuestionIdRef}`) //if you are running backend on port 8081 change the port number in url to 8081
         .then((res)=> {
           console.warn(res)
         })
+        questionHandle();
       // setQuestions(Questions.filters(Questions => Questions.id !== QuestionIdRef.current));
     }
   }
@@ -292,8 +294,8 @@ export default function EnhancedTable() {
               </TableCell>
               <TableCell >
               <Stack spacing={2} direction="row">
-                <FullScreenDialog>{questions?.questionId}</FullScreenDialog>
-                <Button variant="contained" color="error" onClick={handleDelete(questions.questionId)}>
+                <FullScreenDialog>{questions?.question_id}</FullScreenDialog>
+                <Button variant="contained" color="error" onClick={() =>{handleDelete(questions?.question_id)}}>
                   <DeleteIcon/>
                 </Button>
               </Stack>

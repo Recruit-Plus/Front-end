@@ -1,27 +1,28 @@
 import * as React from "react";
+import axios from 'axios';
 import {Link} from "react-router-dom";
 import { Stack,Button,OutlinedInput ,Box,InputLabel ,MenuItem,FormControl,Select,AppBar,Toolbar} from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const names = [
-  'C',
-  'C++',
-  'Java',
-  'DS',
-  'DBMS',
-  'Logical Reasoning',
-  'English',
-  'Java script',
-  'Management Consultant',
-  'Apptitude',
-];
+// const names = [
+//   'C',
+//   'C++',
+//   'Java',
+//   'DS',
+//   'DBMS',
+//   'Logical Reasoning',
+//   'English',
+//   'Java script',
+//   'Management Consultant',
+//   'Apptitude',
+// ];
 export default function PrimarySearchAppBar() {
-    const [personName, setPersonName] = React.useState([]);
+    const [topicName, setTopicName] = React.useState([]);
     const handleChange = (event) => {
       const {
         target: { value },
       } = event;
-      setPersonName(
+      setTopicName(
         // On autofill we get a stringified value.
         typeof value === 'string' ? value.split(',') : value,
       );
@@ -38,6 +39,14 @@ export default function PrimarySearchAppBar() {
   const handleChange2 = (event) => {
     setAge2(event.target.value);
   };
+  const [Topics,setTopics]=React.useState([]);
+  React.useEffect(() => {  
+    axios.get('http://localhost:8080/questions/v1/topics').then(result => setTopics(result?.data))
+    .catch(err=>{
+      console.log(err.message)
+    })
+    console.log(Topics);
+  },[])
   return (
       <AppBar position="static" style={{ background: '#D3D3D3' }}>
         <Toolbar>
@@ -55,24 +64,17 @@ export default function PrimarySearchAppBar() {
                       labelId="demo-multiple-name-label"
                       id="demo-multiple-name"
                       multiple
-                      value={personName}
+                      value={topicName}
                       onChange={handleChange}
-                      input={<OutlinedInput label="Name" />}
-         
-                    >
-                {names.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  
-                >
-                {name}
-              </MenuItem>
-          ))}
-                    </Select>
-                  </FormControl>
-                </Box>
-              </div>
+                      input={<OutlinedInput label="Topic" />}
+                      >
+                        {Topics?.map((topics,id) => (
+                        <MenuItem key={id} value={topics.topic}>{topics.topic}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                 </Box>
+                </div>
         
         <div className="mx-3">
           <Box sx={{ minWidth: 200 , border: '1px solid #DDD', maxHeight:47}}>
@@ -104,20 +106,20 @@ export default function PrimarySearchAppBar() {
                 onChange={handleChange2}
               >
                 <MenuItem value={10}>MCQ</MenuItem>
-                <MenuItem value={20}>Descriptive</MenuItem>
+                <MenuItem value={20}>Fill in the blank</MenuItem>
                 
               </Select>
             </FormControl>
           </Box>
         </div>
+        <div className="container" align='right'>
+          <Link to='/Home'>
+            <Button variant="contained" alignItems="right" onClick={handleClickOpen} style={{backgroundColor: "#000000",}} >
+              Add  questions
+            </Button>
+          </Link>
+        </div>
       </Stack>
-    </div>
-    <div className="container" align='right'>
-      <Link to='/Home'>
-        <Button variant="contained" alignItems="right" onClick={handleClickOpen} style={{backgroundColor: "#000000",}} >
-          Add  Question
-        </Button>
-      </Link>
     </div>
     </Stack>
   </Toolbar>

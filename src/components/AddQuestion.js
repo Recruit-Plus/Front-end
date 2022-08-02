@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  Link,
-} from "react-router-dom";
+import {Link} from "react-router-dom";
 import axios from "axios";
 import PropTypes from 'prop-types';
 import {Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Paper,Typography,Button,autocompleteClasses,styled ,CssBaseline, 
@@ -210,10 +208,18 @@ const Feed= (props) => {     //main function
  function handlepost(e)
  {
   const requestBody = {...data,choices: options}
-  axios.post("http://localhost:8081/questions/v1/",requestBody).then(result=>{console.log(result.data)})
+  axios.post("http://localhost:8080/questions/v1/",requestBody).then(result=>{console.log(result.data)})
 }
 
 const [open, setOpen] = React.useState(false);
+// const [Topics, setTopics] =React.useState([]);
+// React.useEffect(() => {  
+//   axios.get('http://localhost:8080/questions/v1/topics').then(result => console.log(result?.data?.topic))
+//   .catch(err=>{
+//     console.log(err.message)
+//   })
+//   console.log(Topics);
+// },[])
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -247,7 +253,7 @@ const [open, setOpen] = React.useState(false);
         id="customized-dialog-title"
         onClose={handleClose}
       >
-        Add Category
+        Add Topic
       </BootstrapDialogTitle>
         <DialogContent dividers>
         <Typography gutterBottom>
@@ -283,7 +289,7 @@ const [open, setOpen] = React.useState(false);
             <Box style={{ width: '25%' }}>
             {groupedOptions.length > 0 ? (
               <Listbox {...getListboxProps()} >
-                <Button variant="contained" onClick={handleClickOpen} style={{backgroundColor:'black'}}>Add New Category  </Button>
+                <Button variant="contained" onClick={handleClickOpen} style={{backgroundColor:'black'}}>Add New Topic  </Button>
                 {groupedOptions.map((option, index) => (
                   <li {...getOptionProps({ option, index })}>
                     <span>{option.title}</span>
@@ -326,8 +332,8 @@ const [open, setOpen] = React.useState(false);
                     >
                     <FormControlLabel value='mcq' onChange={(event) => setData({...data,type:event.target.value})}  
                      control={<Radio />} label="MCQ" style={{color:'black'}}/>
-                    <FormControlLabel value='descriptive' onChange={(event) => setData({...data,type:event.target.value})}   
-                    control={<Radio/>} label="Descriptive" style={{color:'black'}}/>
+                    <FormControlLabel value='Fill in the blank' onChange={(event) => setData({...data,type:event.target.value})}   
+                    control={<Radio/>} label="Fill in the blank" style={{color:'black'}}/>
                     </RadioGroup>
                   </FormControl>
               </div>
