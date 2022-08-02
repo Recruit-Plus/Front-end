@@ -1,6 +1,6 @@
 import React from 'react';
 import Addquestions from './components/AddQuestion'
-import QuestionList from './components/QuestionList';
+import QuestionList from './components/questionlist';
 import FullScreenDialog from './components/EditButtonPopup';
 import HomePage from './components/HomePage';
 import AdminLogin from './components/AdminLogin';

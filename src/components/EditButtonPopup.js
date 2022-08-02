@@ -55,7 +55,7 @@ export default function FullScreenDialog(props) {
   const [Questions, setQuestions]=React.useState([]);
 
   React.useEffect(() => { 
-    const url='http://localhost:8081/questions/v1/'; // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
+    const url='http://localhost:8080/questions/v1/'; // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
     axios.get(url).then(result =>  setQuestions(result.data) (console.log(result.data) )
     
     )
@@ -107,7 +107,7 @@ export default function FullScreenDialog(props) {
    }
    function handleput(e){
      e.preventDefault();
-    axios.put("http://localhost:8081/recruitPlus/questions",data,choices).then(result => console.log(result))
+    axios.put("http://localhost:8080/recruitPlus/questions",data,choices).then(result => console.log(result))
     let choice={
       option1,
       option2,
