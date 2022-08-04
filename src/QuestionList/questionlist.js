@@ -65,12 +65,13 @@ export default function EnhancedTable() {
   const DeleteHandleFromDialogue= (choose)=>{
     setOpen(false);
     if(choose){
-      questionHandle();
+    
       axios.delete(`http://localhost:8081/questions/v1/question/${QuestionIdRef}`) //if you are running backend on port 8081 change the port number in url to 8081
         .then((res)=> {
           console.warn(res)
+          questionHandle();
         })
-      
+        
       // setQuestions(Questions.filters(Questions => Questions.id !== QuestionIdRef.current));
     }
   }
@@ -81,7 +82,7 @@ export default function EnhancedTable() {
       editopen?<EditButtonPopup question={questionProps} />:
     <div>
         <Navbar></Navbar>
-
+       
         <PrimarySearchAppBar></PrimarySearchAppBar>
 
       <Dialog
@@ -152,12 +153,12 @@ export default function EnhancedTable() {
         {Questions?.length===0 ?
         <div style={{ float: "right" }}>
           <Button onClick={PreviousPage}>Prev</Button>
-          Page {totalPages} of {totalPages}
+          Page {totalPages} 
           <Button onClick={NextPage}>Next</Button>
         </div>:
         <div style={{ float: "right" }}>
           <Button onClick={PreviousPage}>Prev</Button>
-          Page {currentPage} of {totalPages}
+          Page {currentPage}
           <Button onClick={NextPage}>Next</Button>
         </div>}
       </Paper>
