@@ -7,7 +7,8 @@ import {Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Paper,T
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAutocomplete } from '@mui/base/AutocompleteUnstyled';
-
+import Navbar from '../components/Navbar';
+import swal from 'sweetalert';
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -190,8 +191,10 @@ const Feed= (props) => {     //main function
   const[topic,settopic]=React.useState("");
   const[topics,settopics] = React.useState([]);
   const [open, setOpen] = React.useState(false);
-
+  const [answer,setanswer]=React.useState([]);
+  const[category,setCategory]=React.useState([]);
   const options = [option1, option2, option3, option4]
+ const[invalid,setinvalid]=React.useState(false);
   const [data,setData]=React.useState
   (    
     {
@@ -202,6 +205,7 @@ const Feed= (props) => {     //main function
       duration:"",
       score:"",
       answer:[],
+      topics:category,
       created_by:"Ritika",
       last_modified_by:"Srinu"
     }
@@ -209,14 +213,26 @@ const Feed= (props) => {     //main function
  
  function handlepost(e)
  {
-  const requestBody = {...data,choices: options}
-  axios.post("http://localhost:8081/questions/v1/",requestBody).then(result=>{console.log(result.data)})
+  if(data.question.length==0 || data.answer.length==0 ){
+    setinvalid(true);
+    swal({
+      title: "Failed",
+      text: "Enter all fields",
+      icon: "warning",
+      dangerMode: true,
+    })
+  }
+  else{
+  const requestBody = {...data,choices: options,topics:category}
+  axios.post("http://localhost:8081/questions/v1/question",requestBody).then(result=>{console.log(result?.data)})
+  .alert(swal("Data added successfully", "You clicked the button!", "success"));
 }
+ }
 const TopicAddHandler = (e) => {
   setOpen(false);
   console.log(topic);
   axios.post("http://localhost:8081/questions/v1/topic",topic).then(result => console.log(result));
-  {TopicGetHandler()}
+  TopicGetHandler()
 }
   const handleClickOpen = () => {
     setOpen(true);
@@ -230,8 +246,19 @@ const TopicAddHandler = (e) => {
     .catch(err=>{
       console.log(err.message)
     })
-    console.log(topics)
+    console.log(topic)
   }
+  const [Answers, setAnswers] = React.useState([]);
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setAnswers(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
   const {
     getRootProps,
     getInputProps,
@@ -245,11 +272,12 @@ const TopicAddHandler = (e) => {
   } = useAutocomplete({
     id: 'customized-hook-demo',
     multiple: true,
-    options: topics,
+    options: topic,
     getOptionLabel: (option) => option.topic,
   });
   return (
     <>
+       <Navbar/>
      <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
@@ -281,7 +309,7 @@ const TopicAddHandler = (e) => {
                           imported that component in grid  so you want to change something go to that component*/ }
         <Grid item lg={3} >
       <Box style={{borderRight:'4px solid #d50000',backgroundColor:'#f8f8f8',height:'100%',paddingRight:20,width:'100%'}} >
-        <Item  >
+        <Item style={{paddingTop:1 ,paddingBottom:1}} >
         <div className='container my-3' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Topic</div>
         <div align='center' >
         <Root>
@@ -298,9 +326,8 @@ const TopicAddHandler = (e) => {
               <Listbox {...getListboxProps()} >
                 <Button variant="contained" onClick={handleClickOpen} style={{backgroundColor:'black'}}>Add New Topic  </Button>
                 {groupedOptions.map((option, index) => (
-                  <li {...getOptionProps({ option, index })}>
-                    <span>{option.topic}</span>
-                    <CheckIcon fontSize="small" />
+                  <li {...getOptionProps({ option, index })}   onChange={(event) => setCategory({topics:option.topic})}>
+                    <span   >{option.topic}</span>
                   </li>
                 ))}
               </Listbox>
@@ -309,7 +336,7 @@ const TopicAddHandler = (e) => {
         </Root>
       </div>
     </Item>
-    <Item>
+    <Item style={{paddingTop:1 ,paddingBottom:1}}>
       <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Difficulty level</div>
           <div align='left' >
             <FormControl>
@@ -327,7 +354,7 @@ const TopicAddHandler = (e) => {
         </div>
             </Item>
 
-            <Item>
+            <Item style={{paddingTop:0,paddingBottom:0.5}}>
               <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Type</div>
               <div align='left' >
                   <FormControl>
@@ -345,13 +372,13 @@ const TopicAddHandler = (e) => {
                   </FormControl>
               </div>
             </Item>
-            <Item>
+            <Item style={{paddingTop:0.2 ,paddingBottom:1}}>
             <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Max Duration</div>
             <div align='center' >
             <TextField id ='duration' inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} onChange={(event) => setData({...data,duration: event.target.value})} />
             </div>
             </Item>
-            <Item>
+            <Item style={{paddingTop:0.2,paddingBottom:1}}>
             <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Max Score </div>
             <div align='center' >
             <TextField id ='score' inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} onChange={(event) => setData({...data,score: event.target.value})} />
@@ -360,7 +387,7 @@ const TopicAddHandler = (e) => {
           </Box> 
         </Grid>
         <Grid item lg={9}>
-         <div style={{paddingTop:30,paddingBottom:10}}>
+         <div style={{paddingTop:25,paddingBottom:1}}>
         <Box>
               <Stack spacing={50} direction='row'>
             <div></div>
@@ -369,28 +396,28 @@ const TopicAddHandler = (e) => {
                 style={{backgroundColor:'#696969'}}
                 >Close</Button>
               </Link>
-            <Link to='/questionlist'>
+           
               <Button variant="contained"  style={{backgroundColor:'#696969'}} onClick={(e)=>handlepost(e)}
                   >SAVE</Button>
-            </Link>
+          
           </Stack>
         </Box>
       </div>
       <Box 
-        style={{width:'90%',border:'2px solid black',height:'75%',backgroundColor:'#f8f8f8',margin:'0.8rem auto 0 auto',paddingLeft:30,paddingRight:3,paddingBottom:3,paddingTop:10}}>
+        style={{width:'90%',border:'2px solid black',height:'80%',backgroundColor:'#f8f8f8',margin:'0.8rem auto 0 auto',paddingLeft:30,paddingRight:3,paddingBottom:3,paddingTop:10}}>
         <Grid container>
         <Grid item xs={2} >
         <Container >
           <Stack>
-            <p  style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'1rem 0.4rem ',transition:'0.3s linear all',padding:'1.1rem',width:'110%'}}>Question</p>
-            <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'1rem',width:'110%'}}>Option 1</p>
+            <p  style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'130%'}}>Question</p>
+            <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'130%'}}>Option 1</p>
 
-            <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'1rem',width:'110%'}}>Option 2</p>
+            <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'130%'}}>Option 2</p>
 
-            <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'1rem',width:'110%'}}>Option 3</p>
+            <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'130%'}}>Option 3</p>
 
-            <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'1rem',width:'110%'}}>Option 4</p>
-            <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'1rem',width:'110%'}}>Answer</p>
+            <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'130%'}}>Option 4</p>
+            <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'130%'}}>Answer</p>
           </Stack>
        </Container>
       </Grid>
@@ -399,18 +426,19 @@ const TopicAddHandler = (e) => {
           <Stack>
             <form >
             <TextField id ='question' fullWidth label="Question " variant='outlined'  onChange={(event) => setData({...data,question: event.target.value})}
-            style={{margin:'1rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+            style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
             <TextField  fullWidth label="Option 1"   onChange={(event) => setoption1(event.target.value)}
-              style={{margin:'1rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+              style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
             <TextField  fullWidth label="Option 2"   onChange={(event) => setoption2(event.target.value)}
-              style={{margin:'1rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+              style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
             <TextField  fullWidth label="Option 3"   onChange={(event) => setoption3(event.target.value)}
-              style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+              style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
             <TextField  fullWidth label="Option 4"   onChange={(event) => setoption4(event.target.value)}
-              style={{margin:'0.6rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+              style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
             <TextField  fullWidth label="Answer"   value={data.answer}  onChange={(event) => setData({...data,answer: [event.target.value]})}
             
               style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}>
+              
               </TextField>
             </form>
           </Stack>     

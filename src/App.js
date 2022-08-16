@@ -7,6 +7,7 @@ import AdminLogin from './components/AdminLogin';
 import Sign_up from './components/SignUp';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
+import TakeAssessments from './User/TakeAssessments';
 import {
   BrowserRouter as Router,
   Route,
@@ -15,7 +16,7 @@ import {
 function App() {
  return (
   <>
-  <Navbar/>
+ 
 
   <Routes>
     <Route path='/' element={ <HomePage />}></Route>
@@ -27,6 +28,7 @@ function App() {
     <Route path='/signup' element={ <Sign_up/>}/>
     <Route path='/homepage' element={ <HomePage/>}/>
     <Route path='/login' element={ <Login/>}/>
+    <Route path='/TakeAssessments' element={ <TakeAssessments/>}/>
   </Routes>
     </>  
 );

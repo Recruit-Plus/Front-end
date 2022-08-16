@@ -23,10 +23,10 @@ const AdminLogin = () => {
                 <div className='tooltip' style={{width:230}}><p style={{fontSize:'1rem'}}>Add Question<br></br>View All Questions<br></br>Edit Question</p></div>
                 </div>
                 <div className='icon'>
-                    <Link to='/v1/quiz'>
-                        <span><Button variant ='outlined' className='button' style={{backgroundColor:'black',color:'white',fontSize:'1rem'}}>Quiz  </Button></span>
+                    <Link to='/TakeAssessments'>
+                        <span><Button variant ='outlined' className='button' style={{backgroundColor:'black',color:'white',fontSize:'1rem'}}>Assessments</Button></span>
                     </Link>
-                <div className='tooltip' style={{width:150}}><p style={{fontSize:'1rem'}}>Add Quiz<br></br>View Quizzes<br></br>Edit Quiz</p></div>
+                <div className='tooltip' style={{width:180}}><p style={{fontSize:'1rem'}}>Add Assessment<br></br>View Assessments<br></br>Edit Assessments</p></div>
                 </div>
                 </div>
             </div>

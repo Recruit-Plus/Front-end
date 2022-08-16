@@ -2,8 +2,8 @@ import React from 'react'
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { Button ,Box, Grid,TextField,Stack,Container} from '@mui/material';
-
-
+import swal from 'sweetalert'
+import Navbar from '../components/Navbar';
 export default function EditButtonPopup({question}) {
   const[questionId,setQuestionId] = React.useState(question.question_id);
   const[questionm,setquestionm] = React.useState(question.question);
@@ -19,6 +19,7 @@ export default function EditButtonPopup({question}) {
   const[choices,setchoice] = React.useState([]);
   const[topics,settopics] = React.useState([]);
   const options = [option1, option2, option3, option4]
+  const [valid,setvalid]=React.useState(false);
   const [data,setData]=React.useState
   (    
     {
@@ -38,18 +39,31 @@ export default function EditButtonPopup({question}) {
   
     
   function Handleput(e){
+    if(data.question==questionm ){
+      setvalid(true);
+      swal({
+        title: "Something went wrong",
+        icon: "warning",
+       
+        dangerMode: true,
+      })
+    }
+    else{
     const requestBody = {...data,choices: options}
     const url='http://localhost:8081/questions/v1/question/'+questionId; // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
     axios.put(url,requestBody).then((response) => {
-      console.log(response);
+      swal("Data updated successfully", "You clicked the button!", "success");
     });
   }
-
+  }
   return (
+    <>
+    <Navbar/>
     <div style={{paddingTop:'50px'}}>
        <Stack spacing={85} direction='row'>
               <div></div>
       <div style={{paddingTop:'50px'}}>
+        
     <Link to='/questionlist'>
      <Button style={{backgroundColor:'black',color:'white'}} onClick={(e)=>Handleput(e)}>Update </Button>
     </Link>
@@ -139,6 +153,6 @@ export default function EditButtonPopup({question}) {
     </Grid>
     </Grid>
     </div>
-    
+    </>
   )
 }

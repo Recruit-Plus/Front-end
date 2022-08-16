@@ -37,13 +37,13 @@ const Navbar = () => {
            </table> 
         <Typography variant="h6" 
             component="div" sx={{ flexGrow: 1 }}>
-          </Typography>
-          <Link to='/signup'>
-           <Button style={{color:'white'}}> Sign Up</Button></Link>
+          </Typography >
+        
           <Link to='/login'> 
           <Button  style={{color:'white'}} >Login</Button>
-          </Link>
-         <PeopleIcon style={{color:'white'}}/>
+          </Link>  <Link to='/signup'>
+           <Button style={{backgroundColor:'black',color:'white',borderRadius:'20px',paddingLeft:20,paddingRight:20}}> Sign Up</Button></Link>
+         {/* <PeopleIcon style={{color:'white'}}/> */}
         </Toolbar>
       </AppBar>
     </Box>

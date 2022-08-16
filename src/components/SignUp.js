@@ -1,66 +1,87 @@
-import React from 'react';
+import * as React from 'react';
 import {
-  Link
-} from "react-router-dom";
-import { Box} from '@mui/material';
-import { Container } from '@mui/system';
-import Navbar from './Navbar';
+  Link,
+  } from "react-router-dom";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import { Stack ,Grid,Select,MenuItem,InputLabel,FormControl,FormHelperText,Button} from '@mui/material';
+import img1 from '../images/recruitpluslogo.png';
+export default function Sign_up() {
+  const [Degree,setDegree]=React.useState("");
+  const handleChange=(event)=>{
+     setDegree(event.target.value)
+  }
+  return (
+  
+   <>
+   <Grid container style={{paddingTop:30,paddingRight:100}} spacing={2}>
+      <Grid item xs={1} >
+     
+      </Grid>
+      <Grid item xs={11}  >
+    <Box
+      sx={{
+        width: '100%',
+        height:'100%',
+        // maxWidth: '100%',
+        paddingTop:7,
+        paddingLeft:7,
+        backgroundColor:'#EEEDE7',
+        paddingRight:7,
+        border:'2px solid black'
+      }}
+    >
+       <Stack spacing ={30} direction="row">
+        <div></div>
+      <div ><h4>SIGN UP TO GET STARTED</h4></div>
+      </Stack>
+      <Stack spacing ={2} direction="row" style={{paddingTop:17}} >
+      <TextField fullWidth label="Name" id="fullWidth" />
+      <TextField fullWidth label="E-mail" id="fullWidth" />
+      </Stack>
+      <Stack spacing ={2} direction="row" style={{paddingTop:17}}>
+      <FormControl sx={{  minWidth: 420 }}>
+        <InputLabel id="demo-simple-select-helper-label">Degree</InputLabel>
+        <Select
+          labelId="demo-simple-select-helper-label"
+          id="demo-simple-select-helper"
+          value={Degree}
+          label="Degree"
+          onChange={handleChange}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={10}>B.tech</MenuItem>
+          <MenuItem value={20}>M.tech</MenuItem>
+          <MenuItem value={30}>BCA</MenuItem>
+          <MenuItem value={30}>MCA</MenuItem>
+        </Select>
+      </FormControl>
+      <TextField fullWidth label="Branch" id="fullWidth" />
+      </Stack>
+      <Stack direction="row" style={{paddingTop:17}}>
+      <TextField fullWidth label="Branch" id="fullWidth" />
+      </Stack>
+      <Stack direction="row" style={{paddingTop:17}}>
+      <TextField fullWidth label="Branch" id="fullWidth" />
+      </Stack>
+      <Stack spacing={44} direction="row" style={{paddingTop:30}}>
+      <div></div>
 
-const Sign_up = () => {
-return <>
-<Navbar></Navbar>
-<Container style={{paddingTop:80}}>
-  <Box style={{}}>
-    <div>
-    <form>
-      <div class="form-group">
-        <label for="exampleInputEmail1">Name</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your name" style={{width:'50%'}}/>
-        <small id="emailHelp" class="form-text text-muted">Enter your first and last name .</small>
-      </div>
-      <div class="form-group">
-        <label for="exampleInputPassword1">Email address</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Email" style={{width:'50%'}}/>
-      </div>
-      <div class="form-group">
-        <label for="exampleInputPassword1">College</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter your college name" style={{width:'50%'}}/>
-      </div>
-      <div class="form-group">
-        <label for="degree">Degree</label>
-        <div>
-        <select type="password" class="form-control" id="exampleInputPassword1" style={{width:'50%'}}>
-          <option value='Degree'>Select Degree</option>
-          <option value='B.tech'>B.tech</option>
-          <option value='M.tech'>M.tech</option>
-          <option value='Bca'>BCA</option>
-          <option value='MCA'>MCA</option>
-        </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="exampleInputPassword1">Branch</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter your Branch" style={{width:'50%'}}/>
-      </div>
-      <div class="form-group">
-        <label for="exampleInputPassword1">Experience</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter your experience" style={{width:'50%'}}/>
-      </div>
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1"/>
-        <label class="form-check-label" for="exampleCheck1">All the information I  have filled is correct </label>
-      </div>
-      <div style={{paddingTop:15}}>
-        <Link to='/Login'>
-        <button type="submit" class="btn btn-primary" style={{backgroundColor:'black'}}>Sign up</button>
-        </Link>
-      </div>
-    </form>
-  </div>
-</Box>
-</Container>
-</>
+      <div style={{paddingTop:'20px'}}>
+         <Button style={{backgroundColor:'black',color:'white',height:40,width:130}} >Get started </Button>
+     </div>
+      </Stack>
+      <Stack spacing ={1} direction="row" style={{paddingTop:30,paddingLeft:240}}>
+      <h5>Already have an account? </h5>
+      <Link to='/login'>
+      <Button style={{}} >Login</Button>
+      </Link>
+      </Stack>
+    </Box>
+    </Grid>
+    </Grid>
+    </>
+  );
 }
-
-
-export default Sign_up;
