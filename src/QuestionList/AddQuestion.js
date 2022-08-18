@@ -3,12 +3,13 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import PropTypes from 'prop-types';
 import {Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Paper,Typography,Button,autocompleteClasses,styled ,CssBaseline, 
-      Container,Radio,RadioGroup,FormControl,Stack,FormControlLabel,Box,TextField,Grid,IconButton} from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import { useAutocomplete } from '@mui/base/AutocompleteUnstyled';
+      Container,Radio,RadioGroup,Stack,FormControlLabel,Box,TextField,Grid,IconButton, TableCell} from '@mui/material';
+import {OutlinedInput ,InputLabel ,MenuItem,FormControl,Select,AppBar,Table} from "@mui/material"
 import Navbar from '../components/Navbar';
 import swal from 'sweetalert';
+import AddIcon from '@mui/icons-material/Add';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -57,44 +58,8 @@ const Root = styled('div')(
     theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.65)' : 'rgba(0,0,0,.85)'
   };
   font-size: 14px;
-`,
+`
 );
-
-const InputWrapper = styled('div')(
-  ({ theme }) => `
-  width: 190px;
-  border: 1px solid ${theme.palette.mode === 'dark' ? 'black' : '#d9d9d9'};
-  background-color: ${theme.palette.mode === 'dark' ? '#141414' : '#fff'};
-  border-radius: 4px;
-  padding: 1px;
-  display: flex;
-  flex-wrap: wrap;
-  paddingRight:${theme.palette.mode === '60px'};
-  &:hover {
-    border-color: ${theme.palette.mode === 'dark' ? '#177ddc' : '#40a9ff'};
-  }
-  &.focused {
-    border-color: ${theme.palette.mode === 'dark' ? '#177ddc' : '#40a9ff'};
-    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
-  }
-  &input {
-    background-color: ${theme.palette.mode === 'dark' ? '#141414' : '#fff'};
-    color: ${
-      theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.65)' : 'rgba(0,0,0,.85)'
-    };
-    height: 30px;
-    box-sizing: border-box;
-    padding: 4px 6px;
-    width: 0;
-    min-width: 30px;
-    flex-grow: 1;
-    border: 0;
-    margin: 0;
-    outline: 0;
-  }
-`,
-);
-
 function Tag(props) {
   const { label, onDelete, ...other } = props;
   return (
@@ -110,78 +75,6 @@ Tag.propTypes = {
   onDelete: PropTypes.func.isRequired,
 };
 
-const StyledTag = styled(Tag)(
-  ({ theme }) => `
-  display: flex;
-  align-items: center;
-  height: 24px;
-  margin: 2px;
-  line-height: 22px;
-  background-color: ${
-    theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.08)' : '#fafafa'
-  };
-  border: 1px solid ${theme.palette.mode === 'dark' ? '#303030' : '#e8e8e8'};
-  border-radius: 2px;
-  box-sizing: content-box;
-  padding: 0 4px 0 10px;
-  outline: 0;
-  overflow: hidden;
-  &:focus {
-    border-color: ${theme.palette.mode === 'dark' ? '#177ddc' : '#40a9ff'};
-    background-color: ${theme.palette.mode === 'dark' ? '#003b57' : '#e6f7ff'};
-  }
-  &span {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  &svg {
-    font-size: 12px;
-    cursor: pointer;
-    padding: 4px;
-  }
-`,
-);
-
-const Listbox = styled('ul')(
-  ({ theme }) => `
-  width: 300px;
-  margin: 2px 0 0;
-  padding: 0;
-  position: absolute;
-  list-style: none;
-  background-color: ${theme.palette.mode === 'dark' ? '#141414' : '#fff'};
-  overflow: auto;
-  max-height: 250px;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1;
-  &li {
-    padding: 5px 12px;
-    display: flex;
-    &span {
-      flex-grow: 1;
-    }
-    &svg {
-      color: transparent;
-    }
-  }
-  & li[aria-selected='true'] {
-    background-color: ${theme.palette.mode === 'dark' ? '#2b2b2b' : '#fafafa'};
-    font-weight: 600;
-    & svg {
-      color: #1890ff;
-    }
-  }
-  & li.${autocompleteClasses.focused} {
-    background-color: ${theme.palette.mode === 'dark' ? '#003b57' : '#e6f7ff'};
-    cursor: pointer;
-    & svg {
-      color: currentColor;
-    }
-  }
-`,
-);
 const Feed= (props) => {     //main function
   const[choices,setchoice] = React.useState([]);
   const[option1,setoption1] = React.useState('');
@@ -191,7 +84,6 @@ const Feed= (props) => {     //main function
   const[topic,settopic]=React.useState("");
   const[topics,settopics] = React.useState([]);
   const [open, setOpen] = React.useState(false);
-  const [answer,setanswer]=React.useState([]);
   const[category,setCategory]=React.useState([]);
   const options = [option1, option2, option3, option4]
  const[invalid,setinvalid]=React.useState(false);
@@ -205,12 +97,20 @@ const Feed= (props) => {     //main function
       duration:"",
       score:"",
       answer:[],
-      topics:category,
+      topics:[],
       created_by:"Ritika",
       last_modified_by:"Srinu"
     }
   )
- 
+  const handleChangeTopic = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setCategory(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
  function handlepost(e)
  {
   if(data.question.length==0 || data.answer.length==0 ){
@@ -231,7 +131,7 @@ const Feed= (props) => {     //main function
 const TopicAddHandler = (e) => {
   setOpen(false);
   console.log(topic);
-  axios.post("http://localhost:8081/questions/v1/topic",topic).then(result => console.log(result));
+  axios.post("http://localhost:8081/questions/v1/topic",topic).then(result => console.log(result))
   TopicGetHandler()
 }
   const handleClickOpen = () => {
@@ -246,7 +146,6 @@ const TopicAddHandler = (e) => {
     .catch(err=>{
       console.log(err.message)
     })
-    console.log(topic)
   }
   const [Answers, setAnswers] = React.useState([]);
   const handleChange = (event) => {
@@ -259,26 +158,11 @@ const TopicAddHandler = (e) => {
     );
   };
 
-  const {
-    getRootProps,
-    getInputProps,
-    getTagProps,
-    getListboxProps,
-    getOptionProps,
-    groupedOptions,
-    value,
-    focused,
-    setAnchorEl,
-  } = useAutocomplete({
-    id: 'customized-hook-demo',
-    multiple: true,
-    options: topic,
-    getOptionLabel: (option) => option.topic,
-  });
+  
   return (
     <>
-       <Navbar/>
-     <BootstrapDialog
+    <Navbar/>
+<BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
@@ -305,37 +189,40 @@ const TopicAddHandler = (e) => {
           </Button>
         </DialogActions>
       </BootstrapDialog>
-        <Grid container style={{paddingTop:60}} spacing={2}>       {/* After navbar you can see two part left and right
-                          imported that component in grid  so you want to change something go to that component*/ }
+        <Grid container style={{paddingTop:60}} spacing={2}> {/* After navbar you can see two part left and right
+                          imported that component in grid so you want to change something go to that component*/ }
         <Grid item lg={3} >
       <Box style={{borderRight:'4px solid #d50000',backgroundColor:'#f8f8f8',height:'100%',paddingRight:20,width:'100%'}} >
-        <Item style={{paddingTop:1 ,paddingBottom:1}} >
+        <Item>
         <div className='container my-3' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Topic</div>
-        <div align='center' >
-        <Root>
-          <div {...getRootProps()}>
-            <InputWrapper ref={setAnchorEl} className={focused ? 'focused' : ''}>
-              {value.map((option, index) => (
-                <StyledTag label={option.topic} {...getTagProps({ index })} />
-              ))}
-              <input {...getInputProps()} />
-            </InputWrapper>
-          </div>
-            <Box style={{ width: '25%' }}>
-            {groupedOptions.length > 0 ? (
-              <Listbox {...getListboxProps()} >
-                <Button variant="contained" onClick={handleClickOpen} style={{backgroundColor:'black'}}>Add New Topic  </Button>
-                {groupedOptions.map((option, index) => (
-                  <li {...getOptionProps({ option, index })}   onChange={(event) => setCategory({topics:option.topic})}>
-                    <span   >{option.topic}</span>
-                  </li>
-                ))}
-              </Listbox>
-            ) : null}
-            </Box>  
-        </Root>
-      </div>
-    </Item>
+        <Table size='small' padding='none'>
+        <TableCell>
+        <IconButton variant="contained" onClick={handleClickOpen} align="right"><AddIcon/></IconButton>       
+        </TableCell>
+        <TableCell>
+        <div className="mx-3">
+                  <Box sx={{ minWidth: 200 , maxHeight:55}}>
+                    <FormControl sx={{  width: 160 }}>
+                      <InputLabel id="demo-multiple-name-label" style={{color:'black'}}>Topic</InputLabel>
+                      <Select
+                      labelId="demo-multiple-name-label"
+                      id="demo-multiple-name"
+                      multiple
+                      value={category}
+                      onChange= {handleChangeTopic}
+                      input={<OutlinedInput label="Topic" />}
+                      >
+                        {topics?.map((Topics,id) => (
+                        <MenuItem key={id} value={Topics.topic}>{Topics.topic}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                 </Box>
+                </div>
+                </TableCell>
+              </Table>
+              {/* <IconButton variant="contained" onClick={handleClickOpen} align="right"><AddIcon/></IconButton>        */}
+        </Item>
     <Item style={{paddingTop:1 ,paddingBottom:1}}>
       <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Difficulty level</div>
           <div align='left' >

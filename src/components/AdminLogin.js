@@ -3,7 +3,7 @@ import {Link}from 'react-router-dom';
 import {Button,TableRow, TableCell} from '@mui/material';
 import img2 from '../images/AdminHome.jpeg';
 import Navbar from './Navbar';
-import  './App.css';
+import  '../App.css';
 
 const AdminLogin = () => {
     return <>
