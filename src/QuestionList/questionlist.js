@@ -30,7 +30,7 @@ export default function EnhancedTable(props) {
   const [currentPage,setCurrentPage] = React.useState(1);
   const lastIndex = currentPage * questionsPerPage;
   const firstIndex = lastIndex - questionsPerPage;
-  const currentQuestions = Questions && Questions.slice(firstIndex,lastIndex);
+  const currentQuestions = Questions && Questions?.slice(firstIndex,lastIndex);
   const totalPages = Math.ceil(Questions?.length/questionsPerPage);
   const [QuestionIdRef, setQuestionIdRef] =React.useState();
   const [topicName, setTopicName] = React.useState([]);
@@ -72,7 +72,7 @@ export default function EnhancedTable(props) {
     axios.get('http://localhost:8081/questions/v1/search',{
       params:{
         topics,type,difficulty_level
-      }}).then(result => setQuestions(result))
+      }}).then(result => setQuestions(result.data))
     .catch(err=>{
       console.log(err.message)
     })
@@ -228,7 +228,7 @@ export default function EnhancedTable(props) {
                         label=" Difficulty level"
                         onChange={handleChange2}>
                           <MenuItem value="MCQ">MCQ</MenuItem>
-                          <MenuItem value="fill in the blank">Fill in the blank</MenuItem>
+                          <MenuItem value="Fill in the blank">Fill in the blank</MenuItem>
                       </Select>
                     </FormControl>
                   </Box>
