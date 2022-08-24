@@ -39,22 +39,17 @@ export default function EditButtonPopup({question}) {
   
     
   function Handleput(e){
-    if(data.question==questionm ){
-      setvalid(true);
-      swal({
-        title: "Something went wrong",
-        icon: "warning",
-       
-        dangerMode: true,
-      })
-    }
-    else{
+   
     const requestBody = {...data,choices: options}
     const url='http://localhost:8081/questions/v1/question/'+questionId; // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
     axios.put(url,requestBody).then((response) => {
-      swal("Data updated successfully", "You clicked the button!", "success");
+      swal({
+        title: "Question Updated Successfully",
+        icon: "success",
+        button: "OK",
+      });
     });
-  }
+  
   }
   return (
     <>
@@ -76,7 +71,7 @@ export default function EditButtonPopup({question}) {
     <Grid item xs={5}>
 <Container >
       <Stack>
-        {/* <p  style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'1rem 0.4rem ',transition:'0.3s linear all',padding:'0.5rem',width:'100%'}}> Topic</p> */}
+         <p  style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'1rem 0.4rem ',transition:'0.3s linear all',padding:'0.5rem',width:'100%'}}> Topic</p> 
         <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'1.3rem 0.4rem ',transition:'0.3s linear all',padding:'0.5rem',width:'100%'}}>Type</p>
 
         <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'1.2rem 0.4rem ',transition:'0.3s linear all',padding:'0.5rem',width:'100%'}}>Level</p>
@@ -92,7 +87,8 @@ export default function EditButtonPopup({question}) {
     <Container styles={{borderRight:'2px solid black',paddingLeft:60,paddingBottom:30}}>    
       <Stack>
         <form>
-        
+        <TextField  fullWidth label="Topic" defaultValue={question.topics}  onChange={(event) => setData({...data,topics: [event.target.value]})} 
+          style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
         <TextField  fullWidth label="Type" defaultValue={question.type}  onChange={(event) => setData({...data,type: event.target.value})} 
           style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
         <TextField  fullWidth label="Difficulty Level" defaultValue={question.difficulty_level}  onChange={(event) => setData({...data,difficulty_level: event.target.value})} 

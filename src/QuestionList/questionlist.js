@@ -30,7 +30,7 @@ export default function EnhancedTable(props) {
   const [currentPage,setCurrentPage] = React.useState(1);
   const lastIndex = currentPage * questionsPerPage;
   const firstIndex = lastIndex - questionsPerPage;
-  const currentQuestions = Questions && Questions.slice(firstIndex,lastIndex);
+  const currentQuestions = Questions && Questions?.slice(firstIndex,lastIndex);
   const totalPages = Math.ceil(Questions?.length/questionsPerPage);
   const [QuestionIdRef, setQuestionIdRef] =React.useState();
   const [topicName, setTopicName] = React.useState([]);
@@ -49,14 +49,11 @@ export default function EnhancedTable(props) {
      topics=topicName.join();
     console.log(topics,difficulty_level,type);
     // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
-    // setFilter(...filter,topics: topic,)
     axios.get('http://localhost:8081/questions/v1/')  
       .then(result => setQuestions(result?.data?.content))
     .catch(err=>{
       console.log(err.message)
     })
-  
-    // console.log(result);
   }
   const topicHandler=()=>{
     axios.get('http://localhost:8081/questions/v1/topics').then(result => setTopics(result?.data))
@@ -68,11 +65,10 @@ export default function EnhancedTable(props) {
     topics=topicName.join();
     console.log(topics,difficulty_level,type);
     // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
-    // setFilter(...filter,topics: topic,)
     axios.get('http://localhost:8081/questions/v1/search',{
       params:{
         topics,type,difficulty_level
-      }}).then(result => setQuestions(result))
+      }}).then(result => setQuestions(result?.data))
     .catch(err=>{
       console.log(err.message)
     })
@@ -139,7 +135,11 @@ export default function EnhancedTable(props) {
     if(choose){
       axios.delete(`http://localhost:8081/questions/v1/question/${QuestionIdRef}`) //if you are running backend on port 8081 change the port number in url to 8081
         .then((res)=> {
-          swal("Question  deleted successfully", "You clicked the button!", "success");
+          swal({
+            title: "Question Deleted Successfully",
+            icon: "success",
+            button: "OK",
+          });
           questionHandle();
         })
       
@@ -179,9 +179,6 @@ export default function EnhancedTable(props) {
           <Stack Stack spacing={65} direction='row'>
             <div>
               <Stack Stack spacing={4} direction='row'>
-                <Link to='/adminlogin'>
-                  <Button style={{color:'black'}}><ArrowBackIcon /></Button>
-                </Link>
                 <div className="mx-3">
                   <Box sx={{ minWidth: 200 , maxHeight:47}}>
                     <FormControl sx={{  width: 250 }}>
@@ -228,7 +225,7 @@ export default function EnhancedTable(props) {
                         label=" Difficulty level"
                         onChange={handleChange2}>
                           <MenuItem value="MCQ">MCQ</MenuItem>
-                          <MenuItem value="fill in the blank">Fill in the blank</MenuItem>
+                          <MenuItem value="fill in the blank">Descriptive</MenuItem>
                       </Select>
                     </FormControl>
                   </Box>
