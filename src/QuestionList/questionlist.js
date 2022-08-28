@@ -225,7 +225,7 @@ export default function EnhancedTable(props) {
                         label=" Difficulty level"
                         onChange={handleChange2}>
                           <MenuItem value="MCQ">MCQ</MenuItem>
-                          <MenuItem value="fill in the blank">Descriptive</MenuItem>
+                          <MenuItem value="Fill in the blank">Fill in the blank</MenuItem>
                       </Select>
                     </FormControl>
                   </Box>

@@ -42,7 +42,7 @@ const Navbar = () => {
           <Link to='/login'> 
           <Button  style={{color:'white'}} >Login</Button>
           </Link>  <Link to='/TakeAssessments'>
-           <Button style={{backgroundColor:'black',color:'white',borderRadius:'20px',paddingLeft:20,paddingRight:20}}> Sign Up</Button></Link>
+           <Button style={{color:'white'}}> Sign Up</Button></Link>
          {/* <PeopleIcon style={{color:'white'}}/> */}
         </Toolbar>
       </AppBar>
