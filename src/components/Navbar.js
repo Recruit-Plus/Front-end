@@ -38,11 +38,17 @@ const Navbar = () => {
         <Typography variant="h6" 
             component="div" sx={{ flexGrow: 1 }}>
           </Typography>
+          <Link to='/takeassessments'> 
+          <Button  style={{color:'white'}} >User</Button>
+          </Link>
+          <div style={{paddingRight:'8px'}}></div>
           <Link to='/signup'>
            <Button style={{color:'white'}}> Sign Up</Button></Link>
+           <div style={{paddingRight:'8px'}}></div>
           <Link to='/login'> 
           <Button  style={{color:'white'}} >Login</Button>
           </Link>
+          <div style={{paddingRight:'8px'}}></div>
          <PeopleIcon style={{color:'white'}}/>
         </Toolbar>
       </AppBar>

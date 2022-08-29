@@ -87,6 +87,7 @@ const Feed= (props) => {     //main function
   const[category,setCategory]=React.useState([]);
   const options = [option1, option2, option3, option4]
  const[invalid,setinvalid]=React.useState(false);
+ const [answers,setanswers]=React.useState([]);
   const [data,setData]=React.useState
   (    
     {
@@ -111,9 +112,25 @@ const Feed= (props) => {     //main function
       typeof value === 'string' ? value.split(',') : value,
     );
   };
+  const handleChangeAnswer = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setanswers(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
  function handlepost(e)
  {
-  if(data.question.length==0 || data.answer.length==0 ){
+  var c=/^[a-zA-Z]*$/;
+  if
+  (data.question.length==0  || data.type.length=="fghg"
+     || data.difficulty_level.length=="ngf" || data.duration==0 || data.score==0 || category.length==0 
+     || answers.length==0 || options.length==0
+    )
+
+    {
     setinvalid(true);
     swal({
       title: "Failed",
@@ -122,10 +139,25 @@ const Feed= (props) => {     //main function
       dangerMode: true,
     })
   }
+  else if((data.duration.match(c) && data.score.match(c))){
+    setinvalid(true);
+    swal({
+      title: "Duration and score should be number",
+     
+      icon: "warning",
+      dangerMode: true,
+    })
+  }
   else{
-  const requestBody = {...data,choices: options,topics:category}
+  const requestBody = {...data,choices: options,topics:category,answer:answers}
   axios.post("http://localhost:8081/questions/v1/question",requestBody).then(result=>{console.log(result?.data)})
-  .alert(swal("Data added successfully", "You clicked the button!", "success"));
+  .alert(swal({
+    title: "Question added Successfully",
+   
+    icon: "success",
+     
+    button:"OK"
+  }));
 }
  }
 const TopicAddHandler = (e) => {
@@ -147,16 +179,16 @@ const TopicAddHandler = (e) => {
       console.log(err.message)
     })
   }
-  const [Answers, setAnswers] = React.useState([]);
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setAnswers(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
+  // const [Answers, setAnswers] = React.useState([]);
+  // const handleChange = (event) => {
+  //   const {
+  //     target: { value },
+  //   } = event;
+  //   setAnswers(
+  //     // On autofill we get a stringified value.
+  //     typeof value === 'string' ? value.split(',') : value,
+  //   );
+  // };
 
   
   return (
@@ -171,7 +203,7 @@ const TopicAddHandler = (e) => {
         id="customized-dialog-title"
         onClose={handleClose}
       >
-        Add Topic
+        Add New Topic
       </BootstrapDialogTitle>
         <DialogContent dividers>
         <Typography gutterBottom>
@@ -197,12 +229,12 @@ const TopicAddHandler = (e) => {
         <div className='container my-3' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Topic</div>
         <Table size='small' padding='none'>
         <TableCell>
-        <IconButton variant="contained" onClick={handleClickOpen} align="right"><AddIcon/></IconButton>       
+             
         </TableCell>
         <TableCell>
         <div className="mx-3">
                   <Box sx={{ minWidth: 200 , maxHeight:55}}>
-                    <FormControl sx={{  width: 160 }}>
+                    <FormControl sx={{  width: 190 }}>
                       <InputLabel id="demo-multiple-name-label" style={{color:'black'}}>Topic</InputLabel>
                       <Select
                       labelId="demo-multiple-name-label"
@@ -212,6 +244,7 @@ const TopicAddHandler = (e) => {
                       onChange= {handleChangeTopic}
                       input={<OutlinedInput label="Topic" />}
                       >
+                        <Button variant="contained" onClick={handleClickOpen} align="right" style={{backgroundColor:'black'}}>Add New Topic</Button>  
                         {topics?.map((Topics,id) => (
                         <MenuItem key={id} value={Topics.topic}>{Topics.topic}</MenuItem>
                         ))}
@@ -254,7 +287,7 @@ const TopicAddHandler = (e) => {
                     <FormControlLabel value='mcq' onChange={(event) => setData({...data,type:event.target.value})}  
                      control={<Radio />} label="MCQ" style={{color:'black'}}/>
                     <FormControlLabel value='Fill in the blank' onChange={(event) => setData({...data,type:event.target.value})}   
-                    control={<Radio/>} label="Fill in the blank" style={{color:'black'}}/>
+                    control={<Radio/>} label="Descriptive" style={{color:'black'}}/>
                     </RadioGroup>
                   </FormControl>
               </div>
@@ -266,7 +299,7 @@ const TopicAddHandler = (e) => {
             </div>
             </Item>
             <Item style={{paddingTop:0.2,paddingBottom:1}}>
-            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Max Score </div>
+            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} > Score </div>
             <div align='center' >
             <TextField id ='score' inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} onChange={(event) => setData({...data,score: event.target.value})} />
             </div>
@@ -283,10 +316,10 @@ const TopicAddHandler = (e) => {
                 style={{backgroundColor:'#696969'}}
                 >Close</Button>
               </Link>
-           
+           <Link to='/questionlist'>
               <Button variant="contained"  style={{backgroundColor:'#696969'}} onClick={(e)=>handlepost(e)}
                   >SAVE</Button>
-          
+          </Link>
           </Stack>
         </Box>
       </div>
@@ -321,12 +354,33 @@ const TopicAddHandler = (e) => {
             <TextField  fullWidth label="Option 3"   onChange={(event) => setoption3(event.target.value)}
               style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
             <TextField  fullWidth label="Option 4"   onChange={(event) => setoption4(event.target.value)}
-              style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
-            <TextField  fullWidth label="Answer"   value={data.answer}  onChange={(event) => setData({...data,answer: [event.target.value]})}
+              style={{margin:'0.9rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+            {/* <TextField  fullWidth label="Answer"   value={data.answer}  onChange={(event) => setData({...data,answer: [event.target.value]})}
             
               style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}>
               
-              </TextField>
+              </TextField> */}
+              <FormControl sx={{width:535}}>
+              <InputLabel id="demo-multiple-name-label" style={{color:'black'}}>Answer</InputLabel>
+                      <Select
+                      labelId="demo-multiple-name-label"
+                      id="demo-multiple-name"
+                      multiple
+                      value={answers}
+                      onChange= {handleChangeAnswer}
+                      input={<OutlinedInput label="Answer" />}
+                      >
+                         <MenuItem  value={options[0]} >{options[0]}</MenuItem>
+                         <MenuItem  value={options[1]} >{options[1]}</MenuItem>
+                         <MenuItem  value={options[2]} >{options[2]}</MenuItem>
+                         <MenuItem  value={options[3]} >{options[3]}</MenuItem>
+                       
+                         {/* {choices?.map((choice,id) => (
+                        <MenuItem  value={choice.options}>{choice.options}</MenuItem>
+                        ))} */}
+                        
+                      </Select>
+                      </FormControl>
             </form>
           </Stack>     
         </Container>

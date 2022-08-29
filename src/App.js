@@ -11,6 +11,8 @@ import AssessmentList from './Assessments/AssessmentList'
 import AddAssessment from './Assessments/Create_assessment'
 import EditAssessment from './Assessments/EditAssessment';
 import AddQuestionToAssessment from './Assessments/AddQuestionToAssessment';
+import Instructions from './User/Instructions';
+import TakeAssessments from './User/TakeAssessments';
 
 import {
   BrowserRouter as Router,
@@ -36,6 +38,8 @@ function App() {
     <Route path='/addassessment' element={ <AddAssessment/>}/>
     <Route path='/editassessment' element={<EditAssessment/>}/>
     <Route path='/addquestiontoassessment' element={<AddQuestionToAssessment/>}/>
+    <Route path='/instructions' element={<Instructions/>}/>
+  <Route path='/takeassessments' element={ <TakeAssessments/>}/>
   </Routes>
     </>  
 );

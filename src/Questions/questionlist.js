@@ -13,7 +13,7 @@ import EditButtonPopup from "./EditButtonPopup";
 export default function EnhancedTable() {
   const [open, setOpen] = React.useState(false);
   const [dense, setDense] = React.useState(false);
-  const [questionsPerPage, setQuestionsPerPage] = React.useState(8);
+  const [questionsPerPage, setQuestionsPerPage] = React.useState(6);
   const [Questions, setQuestions]=React.useState([]);
   const [currentPage,setCurrentPage] = React.useState(1);
   const lastIndex = currentPage * questionsPerPage;
