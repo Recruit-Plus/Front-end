@@ -84,24 +84,29 @@ const Login = () => {
      console.log(first_name);
      console.log(last_name);
       
-        SearchUser(email);
+        SearchUser(email,first_name,last_name);
  
   }
 
-  const SearchUser=(email)=>{
+  const SearchUser=(email,first_name,last_name)=>{
     axios.get('http://localhost:8084/users/v1/email',{
         params:{
            email
         }}).then(
           function(result) {
-            console.log(result.data[0].role);
-            if (result.data[0].role === "candidate") {
+           /* console.log(result.data[0].role);*/
+            if(result.data==""){
+              navigate("/role",{state:{email:{email},
+               firstName:{first_name},
+               lastName:{last_name}}});
+            }
+            else if (result.data[0].role === "candidate") {
               navigate("/TakeAssessments");
             } else if (result.data[0].role === "admin") {
               navigate("/AdminLogin");
             }
             else{
-              navigate("/NoRole");
+          
             }
           })
       .catch(err=>{
@@ -188,15 +193,15 @@ const Login = () => {
         <div style={{paddingBottom:'8px'}} align="left">
           <Checkbox style={{}} {...label} />Remember me
         </div>
-        <div className="conatiner" align="center" style={{paddingBottom:'8px'}}>
-          <Link to="/adminlogin">
+        <div className="container" align="center" style={{paddingBottom:'8px'}}>
+          <Link to="/role">
             <Button variant="contained" >
               Login
             </Button>
           </Link>        
         </div>
         <div id="loginDiv" className="conatiner " align="center">
-          <Link to="/adminlogin">
+          <Link to="/role">
             <Button >
              
             </Button>

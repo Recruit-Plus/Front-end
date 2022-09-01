@@ -12,6 +12,7 @@ import EditAssessments from './Assessments/EditAssessments';
 import AssessmentList from './Assessments/AssessmentList';
 import TakeAssessments from './User/TakeAssessments';
 import Instructions from './User/Instructions';
+import NoRole from './components/NoRole';
 import {
   BrowserRouter as Router,
   Route,
@@ -31,6 +32,7 @@ function App() {
     <Route path='/home' element={ <EditButtonPopup/>}/>
     <Route path='/signup' element={ <Sign_up/>}/>
     <Route path='/homepage' element={ <HomePage/>}/>
+    <Route path='/role' element={ <NoRole/>}/>
     <Route path='/login' element={ <Login/>}/>
     <Route path='/TakeAssessments' element={ <TakeAssessments/>}/>
     <Route path='/assessmentlist' element={ <AssessmentList/>}/>

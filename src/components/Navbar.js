@@ -41,7 +41,7 @@ const Navbar = () => {
         
           <Link to='/login'> 
           <Button  style={{color:'white'}} >Login</Button>
-          </Link>  <Link to='/TakeAssessments'>
+          </Link>  <Link to='/signup'>
            <Button style={{color:'white'}}> Sign Up</Button></Link>
          {/* <PeopleIcon style={{color:'white'}}/> */}
         </Toolbar>

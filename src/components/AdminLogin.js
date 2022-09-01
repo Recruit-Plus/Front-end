@@ -13,7 +13,7 @@ const AdminLogin = () => {
             <TableCell><div  ><img src={img2} width={500} height={500} style={{marginTop: "12%", display: "inline-block;" , width:"80%",height:"80%"}}></img></div></TableCell>
             <TableCell>
                 <div className='body'><br></br>
-                    <span className='text1' align='center' style={{}}>Welcome Meghana!</span><br></br>
+                    <span className='text1' align='center' style={{}}>Welcome Keerthi!</span><br></br>
                     <span align='center' className='text'>Easily create quizzes to test <br></br>student's knowledge and track their performance</span>
                 <div className='wrapper'>
                 <div className='icon'>
