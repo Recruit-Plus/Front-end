@@ -1,0 +1,13 @@
+/* ::-webkit-scrollbar{
+    width: 4rem;
+}
+::-webkit-scrollbar-track{
+    background: gray;
+}
+::-webkit-scrollbar-thumb{
+    background: black;
+} */
+.scroll{
+    overflow: hidden;
+    overflow-y: scroll;
+}

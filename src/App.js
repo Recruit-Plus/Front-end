@@ -12,11 +12,13 @@ import EditAssessments from './Assessments/EditAssessments';
 import AssessmentList from './Assessments/AssessmentList';
 import TakeAssessments from './User/TakeAssessments';
 import Instructions from './User/Instructions';
+import Feedback from './User/Feedback';
 import {
   BrowserRouter as Router,
   Route,
   Routes
 } from "react-router-dom";
+
 function App() {
  return (
   <>
@@ -37,6 +39,7 @@ function App() {
     <Route path='/addassessment' element={ <CreateAssesssments />}/>
     <Route path='/editassessment' element={<EditAssessments/>}/>
     <Route path='/instructions' element={<Instructions/>}/>
+    <Route path='/Feedback' element={<Feedback/>}/>
   </Routes>
     </>  
 );
