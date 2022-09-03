@@ -12,7 +12,7 @@ import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import PrimarySearchAppBar from "../components/Subnav";
 import EditButtonPopup from "./EditButtonPopup";
-import Navbar from '../components/Navbar';
+import Navbar1 from '../components/Navbar1';
 import EditIcon from '@mui/icons-material/Edit';
 import swal from 'sweetalert';
 function questionFilters(props){
@@ -172,7 +172,7 @@ export default function EnhancedTable(props) {
     </DialogActions>
   </Dialog>
   {/*<Navbar/>*/}
-  <Navbar/>
+  <Navbar1/>
     <div style={{paddingTop:75}}>
     <AppBar position="static" style={{ background: '#D3D3D3' }}>
         <Toolbar>
