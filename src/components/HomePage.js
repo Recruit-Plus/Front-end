@@ -14,17 +14,17 @@ const HomePage = () => {
     <div classname="HomePage">
     <img
     src={Bgimg}
-    style={{ marginTop: "8%", display: "inline-block;" , width:"43%",height:"55%",paddingRight:10}}
+    style={{ marginTop: "15%", display: "inline-block;" , width:"43%",height:"55%",paddingRight:10}}
     ></img>
-    <motion.p animate={{ scale:2.2, speed: Slide}} style={{fontSize:'20',paddingRight:20,paddingLeft:0}}>
-    <h1 style={{fontSize:'1.8rem'}}><strong>RECRUIT+</strong></h1>
+    <motion.p animate={{ scale:2.2, speed: Slide}} style={{marginTop: "15%",fontSize:'30',paddingRight:20,paddingLeft:0}}> 
+    <h1 style={{fontSize:'1.8rem',marginTop: "15%"}}><strong>RECRUIT+</strong></h1>
     Recruit+ is an application developed <br />
     for the purpose of hiring,<br />
     allows hiring managers to conduct tests,<br />
     view results, allows students to take tests <br/> 
     and join their dream companies.
-    </motion.p>
-    <div className="container" >
+     </motion.p> 
+    <div class="container" >
         <div className="row">
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridGap: 10 , marginLeft: "-15%"}}>
                 <div>

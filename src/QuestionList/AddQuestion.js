@@ -224,7 +224,8 @@ const TopicAddHandler = (e) => {
         <Grid container style={{paddingTop:60}} spacing={2}> {/* After navbar you can see two part left and right
                           imported that component in grid so you want to change something go to that component*/ }
         <Grid item lg={3} >
-      <Box style={{borderRight:'4px solid #d50000',backgroundColor:'#f8f8f8',height:'100%',paddingRight:20,width:'100%'}} >
+      <Box style={{borderRight:'4px solid #d50000',height:'100%',paddingRight:20,width:'100%'}} >
+     
         <Item>
         <div className='container my-3' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Topic</div>
         <Table size='small' padding='none'>
@@ -289,7 +290,7 @@ const TopicAddHandler = (e) => {
                     <FormControlLabel value='Fill in the blank' onChange={(event) => setData({...data,type:event.target.value})}   
                     control={<Radio/>} label="Descriptive" style={{color:'black'}}/>
                     </RadioGroup>
-                  </FormControl>
+                  </FormControl>  
               </div>
             </Item>
             <Item style={{paddingTop:0.2 ,paddingBottom:1}}>
@@ -309,7 +310,7 @@ const TopicAddHandler = (e) => {
         <Grid item lg={9}>
          <div style={{paddingTop:25,paddingBottom:1}}>
         <Box>
-              <Stack spacing={50} direction='row'>
+              <Stack spacing={36} direction='row'>
             <div></div>
               <Link to='/questionlist'>
                 <Button variant="contained" 
@@ -324,7 +325,8 @@ const TopicAddHandler = (e) => {
         </Box>
       </div>
       <Box 
-        style={{width:'90%',border:'2px solid black',height:'80%',backgroundColor:'#f8f8f8',margin:'0.8rem auto 0 auto',paddingLeft:30,paddingRight:3,paddingBottom:3,paddingTop:10}}>
+        style={{width:'100%',height:'80%',margin:'0.8rem auto 0 auto',paddingLeft:30,paddingRight:3,paddingBottom:3,paddingTop:10}}>
+           <Paper  sx={{ height:"100%",width: "95%", mb: 2 ,paddingBottom:4,paddingTop:4}}>
         <Grid container>
         <Grid item xs={2} >
         <Container >
@@ -360,7 +362,7 @@ const TopicAddHandler = (e) => {
               style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}>
               
               </TextField> */}
-              <FormControl sx={{width:535}}>
+              <FormControl sx={{width:570}}>
               <InputLabel id="demo-multiple-name-label" style={{color:'black'}}>Answer</InputLabel>
                       <Select
                       labelId="demo-multiple-name-label"
@@ -386,6 +388,7 @@ const TopicAddHandler = (e) => {
         </Container>
         </Grid>
       </Grid>
+      </Paper>
     </Box>
   </Grid>
 </Grid>

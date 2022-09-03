@@ -6,7 +6,7 @@ import {Dialog,DialogTitle,DialogContent,DialogContentText,DialogActions,IconBut
 import DeleteIcon from "@mui/icons-material/Delete";
 //import PrimarySearchAppBar from "./Subnav";
 import EditIcon from '@mui/icons-material/Edit';
-import Navbar from "../components/Navbar";
+import Navbar1 from "../components/Navbar1";
 import EditButtonPopup from "../QuestionList/EditButtonPopup";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
@@ -80,7 +80,7 @@ const AssessmentList = () => {
    
       
          <div>
-        <Navbar></Navbar>
+        <Navbar1></Navbar1>
         {/* <PrimarySearchAppBar></PrimarySearchAppBar> */}
          <Dialog
     open={open}

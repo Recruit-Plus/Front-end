@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { Button ,Box, Grid,TextField,Stack,Container} from '@mui/material';
 import swal from 'sweetalert'
-import Navbar from '../components/Navbar';
+import Navbar1 from '../components/Navbar1';
 export default function EditButtonPopup({question}) {
   const[questionId,setQuestionId] = React.useState(question.question_id);
   const[questionm,setquestionm] = React.useState(question.question);
@@ -53,7 +53,7 @@ export default function EditButtonPopup({question}) {
   }
   return (
     <>
-    <Navbar/>
+    <Navbar1/>
     <div style={{paddingTop:'50px'}}>
        <Stack spacing={85} direction='row'>
               <div></div>
