@@ -101,7 +101,7 @@ const Login = () => {
                lastName:{last_name}}});
             }
             else if (result.data[0].role === "candidate") {
-              navigate("/TakeAssessments");
+              navigate("/Instructions");
             } else if (result.data[0].role === "admin") {
               navigate("/AdminLogin");
             }
@@ -130,10 +130,6 @@ const Login = () => {
       }
     );
   },[])
-
-
-
-
 
   return<>  
     <Navbar></Navbar>

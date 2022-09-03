@@ -73,24 +73,19 @@ export default function FormPropsTextFields(email,firstName,lastName) {
   } = useForm();
   
   const onSubmit = (data) => {
-    var c=/^[a-zA-Z]*$/;
-    if(data.year.match(c) ){
-     setinvalid(true);
-     swal({
-       title: "Enter a valid year",
-       icon: "warning",
-       dangerMode: true,
-     })
-   }
-   else{
     const requestbody={...userDetails,college:data.college,branch:data.branch,year:data.year}
     axios.post("http://localhost:8084/users/v1/",requestbody).then(result=>console.log(result))
     .catch(err=>{
         console.log(err.message)
       });
-      navigate("/TakeAssessments")
+      if(userDetails.role==="candidate"){
+      navigate("/instructions")
+     }
+     else{
+      navigate("/adminlogin")
+     }
+
  }
-  };
   const onSubmitHandle=(data)=>{
     console.log(data);
   }
@@ -171,7 +166,7 @@ export default function FormPropsTextFields(email,firstName,lastName) {
                     </FormControl>
                     <TextField
                        required
-                       id="fullWidth"
+                       fullWidth
                       label="Year of passing"
                       onChange={(event) => setUserDetails({...userDetails,year:event.target.value})}
                       {...register("year", {
@@ -247,7 +242,7 @@ export default function FormPropsTextFields(email,firstName,lastName) {
                         height: 40,
                         width: 200,
                       }}
-                    //  onClick={onSubmit}
+                    
                     >
                       proceed to take test
                     </Button>
@@ -265,18 +260,18 @@ export default function FormPropsTextFields(email,firstName,lastName) {
                       label="Verification code"
                       id="fullWidth"
                     
-                        className={`${errors.Secretcode && "invalid"}`}
-                      {...register("Verificationcode", {
+                        className={`${errors.verificationcode && "invalid"}`}
+                      {...register("verificationcode", {
                         required: "Verification code is Required",
                         pattern: {
-                          value: /^[0-9]*$/,
+                          value: /2326/,
                           message: "Enter Valid code",
                         },
                       })}
                     />
-                    {errors.Secretcode && (
+                    {errors.verificationcode && (
                       <small className="text-danger">
-                        {errors.Secretcode.message}
+                        {errors.verificationcode.message}
                       </small>
                     )}
                   </Stack>
