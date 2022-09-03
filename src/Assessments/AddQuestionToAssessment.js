@@ -6,7 +6,7 @@ import {Paper,Box,Table,TableBody,TableCell,TableContainer,
 import Navbar from "../components/Navbar";
 
 
-export default function AddQuestionToAssessment({assessment}) {
+export default function AddQuestionToAssessment() {
     const [dense, setDense] = React.useState(false);
     const [Questions, setQuestions]=React.useState([]);
     const [stateCustomer, setCustomerState] = React.useState([]);
@@ -26,7 +26,7 @@ export default function AddQuestionToAssessment({assessment}) {
       };
       const AddQuestionByIds = () => {
         console.log(stateCustomer);
-        console.log({assessment});
+        // console.log({assessment});
         let arrayids = [];
         stateCustomer.forEach(d => {
           if (d.select) {

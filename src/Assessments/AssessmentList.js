@@ -61,31 +61,22 @@ export default function EnhancedTable() {
     
     setOpen(true);
   };
-  
   const handleClose = () => {
     setOpen(false);
   };
-
-
   const handleUpdate= assessment =>{
     setEditOpen(true);
     console.log(assessment);
     setAssessmentProps(assessment);
   }
- 
- 
-  
-   const handleChangeDense = (event) => {
+  const handleChangeDense = (event) => {
     setDense(event.target.checked);
   };
-
-
   const handleDelete= id =>{
     setOpen(true);
     console.log(id);
     setAssessmentIdRef(id); 
   }
-
   const DeleteHandleFromDialogue= (choose)=>{
     setOpen(false);
     if(choose){
@@ -98,18 +89,12 @@ export default function EnhancedTable() {
       // setQuestions(Questions.filters(Questions => Questions.id !== QuestionIdRef.current));
     }
   }
-
-
-
-
   return (
     <>
-     
-      
-         <div>
-        <Navbar></Navbar>
-        {/* <PrimarySearchAppBar></PrimarySearchAppBar> */}
-         <Dialog
+    <div>
+      <Navbar></Navbar>
+      {/* <PrimarySearchAppBar></PrimarySearchAppBar> */}
+        <Dialog
     open={open}
     onClose={handleClose}
     aria-labelledby="alert-dialog-title"
@@ -178,8 +163,7 @@ export default function EnhancedTable() {
                 <EditIcon/>   {/* This you can see infront of every question */ }
               </Button>
               </Link>
-              
-                <Button variant="contained" color="error" onClick={() =>{handleDelete(assessments?.assessment_id)}}>
+               <Button variant="contained" color="error" onClick={() =>{handleDelete(assessments?.assessment_id)}}>
                   <DeleteIcon/>
                   </Button>
                 </Stack>
@@ -204,11 +188,11 @@ export default function EnhancedTable() {
           <Button onClick={NextPage}>Next</Button>
         </div>}
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
-    </Box>
+    <FormControlLabel
+      control={<Switch checked={dense} onChange={handleChangeDense} />}
+      label="Dense padding"
+    />
+  </Box>
   </div>
 
 </>

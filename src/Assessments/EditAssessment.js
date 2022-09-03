@@ -65,7 +65,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   }
 }));
 
-export default function EditAssessment({assessment_id}) {
+export default function EditAssessment() {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     
@@ -74,7 +74,7 @@ export default function EditAssessment({assessment_id}) {
   const handleClose = () => {
     setOpen(false);
   };
-  console.log({assessment_id});
+  
   return (
     <>
     <Dialog
