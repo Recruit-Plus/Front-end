@@ -5,23 +5,29 @@ import {Dialog,DialogTitle,DialogContent,DialogContentText,DialogActions,IconBut
 import {OutlinedInput ,InputLabel ,MenuItem,FormControl,Select,AppBar} from "@mui/material";
 import Navbar1 from "../components/Navbar1";
 import TakeAssessments from "./TakeAssessments";
+// import { Navigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 const EligibleAssessments =()=>{
     const [assessments, setAssessments]=React.useState([]);
+    let navigate =useNavigate();
 
     React.useEffect(() => {  
         assessmentsHandle()
       },[])
 
-      const assessmentsHandle= () => {
+    const assessmentsHandle= () => {
 
        axios.get('http://localhost:8082/assessments/v1/assessment')  
          .then(result => setAssessments(result?.data))
        .catch(err=>{
          console.log(err.message)
        })
-     }
-     console.log(assessments);
+    }
+    const handleTest= id =>{
+      navigate("/TakeAssessments",{state:{assessment_id:{id}}});
+    }
+
 
 
     return <>
@@ -51,8 +57,8 @@ const EligibleAssessments =()=>{
               </TableCell>
               <TableCell >
               <Stack spacing={2} direction="row">
-                        <Button variant ='outlined' className='button' style={{width:200,backgroundColor:'black',color:'white',fontSize:'1rem'}} >Take Test</Button>
-
+                <Button style={{width:200,backgroundColor:'black',color:'white',fontSize:'1rem'}}
+                onClick={()=>{handleTest(assessment.assessment_id)}} >Take Test</Button>
               </Stack>
               </TableCell>
               </TableRow>

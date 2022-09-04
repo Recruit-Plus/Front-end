@@ -79,7 +79,7 @@ export default function FormPropsTextFields(email,firstName,lastName) {
         console.log(err.message)
       });
       if(userDetails.role==="candidate"){
-      navigate("/TakeAssessments")
+      navigate("/CandidateLogin")
      }
      else{
       navigate("/Adminlogin")

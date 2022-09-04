@@ -56,9 +56,7 @@ const Navbar = () => {
           function(result) {
         
             if(result.data==""){
-              navigate("/role",{state:{email:{email},
-               firstName:{first_name},
-               lastName:{last_name}}});
+              navigate("/role",{state:{email:{email},firstName:{first_name},lastName:{last_name}}});
             }
             else if (result.data[0].role === "candidate") {
               navigate("/CandidateLogin",{state:{firstName:{first_name},lastName:{last_name}}});

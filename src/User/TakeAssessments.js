@@ -8,9 +8,11 @@ import { Button ,Typography,AppBar,Box,Toolbar,Grid,Stack,RadioGroup,Radio,FormC
 import IconButton from '@mui/material/IconButton';
 import PersonIcon from '@mui/icons-material/Person';
 import TimerIcon from '@mui/icons-material/Timer';
- import Instructions from './Instructions';
- import Divider from '@mui/material/Divider';
- import  './takeassessment.css';
+import Instructions from './Instructions';
+import Divider from '@mui/material/Divider';
+import { useLocation } from "react-router-dom";
+import  './takeassessment.css';
+import axios from 'axios';
 
  function createTest(Question,option1,option2,option3,option4){
     return {Question ,option1,option2,option3,option4};
@@ -19,7 +21,8 @@ import TimerIcon from '@mui/icons-material/Timer';
   createTest("Which component is used  compile, debug and execute the java programs?","JRE", "JIT","JDK","JVM")
   
 ];
-const TakeAssessments = () => {
+const TakeAssessments = (assessmentId) => {
+  const location = useLocation();
   const [finish,setfinish]=React.useState(false);
   const[Question,setQuestion]=React.useState(0);
   const[Questionsperpage,setquestionsperpage]=React.useState(1);
@@ -29,6 +32,11 @@ const TakeAssessments = () => {
   const firstIndex=lastIndex-Questionsperpage;
   const CurrentQuestion=Questions && Questions?.slice(firstIndex,lastIndex);
   const totalPages = Math.ceil(Questions?.length/Questionsperpage);
+  const assessment_id=location.state.assessment_id.id;
+  React.useEffect(()=>{
+    axios.get(`http://localhost:8082/assessments/v1/assessment/${assessment_id}`).then(res => console.log(res.data))
+    .catch(err => console.log(err));
+  },[])
    function handleClose(){
     setfinish(false);
    }

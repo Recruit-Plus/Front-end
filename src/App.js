@@ -7,7 +7,7 @@ import AdminLogin from './components/AdminLogin';
 import Sign_up from './components/SignUp';
 //import Login from './components/Login';
 import Navbar from './components/Navbar';
-import CreateAssesssments from './Assessments/CreateAssesssments';
+import CreateAssesssment from './Assessments/CreateAssesssment';
 import EditAssessments from './Assessments/EditAssessments';
 import AssessmentList from './Assessments/AssessmentList';
 import TakeAssessments from './User/TakeAssessments';
@@ -42,7 +42,7 @@ function App() {
     <Route path='/EligibleAssessments' element={ <EligibleAssessments/>}/>
     <Route path='/TakeAssessments' element={ <TakeAssessments/>}/>
     <Route path='/assessmentlist' element={ <AssessmentList/>}/>
-    <Route path='/addassessment' element={ <CreateAssesssments />}/>
+    <Route path='/addassessment' element={ <CreateAssesssment />}/>
     <Route path='/editassessment' element={<EditAssessments/>}/>
     <Route path='/instructions' element={<Instructions/>}/>
     <Route path='/Feedback' element={<Feedback/>}/>
