@@ -2,7 +2,7 @@ import React from 'react';
 import {Link}from 'react-router-dom';
 import {Button,TableRow, TableCell} from '@mui/material';
 import img2 from '../images/candidate.jpeg';
-import Navbar1 from './Navbar1';
+import Navbar from './Navbar';
 import {useLocation} from 'react-router-dom';
 
 import  './App.css';
@@ -15,7 +15,7 @@ const CandidateLogin = (firstName,lastName) => {
     console.log(location.state.firstName.first_name,location.state.lastName.last_name);
 
     return <>
-      <Navbar1/>
+      {/* <Navbar/> */}
       <div><br></br>
         <TableRow>
             <TableCell><div  ><img src={img2} width={500} height={500} style={{marginTop: "15%", display: "inline-block;" , width:"120%",height:"150%"}}></img></div></TableCell>

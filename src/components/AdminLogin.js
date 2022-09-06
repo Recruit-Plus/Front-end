@@ -2,7 +2,7 @@ import React from 'react';
 import {Link}from 'react-router-dom';
 import {Button,TableRow, TableCell} from '@mui/material';
 import img2 from '../images/AdminHome.jpeg';
-import Navbar1 from './Navbar1';
+import Navbar from './Navbar';
 import  './App.css';
 import {useLocation} from 'react-router-dom';
 
@@ -11,7 +11,7 @@ const AdminLogin = (firstName,lastName) => {
     const f_name=location.state.firstName.first_name;
     const l_name=location.state.lastName.last_name;
     return <>
-      <Navbar1/>
+      <Navbar/>
       <div><br></br>
         <TableRow>
             <TableCell><div  ><img src={img2} width={500} height={500} style={{marginTop: "12%", display: "inline-block;" , width:"80%",height:"80%",borderRadius:"90px"}}></img></div></TableCell>

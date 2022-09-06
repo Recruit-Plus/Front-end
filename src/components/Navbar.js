@@ -8,36 +8,58 @@ import PeopleIcon from '@mui/icons-material/People';
 import { useNavigate} from "react-router-dom";
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import { GoogleLogin} from 'react-google-login';
+import { GoogleLogout } from 'react-google-login';
+import { gapi } from 'gapi-script';
+
 
 const Navbar = () => {
   let navigate =useNavigate();
-  useEffect(() =>{
-    /* global google*/
-    google.accounts.id.initialize({
-      client_id:"230149321839-n3hq4qtv99taso7fot2jjl8he3dg3n5p.apps.googleusercontent.com",
-      callback:useHandleCallbackResponse
-      
-    });
+  const [user,setUser]=React.useState({});
+  const [state,setState]=React.useState({isLogined:false});
+  const name=user.name;
+  const pic=user.picture;
+  const clientId="230149321839-57i5bhj574906nhivbfm27a104n53o16.apps.googleusercontent.com";
 
-    google.accounts.id.renderButton(
-        document.getElementById("loginDiv"),
-       {
-        theme:"outline" ,
-        size:"small",
-      }
-    );
-     
-  },[])
+  useEffect(()=>{
+    gapi.load("client:auth2",()=>{
+      gapi.auth2.init({clientId:clientId})
+    })
+  })
+  const logout = (response) => {
+    window.sessionStorage.removeItem("email");
+     window.sessionStorage.removeItem("name");
+     setState(state => ({
+         isLogined: false
+         
+     }),
+     console.log(response)
+     );
+   navigate("/");
+ }
 
-  function useHandleCallbackResponse(response)
+
+  const responseGoogle =(response)=>
   {
-      console.log("Encoded JWT ID token:"+ response.credential);
-      var userObject = jwt_decode(response.credential);
+      console.log("Encoded JWT ID token:"+ JSON.stringify(response.profileObj));
+      var userObject =response.profileObj;
       console.log(userObject);
+      window.sessionStorage.setItem("email", userObject.email);
+      window.sessionStorage.setItem("name", userObject.givenName);
+      window.sessionStorage.setItem("name", userObject.name);
+      setState(state => ({
+        isLogined: true
+        
+    })
+      );
+
+
+      setUser(userObject);
+      const n=user.name;
 
       const email=userObject.email;
-      const first_name=userObject.given_name;
-      const last_name=userObject.family_name;
+      const first_name=userObject.givenName;
+      const last_name=userObject.familyName;
       
      console.log(email);
      console.log(first_name);
@@ -45,6 +67,7 @@ const Navbar = () => {
       
         SearchUser(email,first_name,last_name);
  
+
   }
 
   const SearchUser=(email,first_name,last_name)=>{
@@ -103,10 +126,24 @@ const Navbar = () => {
         <Typography variant="h6" 
             component="div" sx={{ flexGrow: 1 }}>
           </Typography >
-          <div className="conatiner " align="center">
-          <Link to="/adminlogin">
-            <Button id="loginDiv">LOGIN</Button>
-          </Link> 
+          <div>
+          {window.sessionStorage.getItem("name")==null?
+          <GoogleLogin
+          clientId= {clientId}
+          scope=""
+          buttonText="Login"
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy={'single_host_origin'}
+      />
+      :
+          <GoogleLogout
+                 clientId={clientId}
+                 buttonText="Logout"
+                onLogoutSuccess={logout}
+                >
+                 </GoogleLogout>     
+          } 
           </div>
            
         </Toolbar>

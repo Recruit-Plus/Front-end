@@ -96,7 +96,7 @@ const EditAssessments = () => {
     </DialogActions>
   </Dialog>
   <div style={{paddingTop:'75px'}}>
-    <Navbar></Navbar>
+    {/* <Navbar></Navbar> */}
     <div>
     <Box sx={{ flexGrow: 1 }} style={{background:'#ffffff'}}>
       <AppBar position="static" >

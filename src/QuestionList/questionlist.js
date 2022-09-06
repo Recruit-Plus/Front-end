@@ -10,9 +10,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SearchIcon from '@mui/icons-material/Search';
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import PrimarySearchAppBar from "../components/Subnav";
+import PrimarySearchAppBar from "./Subnav";
 import EditButtonPopup from "./EditButtonPopup";
-import Navbar1 from '../components/Navbar1';
+import Navbar from '../components/Navbar';
 import EditIcon from '@mui/icons-material/Edit';
 import swal from 'sweetalert';
 function questionFilters(props){
@@ -171,8 +171,7 @@ export default function EnhancedTable(props) {
       <Button onClick={() =>DeleteHandleFromDialogue(true)} variant="contained" color="error"autoFocus>Delete</Button>
     </DialogActions>
   </Dialog>
-  {/*<Navbar/>*/}
-  <Navbar1/>
+  
     <div style={{paddingTop:75}}>
     <AppBar position="static" style={{ background: '#D3D3D3' }}>
         <Toolbar>
