@@ -29,6 +29,7 @@ const Navbar = () => {
   const logout = (response) => {
     window.sessionStorage.removeItem("email");
      window.sessionStorage.removeItem("name");
+     window.localStorage.removeItem("userId");
      setState(state => ({
          isLogined: false
          
@@ -60,12 +61,7 @@ const Navbar = () => {
       const email=userObject.email;
       const first_name=userObject.givenName;
       const last_name=userObject.familyName;
-      
-     console.log(email);
-     console.log(first_name);
-     console.log(last_name);
-      
-        SearchUser(email,first_name,last_name);
+      SearchUser(email,first_name,last_name);
  
 
   }
@@ -84,6 +80,8 @@ const Navbar = () => {
                lastName:{last_name}}});
             }
             else if (result.data[0].role === "candidate") {
+              window.localStorage.setItem("userId", result.data[0].user_id);
+              console.log(window.localStorage.getItem("userId"));
               navigate("/CandidateLogin",{state:{firstName:{first_name},lastName:{last_name}}});
          
             } else if (result.data[0].role === "admin") {

@@ -42,12 +42,13 @@ export default function FormPropsTextFields(email,firstName,lastName) {
   const verify="";
   const[invalid,setinvalid]=React.useState(false);
   const location = useLocation();
-  const f_name=location.state.firstName.first_name;
+  const first_name=location.state.firstName.first_name;
+  const last_name=location.state.lastName.last_name;
   const Email=location.state.email.email;
   const [userDetails,setUserDetails]=React.useState
   (    
     {
-      user_name:f_name,
+      user_name:first_name,
       email:Email,
       role:"",
       degree:"",
@@ -74,15 +75,18 @@ export default function FormPropsTextFields(email,firstName,lastName) {
   
   const onSubmit = (data) => {
     const requestbody={...userDetails,college:data.college,branch:data.branch,year:data.year}
-    axios.post("http://localhost:8084/users/v1/",requestbody).then(result=>console.log(result))
+    axios.post("http://localhost:8084/users/v1/",requestbody).then(result=>
+      window.localStorage.setItem("userId", result.data.user_id)
+    )
     .catch(err=>{
         console.log(err.message)
       });
       if(userDetails.role==="candidate"){
-      navigate("/TakeAssessments")
+        navigate("/CandidateLogin",{state:{firstName:{first_name},lastName:{last_name}}});
+
      }
      else{
-      navigate("/Adminlogin")
+        navigate("/AdminLogin",{state:{firstName:{first_name},lastName:{last_name}}});
      }
 
  }
@@ -116,7 +120,7 @@ export default function FormPropsTextFields(email,firstName,lastName) {
                 fullWidth
                 id="outlined-read-only-input"
                 label="User name"
-                defaultValue={f_name}
+                defaultValue={first_name}
                 InputProps={{
                   readOnly: true,
                 }}

@@ -11,14 +11,14 @@ import { useNavigate} from "react-router-dom";
 const EligibleAssessments =()=>{
     const [assessments, setAssessments]=React.useState([]);
     let navigate =useNavigate();
-
+    const user_id=window.localStorage.getItem("userId");
     React.useEffect(() => {  
         assessmentsHandle()
       },[])
 
     const assessmentsHandle= () => {
 
-       axios.get('http://localhost:8082/assessments/v1/assessment')  
+       axios.get(`http://localhost:8082/assessments/v1/user/${user_id}`)  
          .then(result => setAssessments(result?.data))
        .catch(err=>{
          console.log(err.message)
@@ -47,7 +47,7 @@ const EligibleAssessments =()=>{
             <TableBody>
                 {assessments?.length===0 ?
                 <TableCell scope="assessments" style={{width:'100%'}} >   
-                <h5>No data Available!!!</h5>
+                <h5>No Assessments assigned to you!</h5>
               </TableCell>
               :
               assessments?.map((assessment,index) => (
