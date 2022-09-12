@@ -30,6 +30,7 @@ const Navbar = () => {
     window.sessionStorage.removeItem("email");
      window.sessionStorage.removeItem("name");
      window.localStorage.removeItem("userId");
+     window.localStorage.removeItem("user");
      setState(state => ({
          isLogined: false
          
@@ -73,7 +74,7 @@ const Navbar = () => {
            email
         }}).then(
           function(result) {
-        
+            console.log(result);
             if(result.data==""){
               navigate("/role",{state:{email:{email},
                firstName:{first_name},
@@ -81,10 +82,10 @@ const Navbar = () => {
             }
             else if (result.data[0].role === "candidate") {
               window.localStorage.setItem("userId", result.data[0].user_id);
-              console.log(window.localStorage.getItem("userId"));
               navigate("/CandidateLogin",{state:{firstName:{first_name},lastName:{last_name}}});
          
             } else if (result.data[0].role === "admin") {
+              window.localStorage.setItem("user", result.data[0].user_name);
               navigate("/AdminLogin",{state:{firstName:{first_name},lastName:{last_name}}});
             }
           })

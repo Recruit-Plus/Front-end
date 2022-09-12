@@ -1,17 +1,28 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import {Link, useNavigate, useLocation} from 'react-router-dom';
 import {Button,Checkbox} from "@mui/material";
+import axios from 'axios';
 import {styled } from "@mui/material/styles";
 import Navbar from '../components/Navbar';
-export default function ControlledCheckbox() {
-  const [checked, setChecked] = React.useState(true);
-
+import { useEffect } from "react";
+export default function ControlledCheckbox(assessmentId,assessmentDuration,assessmentLength,assessmentName) {
+  const [checked, setChecked] = React.useState(false);
+  const [assessment,setAssessment]=React.useState();
+  let navigate=useNavigate();
+  let location = useLocation();
+  const assessment_id=location.state.assessmentId.id;
+  const assessment_duration=location.state.assessmentDuration.duration;
+  const assessment_length=location.state.assessmentLength.length;
+  const assessment_name=location.state.assessmentName.name;
+  
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
+  const handlAttempt=()=>{
+    navigate("/TakeAssessments",{state:{assessment_id:{assessment_id}}});
+  }
   return (
     <>
-    <Navbar></Navbar>
     <container>
     <div style={{ paddingTop: 88,paddingBottom: "20px"  }}>
               <h1 style={{
@@ -31,10 +42,10 @@ export default function ControlledCheckbox() {
            </div>
            <box>
            <div className='my-1 mx-5' align= "left"style={{ paddingTop: "10px" }}>
-              <h4>Time Limit:</h4>
-              <h4>Total Questions:</h4>
-              <h4>Marks allotted to each question</h4>
-              <h4>Allowed attempts:</h4>
+              <h4>Assessment Name: {assessment_name}</h4>
+              <h4>Time Limit: {assessment_duration}</h4>
+              <h4>Total Questions: {assessment_length}</h4>
+              <h4>Allowed attempts:01</h4>
             </div>
             </box>
             <container>
@@ -47,18 +58,24 @@ export default function ControlledCheckbox() {
            </div>
             </container>
             <div align="right" style={{ paddingBottom: "30px" }}>
+                       <Link to="/EligibleAssessments">
                        <Button
                         style={{
                           backgroundColor: "black",
                           color: "white",
                           height: 35,
-                          width: 140}}>Back</Button>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<Button
+                          width: 140}}>Back</Button></Link>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+                          {checked?
+                          <Button
                           style={{
                             backgroundColor: "black",
                             color: "white",
                             height: 35,
-                            width: 200}}>Proceed to take test</Button>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+                            width: 200}}
+                            onClick={handlAttempt}>Proceed to take test</Button>:null }
+                            &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
                              &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+
                   
                   </div>
            </container>

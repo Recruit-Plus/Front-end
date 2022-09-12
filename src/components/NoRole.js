@@ -75,8 +75,10 @@ export default function FormPropsTextFields(email,firstName,lastName) {
   
   const onSubmit = (data) => {
     const requestbody={...userDetails,college:data.college,branch:data.branch,year:data.year}
-    axios.post("http://localhost:8084/users/v1/",requestbody).then(result=>
-      window.localStorage.setItem("userId", result.data.user_id)
+    axios.post("http://localhost:8084/users/v1/",requestbody)
+    .then(result =>
+      window.localStorage.setItem("userId", result.data.user_id),
+      window.localStorage.setItem("user", userDetails.user_name)
     )
     .catch(err=>{
         console.log(err.message)

@@ -24,8 +24,8 @@ const EligibleAssessments =()=>{
          console.log(err.message)
        })
     }
-    const handleTest= id =>{
-      navigate("/TakeAssessments",{state:{assessment_id:{id}}});
+    const handleTest= (id, duration, length, name ) =>{
+      navigate("/instructions",{state:{assessmentId:{id},assessmentDuration:{duration},assessmentLength:{length},assessmentName:{name}}});
     }
 
 
@@ -58,7 +58,7 @@ const EligibleAssessments =()=>{
               <TableCell >
               <Stack spacing={2} direction="row">
                 <Button style={{width:200,backgroundColor:'black',color:'white',fontSize:'1rem'}}
-                onClick={()=>{handleTest(assessment.assessment_id)}} >Take Test</Button>
+                onClick={()=>{handleTest(assessment.assessment_id, assessment.duration, assessment.question_id?.length, assessment.assessment_name)}} >Take Test</Button>
               </Stack>
               </TableCell>
               </TableRow>

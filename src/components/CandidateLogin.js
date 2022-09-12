@@ -12,10 +12,7 @@ const CandidateLogin = (firstName,lastName) => {
     const f_name=location.state.firstName.first_name;
     const l_name=location.state.lastName.last_name;
 
-    console.log(location.state.firstName.first_name,location.state.lastName.last_name);
-
     return <>
-      {/* <Navbar/> */}
       <div><br></br>
         <TableRow>
             <TableCell><div  ><img src={img2} width={500} height={500} style={{marginTop: "15%", display: "inline-block;" , width:"120%",height:"150%"}}></img></div></TableCell>

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 import axios from 'axios';
 import { Button ,Box, Grid,TextField,Stack,Container} from '@mui/material';
 import swal from 'sweetalert'
@@ -16,23 +16,25 @@ export default function EditButtonPopup({question}) {
   const[level,setLevel] = React.useState(question.difficulty_level);
   const[duration,setDuration] = React.useState(question.duration);
   const[score,setScore] = React.useState(question.score);
+  const ans =question.answer;
   const[choices,setchoice] = React.useState([]);
   const[topics,settopics] = React.useState([]);
   const options = [option1, option2, option3, option4]
   const [valid,setvalid]=React.useState(false);
+  const created=question.created_by;
   const [data,setData]=React.useState
   (    
     {
       question:questionm,
        choices:choices,
-      topic : topics,
+      topic : topic,
       difficulty_level:level,
       type:type,
       duration:duration,
       score:score,
-      answer:[],
-      created_by:"Ritika",
-      last_modified_by:"Srinu"
+      answer:ans,
+      created_by:"",
+      last_modified_by:window.localStorage.getItem("user")
     }
   )
  
@@ -40,7 +42,7 @@ export default function EditButtonPopup({question}) {
     
   function Handleput(e){
    
-    const requestBody = {...data,choices: options}
+    const requestBody = {...data,choices: options,created_by:created}
     const url='http://localhost:8081/questions/v1/question/'+questionId; // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
     axios.put(url,requestBody).then((response) => {
       swal({
@@ -48,8 +50,7 @@ export default function EditButtonPopup({question}) {
         icon: "success",
         button: "OK",
       });
-    });
-  
+    });  
   }
   return (
     <>
@@ -58,10 +59,7 @@ export default function EditButtonPopup({question}) {
        <Stack spacing={85} direction='row'>
               <div></div>
       <div style={{paddingTop:'50px'}}>
-        
-    <Link to='/questionlist'>
-     <Button style={{backgroundColor:'black',color:'white'}} onClick={(e)=>Handleput(e)}>Update </Button>
-    </Link>
+        <Button style={{backgroundColor:'black',color:'white'}} onClick={(e)=>Handleput(e)}>Update </Button>
     </div>
 </Stack>
     <Grid container style={{paddingTop:20}} spacing={2}>  <Grid item lg={3} >
@@ -87,7 +85,7 @@ export default function EditButtonPopup({question}) {
     <Container styles={{borderRight:'2px solid black',paddingLeft:60,paddingBottom:30}}>    
       <Stack>
         <form>
-        <TextField  fullWidth label="Topic" defaultValue={question.topics}  onChange={(event) => setData({...data,topics: [event.target.value]})} 
+        <TextField  fullWidth label="Topic" defaultValue={topic}  onChange={(event) => setData({...data,topics: [event.target.value]})} 
           style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
         <TextField  fullWidth label="Type" defaultValue={question.type}  onChange={(event) => setData({...data,type: event.target.value})} 
           style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
@@ -138,7 +136,7 @@ export default function EditButtonPopup({question}) {
           style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
         <TextField  fullWidth label="Option 4" defaultValue={question.choices[3]} onChange={(event) => setoption4(event.target.value)}
           style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
-        <TextField  fullWidth label="Answer" defaultValue={question.answer} onChange={(event) => setData({...data,answer: [event.target.value]})}
+        <TextField  fullWidth label="Answer" defaultValue={ans} onChange={(event) => setData({...data,answer: [event.target.value]})}
           style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
         </form>
       </Stack>     

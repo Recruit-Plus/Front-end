@@ -88,7 +88,8 @@ const Feed= (props) => {     //main function
   const options = [option1, option2, option3, option4]
  const[invalid,setinvalid]=React.useState(false);
  const [answers,setanswers]=React.useState([]);
-  const [data,setData]=React.useState
+ console.log( window.localStorage.getItem("user"));
+ const [data,setData]=React.useState
   (    
     {
       question:"",
@@ -99,9 +100,9 @@ const Feed= (props) => {     //main function
       score:"",
       answer:[],
       topics:[],
-      created_by:"Ritika",
-      last_modified_by:"Srinu"
-    }
+      created_by: window.localStorage.getItem("user"),
+      last_modified_by:window.localStorage.getItem("user")
+      }
   )
   const handleChangeTopic = (event) => {
     const {
@@ -178,19 +179,7 @@ const TopicAddHandler = (e) => {
     .catch(err=>{
       console.log(err.message)
     })
-  }
-  // const [Answers, setAnswers] = React.useState([]);
-  // const handleChange = (event) => {
-  //   const {
-  //     target: { value },
-  //   } = event;
-  //   setAnswers(
-  //     // On autofill we get a stringified value.
-  //     typeof value === 'string' ? value.split(',') : value,
-  //   );
-  // };
-
-  
+  }  
   return (
     <>
     <Navbar/>
@@ -255,8 +244,7 @@ const TopicAddHandler = (e) => {
                 </div>
                 </TableCell>
               </Table>
-              {/* <IconButton variant="contained" onClick={handleClickOpen} align="right"><AddIcon/></IconButton>        */}
-        </Item>
+            </Item>
     <Item style={{paddingTop:1 ,paddingBottom:1}}>
       <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Difficulty level</div>
           <div align='left' >
@@ -267,9 +255,9 @@ const TopicAddHandler = (e) => {
                 name="radio-buttons-group"
                 id='  difficulty_level'
               >
-            <FormControlLabel  value='easy' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Easy" style={{color:'black'}}/>
-            <FormControlLabel  value='medium' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Medium" style={{color:'black'}}/>
-            <FormControlLabel   value='hard' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Hard" style={{color:'black'}}/>
+            <FormControlLabel  value='Easy' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Easy" style={{color:'black'}}/>
+            <FormControlLabel  value='Medium' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Medium" style={{color:'black'}}/>
+            <FormControlLabel   value='Hard' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Hard" style={{color:'black'}}/>
             </RadioGroup>
             </FormControl>
         </div>
@@ -288,7 +276,7 @@ const TopicAddHandler = (e) => {
                     <FormControlLabel value='mcq' onChange={(event) => setData({...data,type:event.target.value})}  
                      control={<Radio />} label="MCQ" style={{color:'black'}}/>
                     <FormControlLabel value='Fill in the blank' onChange={(event) => setData({...data,type:event.target.value})}   
-                    control={<Radio/>} label="Descriptive" style={{color:'black'}}/>
+                    control={<Radio/>} label="Fill in the blank" style={{color:'black'}}/>
                     </RadioGroup>
                   </FormControl>  
               </div>
@@ -357,11 +345,7 @@ const TopicAddHandler = (e) => {
               style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
             <TextField  fullWidth label="Option 4"   onChange={(event) => setoption4(event.target.value)}
               style={{margin:'0.9rem auto ',color:'black',backgroundColor:'white'}}></TextField>
-            {/* <TextField  fullWidth label="Answer"   value={data.answer}  onChange={(event) => setData({...data,answer: [event.target.value]})}
-            
-              style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}>
-              
-              </TextField> */}
+          
               <FormControl sx={{width:570}}>
               <InputLabel id="demo-multiple-name-label" style={{color:'black'}}>Answer</InputLabel>
                       <Select
@@ -376,10 +360,6 @@ const TopicAddHandler = (e) => {
                          <MenuItem  value={options[1]} >{options[1]}</MenuItem>
                          <MenuItem  value={options[2]} >{options[2]}</MenuItem>
                          <MenuItem  value={options[3]} >{options[3]}</MenuItem>
-                       
-                         {/* {choices?.map((choice,id) => (
-                        <MenuItem  value={choice.options}>{choice.options}</MenuItem>
-                        ))} */}
                         
                       </Select>
                       </FormControl>

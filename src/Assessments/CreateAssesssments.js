@@ -28,8 +28,8 @@ const [data,setData]=React.useState
     {
       assessment_name:"",
       question_id:[],
-      created_by:"Ritika",
-      last_modified_by:"Srinu"
+      created_by:window.localStorage.getItem("user"),
+      last_modified_by:window.localStorage.getItem("user")
     }
   )
 function handlepost(e)

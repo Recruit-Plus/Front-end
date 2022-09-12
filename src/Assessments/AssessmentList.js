@@ -120,9 +120,6 @@ const AssessmentList = () => {
            
             <TableBody>
                 <TableCell>
-                  <Link to='/adminlogin'>
-                    <Button style={{color:'black'}}><ArrowBackIcon/></Button>
-                  </Link>
                   <h3 align='center'>Assessments List</h3>
                 </TableCell>
                 <TableCell align='right'>

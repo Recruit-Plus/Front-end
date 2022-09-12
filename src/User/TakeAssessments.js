@@ -32,9 +32,9 @@ const TakeAssessments = (assessmentId) => {
   const firstIndex=lastIndex-Questionsperpage;
   const CurrentQuestion=Questions && Questions?.slice(firstIndex,lastIndex);
   const totalPages = Math.ceil(Questions?.length/Questionsperpage);
-  const assessment_id=location.state.assessment_id.id;
+  const assessment_id=location.state.assessment_id.assessment_id;
   React.useEffect(()=>{
-    axios.get(`http://localhost:8082/assessments/v1/assessment/${assessment_id}`).then(res => console.log(res.data))
+    axios.get(`http://localhost:8082/assessments/v1/assessment/questions/${assessment_id}`).then(res => console.log(res.data))
     .catch(err => console.log(err));
   },[])
    function handleClose(){

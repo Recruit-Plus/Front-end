@@ -1,26 +1,16 @@
 import * as React from "react";
 import axios from 'axios';
-import {Dialog,DialogTitle,DialogContent,DialogContentText,DialogActions,IconButton ,Paper,Box,Table,TableBody,TableCell,TableContainer,alpha,
-        TableRow,TableSortLabel,Toolbar,Typography,Checkbox,Tooltip,FormControlLabel,Switch,Stack,Button} from "@mui/material";
+import {Dialog,DialogTitle,DialogContent,DialogContentText,DialogActions,Paper,Box,Table,TableBody,TableCell,TableContainer,alpha,
+        TableRow,Toolbar,FormControlLabel,Switch,Stack,Button} from "@mui/material";
 import {OutlinedInput ,InputLabel ,MenuItem,FormControl,Select,AppBar} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import { visuallyHidden } from "@mui/utils";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SearchIcon from '@mui/icons-material/Search';
 import {Link} from "react-router-dom";
-import PropTypes from "prop-types";
-import PrimarySearchAppBar from "./Subnav";
 import EditButtonPopup from "./EditButtonPopup";
-import Navbar from '../components/Navbar';
 import EditIcon from '@mui/icons-material/Edit';
 import swal from 'sweetalert';
-function questionFilters(props){
-  console.log("function called",props.children)
-}
+
 export default function EnhancedTable(props) {
-  //  questionFilters(props)
-  const [order, setOrder] = React.useState("asc");
   const [selected, setSelected] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [dense, setDense] = React.useState(false);
@@ -37,18 +27,15 @@ export default function EnhancedTable(props) {
   const [Topics,setTopics]=React.useState([]);
   const [questionProps, setQuestionProps] =React.useState(false);
   const [editopen, setEditOpen] = React.useState(false);
+  const [difficulty_level, setDifficulty_level] = React.useState("");
+  const [type, setType] = React.useState(" ");
   let topics="";
-
-  // const [topics,settopics]=React.useState([]);
   React.useEffect(() => {  
     questionHandle()
     topicHandler()
   },[])
   const questionHandle= () => {
-    
-     topics=topicName.join();
-    console.log(topics,difficulty_level,type);
-    // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
+    topics=topicName.join();
     axios.get('http://localhost:8081/questions/v1/')  
       .then(result => setQuestions(result?.data?.content))
     .catch(err=>{
@@ -64,7 +51,6 @@ export default function EnhancedTable(props) {
   const handleSearch=()=>{
     topics=topicName.join();
     console.log(topics,difficulty_level,type);
-    // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
     axios.get('http://localhost:8081/questions/v1/search',{
       params:{
         topics,type,difficulty_level
@@ -83,15 +69,11 @@ export default function EnhancedTable(props) {
       typeof value === 'string' ? value.split(',') : value,
     );
   };
-  const [difficulty_level, setDifficulty_level] = React.useState("");
   const handleChange1 = (event) => {
     setDifficulty_level(event.target.value);
-    // setFilterData({...filterData, difficulty_level:event.target.value})
       };
-  const [type, setType] = React.useState("");
   const handleChange2 = (event) => {
     setType(event.target.value);
-    // setFilterData({...filterData, type:event.target.value})
       };
   const PreviousPage= (event) =>{
       if(currentPage>1){
@@ -133,7 +115,7 @@ export default function EnhancedTable(props) {
   const DeleteHandleFromDialogue= (choose)=>{
     setOpen(false);
     if(choose){
-      axios.delete(`http://localhost:8081/questions/v1/question/${QuestionIdRef}`) //if you are running backend on port 8081 change the port number in url to 8081
+      axios.delete(`http://localhost:8081/questions/v1/question/${QuestionIdRef}`) 
         .then((res)=> {
           swal({
             title: "Question Deleted Successfully",
@@ -142,8 +124,6 @@ export default function EnhancedTable(props) {
           });
           questionHandle();
         })
-      
-      // setQuestions(Questions.filters(Questions => Questions.id !== QuestionIdRef.current));
     }
   }
   return (
@@ -151,7 +131,6 @@ export default function EnhancedTable(props) {
     {
           editopen?<EditButtonPopup question={questionProps} />:
          <div>
-         {/* <PrimarySearchAppBar></PrimarySearchAppBar>  */}
          <Dialog
     open={open}
     onClose={handleClose}
@@ -271,7 +250,7 @@ export default function EnhancedTable(props) {
               <TableCell >
               <Stack spacing={2} direction="row">
               <Button variant="outlined" style={{backgroundColor:'black',color:'white'}} onClick={() =>{handleUpdate(questions)}}>
-                <EditIcon/>   {/* This you can see infront of every question */ }
+                <EditIcon/> 
               </Button>
               
                 <Button variant="contained" color="error" onClick={() =>{handleDelete(questions?.question_id)}}>
