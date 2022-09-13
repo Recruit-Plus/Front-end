@@ -7,8 +7,6 @@ import {Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Paper,T
 import {OutlinedInput ,InputLabel ,MenuItem,FormControl,Select,AppBar,Table} from "@mui/material"
 import Navbar from '../components/Navbar';
 import swal from 'sweetalert';
-import AddIcon from '@mui/icons-material/Add';
-import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -88,7 +86,6 @@ const Feed= (props) => {     //main function
   const options = [option1, option2, option3, option4]
  const[invalid,setinvalid]=React.useState(false);
  const [answers,setanswers]=React.useState([]);
- console.log( window.localStorage.getItem("user"));
  const [data,setData]=React.useState
   (    
     {
@@ -128,7 +125,7 @@ const Feed= (props) => {     //main function
   if
   (data.question.length==0  || data.type.length=="fghg"
      || data.difficulty_level.length=="ngf" || data.duration==0 || data.score==0 || category.length==0 
-     || answers.length==0 || options.length==0
+     || (answers.length==0 && options.length==0)
     )
 
     {
@@ -150,7 +147,9 @@ const Feed= (props) => {     //main function
     })
   }
   else{
+    console.log(answers);
   const requestBody = {...data,choices: options,topics:category,answer:answers}
+  console.log(requestBody);
   axios.post("http://localhost:8081/questions/v1/question",requestBody).then(result=>{console.log(result?.data)})
   .alert(swal({
     title: "Question added Successfully",
@@ -273,7 +272,7 @@ const TopicAddHandler = (e) => {
                       name="radio-buttons-group"
                       id='type'      
                     >
-                    <FormControlLabel value='mcq' onChange={(event) => setData({...data,type:event.target.value})}  
+                    <FormControlLabel value='MCQ' onChange={(event) => setData({...data,type:event.target.value})}  
                      control={<Radio />} label="MCQ" style={{color:'black'}}/>
                     <FormControlLabel value='Fill in the blank' onChange={(event) => setData({...data,type:event.target.value})}   
                     control={<Radio/>} label="Fill in the blank" style={{color:'black'}}/>
@@ -320,14 +319,15 @@ const TopicAddHandler = (e) => {
         <Container >
           <Stack>
             <p  style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'130%'}}>Question</p>
-            <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'130%'}}>Option 1</p>
-
+            {data.type=="MCQ"?
+            <Stack><p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'130%'}}>Option 1</p>
             <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'130%'}}>Option 2</p>
-
             <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'130%'}}>Option 3</p>
-
             <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'130%'}}>Option 4</p>
             <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'130%'}}>Answer</p>
+            </Stack>:
+            <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.6rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'130%'}}>Answer</p>
+            }
           </Stack>
        </Container>
       </Grid>
@@ -337,7 +337,8 @@ const TopicAddHandler = (e) => {
             <form >
             <TextField id ='question' fullWidth label="Question " variant='outlined'  onChange={(event) => setData({...data,question: event.target.value})}
             style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
-            <TextField  fullWidth label="Option 1"   onChange={(event) => setoption1(event.target.value)}
+             {data.type=="MCQ"?
+            <Stack><TextField  fullWidth label="Option 1"   onChange={(event) => setoption1(event.target.value)}
               style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
             <TextField  fullWidth label="Option 2"   onChange={(event) => setoption2(event.target.value)}
               style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
@@ -363,6 +364,9 @@ const TopicAddHandler = (e) => {
                         
                       </Select>
                       </FormControl>
+              </Stack>:
+              <TextField  fullWidth label="answer"   onChange={(event) => setanswers((event.target.value).split(" "))}
+              style={{margin:'0.9rem auto ',color:'black',backgroundColor:'white'}}></TextField>} 
             </form>
           </Stack>     
         </Container>
