@@ -1,30 +1,29 @@
 import React from 'react';
-import {
-    Link,
-    } from "react-router-dom";
+import {Link} from "react-router-dom";
   import img1 from '../images/recruit+logo.png';
-import { Button ,Typography,AppBar,Box,Toolbar,Grid,Stack,RadioGroup,Radio,FormControlLabel,FormControl,ListItem,ListItemText
-,DialogActions,DialogContentText,DialogContent,DialogTitle,Dialog,TableBody,TableCell,TableRow,Table,Paper,TableContainer}from '@mui/material';
+import { Button ,Typography,AppBar,Box,Toolbar,Grid,Stack,RadioGroup,Radio,FormControlLabel,FormControl,TextField,Input,
+  DialogActions,DialogContentText,DialogContent,DialogTitle,Dialog,TableBody,TableCell,TableRow,Table,Paper,TableContainer}from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import PersonIcon from '@mui/icons-material/Person';
 import TimerIcon from '@mui/icons-material/Timer';
 import Instructions from './Instructions';
 import Divider from '@mui/material/Divider';
 import { useLocation } from "react-router-dom";
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import  './takeassessment.css';
 import axios from 'axios';
 
- function createTest(Question,option1,option2,option3,option4){
-    return {Question ,option1,option2,option3,option4};
- }
- const question=[
-  createTest("Which component is used  compile, debug and execute the java programs?","JRE", "JIT","JDK","JVM")
+//  function createTest(Question,option1,option2,option3,option4){
+//     return {Question ,option1,option2,option3,option4};
+//  }
+//  const question=[
+//   createTest("Which component is used   debug and execute the java programs?","JRE", "JIT","JDK","JVM")
   
-];
+// ];
 const TakeAssessments = (assessmentId) => {
   const location = useLocation();
   const [finish,setfinish]=React.useState(false);
-  const[Question,setQuestion]=React.useState(0);
+  // const[Questions,setQuestion]=React.useState(0);
   const[Questionsperpage,setquestionsperpage]=React.useState(1);
   const[Currentpage,setcurrentpage]=React.useState(1);
   const[Questions,setQuestions]=React.useState([]);
@@ -33,10 +32,17 @@ const TakeAssessments = (assessmentId) => {
   const CurrentQuestion=Questions && Questions?.slice(firstIndex,lastIndex);
   const totalPages = Math.ceil(Questions?.length/Questionsperpage);
   const assessment_id=location.state.assessment_id.assessment_id;
+  const [reset ,SetReset]=React.useState(true);
+  let questionLength=Questions.length;
+  const [questionIndex, setQuestionIndex]=React.useState(0);
   React.useEffect(()=>{
-    axios.get(`http://localhost:8082/assessments/v1/assessment/questions/${assessment_id}`).then(res => console.log(res.data))
+    axios.get(`http://localhost:8082/assessments/v1/assessment/questions/${assessment_id}`).then(res =>setQuestions(res?.data))
     .catch(err => console.log(err));
   },[])
+  function resetAnswer(){
+    SetReset(false);
+ }
+
    function handleClose(){
     setfinish(false);
    }
@@ -44,12 +50,18 @@ const TakeAssessments = (assessmentId) => {
     setfinish(true);
    }
    const PreviousPage= (event) =>{
-    if(Currentpage>1){
+    if(Currentpage==1){
+      alert("Reached to first question");
+    }
+    else if(Currentpage>1){
       setcurrentpage(Currentpage-1);
     }
 }
 const NextPage = (event) =>{
-  if(Currentpage < Currentpage+1){
+  if(Currentpage==questionLength){
+    alert("Reached to last question");
+  }
+  else if(Currentpage < Currentpage+1){
     setcurrentpage(Currentpage+1);
   }
 }
@@ -119,9 +131,11 @@ const NextPage = (event) =>{
       <Grid item xs={2} style={{borderRight:'2px solid black'}} >
           <Box sx={{ width: "95%" ,paddingTop:3,paddingLeft:4}}>
             <Paper className='scroll' sx={{ height:"100%",width: "85%", mb: 2 ,paddingBottom:4}}>
+            {Questions.map((question,index) => (
               <div style={{ float: "left" ,paddingLeft:50,paddingTop:6}}>
-              <Box  width={35} height={35} style={{backgroundColor:'black',borderRadius:30}}><h6 align="center" style={{color:'white',paddingTop:6}}>1</h6></Box>   
-             </div>
+              <Box  width={35} height={35} style={{backgroundColor:'black',borderRadius:30}}><h6 align="center" style={{color:'white',paddingTop:6}}>{index +1}</h6></Box>   
+              </div>
+               ))}
             </Paper>
          </Box>
        
@@ -131,7 +145,7 @@ const NextPage = (event) =>{
      <Box sx={{ width: "95%" ,paddingTop:3,paddingLeft:10}}>
     
      <Paper sx={{ width: "100%", mb: 2 ,paddingBottom:4}}>
-      {question?.length===0 ?
+      {Questions?.length===0 ?
         <div style={{ float: "left"  }}>
          Question {totalPages}  
          </div>
@@ -152,80 +166,62 @@ const NextPage = (event) =>{
           >
            
            <TableBody>
-                {question?.length===0 ?
-                <TableCell scope="questions" style={{width:'100%'}} >   
+                {Questions?.length===0 ?
+                <TableCell style={{width:'100%'}} >   
                 <h5>No data Available!!!</h5>
               </TableCell>
               :
-             question.map((questions) => (
+             CurrentQuestion?.map((questions,index ) => (
+          <Table>
         <TableRow
    
-            key={questions.Question}
+            key={index}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
         >
     
              <TableCell component="th" scope="row" >
-              {questions.Question}
+              {questions?.question}
             </TableCell>
-          
-   </TableRow>
-              ),) } 
-              
-            </TableBody>     </Table>
+        </TableRow>
+        <TableRow>
+        
+          <TableCell>
+   <FormControl>
+    {questions.type=="mcq"?
+    <div>
+   {questions?.choices.map((option) => (
+    <RadioGroup
+      aria-labelledby="demo-radio-buttons-group-label"
+      name="radio-buttons-group">
+       {option.length!==0?
+      <FormControlLabel value={option} control={<Radio />} label={option}/>:null
+       }
+    </RadioGroup>
+    ))}
+    </div>
+    :
+    <TextField
+    label="Answer"
+    onChange={(event)=>console.log(event.target.value)}
+  />
+    }
+  </FormControl>
+  </TableCell>
+    </TableRow>
+    </Table>
+  ),) } 
+   </TableBody>     
+            </Table>
         </TableContainer>
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 600 , maxwidth :600 }}
-            aria-labelledby="tableTitle"
-           
-          >
-           
-           <TableBody>
-                {question?.length===0 ?
-                <TableCell scope="questions" style={{width:'100%'}} >   
-              </TableCell>
-              :
-             question.map((questions) => (
-        <TableRow
-   
-            key={questions.Question}
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-        >
-            
-  <TableCell>
-     <FormControl>
-      <RadioGroup
-        aria-labelledby="demo-radio-buttons-group-label"
-        defaultValue="female"
-        name="radio-buttons-group"
-      >
-        <FormControlLabel value={questions.option1} control={<Radio />} label={questions.option1}/>
-        <FormControlLabel value={questions.option2} control={<Radio />} label={questions.option2} />
-        <FormControlLabel value={questions.option3} control={<Radio />} label={questions.option3} />
-        <FormControlLabel value={questions.option4} control={<Radio />} label={questions.option4} />
-      </RadioGroup>
-    </FormControl>
-    </TableCell>
-   </TableRow>
-              ),) } 
-              
-            </TableBody>     </Table>
-        </TableContainer>
-        {question?.length===0 ?
-        <div style={{ float: "left" }}>
-          <Button onClick={PreviousPage} style={{}}>Prev</Button>
-          {/* Page {totalPages}  */}
-          <Button onClick={NextPage}>Next</Button>
-        </div>
-        :
-        <div style={{ float: "left" ,paddingTop:100,paddingRight:700}}>
-          <Stack spacing={2} direction='row'>
+        </Paper>
+        <Button onClick={resetAnswer}>Reset Answer <RestartAltIcon/></Button> 
+        <div style={{ float: "left" ,paddingTop:90,paddingRight:700}}>
+          <Stack spacing={20} direction='row'>
           <Button onClick={PreviousPage}  style={{float: "left"}}>Prev</Button>
-          {/* Page {Currentpage}  */}
           <Button onClick={NextPage}  style={{float: "right"}}>Next</Button>
           </Stack>
-        </div>}
-      </Paper>
+        </div>
+     
     </Box>
      </Grid>
     </Grid>

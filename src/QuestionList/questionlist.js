@@ -28,7 +28,7 @@ export default function EnhancedTable(props) {
   const [questionProps, setQuestionProps] =React.useState(false);
   const [editopen, setEditOpen] = React.useState(false);
   const [difficulty_level, setDifficulty_level] = React.useState("");
-  const [type, setType] = React.useState(" ");
+  const [type, setType] = React.useState("");
   let topics="";
   React.useEffect(() => {  
     questionHandle()

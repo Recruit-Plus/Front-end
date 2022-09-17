@@ -92,7 +92,7 @@ const Feed= (props) => {     //main function
       question:"",
        choices:choices,
       difficulty_level:"",
-      type:"",
+      type:"Fill in the blank",
       duration:"",
       score:"",
       answer:[],

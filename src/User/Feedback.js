@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { Divider,Typography,Stack,Box,IconButton,Toolbar,AppBar } from '@mui/material';
 import img1 from '../images/recruit+logo.png';
+import {Link} from "react-router-dom";
+
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     'label + &': {
@@ -36,34 +38,9 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   
 const Feedback = () => {
     return <>
-    <Box  style={{paddingBottom:70 }}>
-     <AppBar position="fixed"  style={{backgroundColor:'#d50000',minHeight: 20}}>
-        <Toolbar>
-        <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-          
-            <img src={img1} style={{ width:"40px",height:"40px"}} alt="img"/>
-          </IconButton>
-          <Divider orientation="vertical" flexItem color='white'/>
-        <Stack spacing={4} direction ='row' style={{paddingLeft:30}}>
-          <Divider orientation="vertical" flexItem color='white'/>
-          <Typography variant="h4" 
-            component="div" sx={{ flexGrow: 3}}>
-          </Typography >
-          <Typography style={{color:'white',paddingRight:340,paddingLeft:400}}></Typography>
-          </Stack>
-        </Toolbar>
-      </AppBar>
-    </Box>
-
      <Container>
     <box>
-    <div align ="center" style={{paddingTop : 50}}> 
+    <div align ="center" style={{paddingTop : 75}}> 
     <h2>Your Quiz has been submitted successfully!!!!!</h2>
     <div>
     <div style={{paddingTop : 10}} align="left">
@@ -77,14 +54,16 @@ const Feedback = () => {
      name="half-rating"
      size="large" />
      </div>
-     <div align = "left" style={{paddingTop : 50}}><h5>Do you have any suggestions to improve our website</h5></div>
+     <div align = "left" style={{paddingTop : 20}}><h5>Do you have any suggestions to improve our website</h5></div>
      <div className='container my-2 mx-1' align= "left" style={{paddingTop : 20}} >
      <FormControl variant="standard">
         <BootstrapInput defaultValue=" " />
       </FormControl>
       </div>
       <div style={{paddingTop : 40}} align= "center">
+      <Link to="/">
       <Button  variant="contained" style={{backgroundColor:'black'}}>Submit</Button>
+      </Link>
       </div>
      </box>
      </Container></>;
