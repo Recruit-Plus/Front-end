@@ -11,7 +11,7 @@ import Navbar from './Navbar';
 const HomePage = () => {
     return  <>
     {/* <Navbar/> */}
-    <div classname="HomePage">
+    <div className="HomePage">
     <img
     src={Bgimg}
     style={{ marginTop: "15%", display: "inline-block;" , width:"43%",height:"55%",paddingRight:10}}
@@ -24,7 +24,7 @@ const HomePage = () => {
     view results, allows students to take tests <br/> 
     and join their dream companies.
      </motion.p> 
-    <div class="container" >
+    <div className="container" >
         <div className="row">
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridGap: 10 , marginLeft: "-15%"}}>
                 <div>
