@@ -123,8 +123,8 @@ const Feed= (props) => {     //main function
  {
   var c=/^[a-zA-Z]*$/;
   if
-  (data.question.length==0  || data.type.length=="fghg"
-     || data.difficulty_level.length=="ngf" || data.duration==0 || data.score==0 || category.length==0 
+  (data.question.length==0  || data.type.length==0
+     || data.difficulty_level.length==0 || data.duration==0 || data.score==0 || category.length==0 
      || (answers.length==0 && options.length==0)
     )
 
@@ -300,8 +300,7 @@ const TopicAddHandler = (e) => {
               <Stack spacing={36} direction='row'>
             <div></div>
               <Link to='/questionlist'>
-                <Button variant="contained" 
-                style={{backgroundColor:'#696969'}}
+                <Button variant="contained" style={{backgroundColor:'#696969'} }
                 >Close</Button>
               </Link>
            <Link to='/questionlist'>

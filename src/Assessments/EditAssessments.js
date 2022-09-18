@@ -64,7 +64,7 @@ color: "inherit",
   }
 }
 }));
-const EditAssessments = () => {
+const EditAssessments = (assessment) => {
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
       

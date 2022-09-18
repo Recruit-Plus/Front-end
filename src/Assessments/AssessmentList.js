@@ -4,11 +4,11 @@ import axios from 'axios';
 import {Dialog,DialogTitle,DialogContent,DialogContentText,DialogActions,IconButton ,Paper,Box,Table,TableBody,TableCell,TableContainer,alpha,
         TableRow,TableSortLabel,Toolbar,Typography,Checkbox,Tooltip,FormControlLabel,Switch,Stack,Button} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-//import PrimarySearchAppBar from "./Subnav";
 import EditIcon from '@mui/icons-material/Edit';
 import Navbar from "../components/Navbar";
 import EditButtonPopup from "../QuestionList/EditButtonPopup";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import swal from 'sweetalert';
 
 
 
@@ -26,16 +26,22 @@ const AssessmentList = () => {
   const firstIndex = lastIndex - assessmentsPerPage;
   const currentassessments = assessments && assessments.slice(firstIndex,lastIndex);
   const totalPages = Math.ceil(assessments?.length/assessmentsPerPage);
-  const [questionProps, setQuestionProps] =React.useState(false);
+  const [assessmentProps, setAssessmentProps] =React.useState(false);
   const [editopen, setEditOpen] = React.useState(false);
+  const [assessmentIdRef, setAssessmentIdRef] =React.useState();
   
   React.useEffect(() => {  
     
+   assessmentHandle();
+  },[]) 
+
+  const assessmentHandle=()=>{
     axios.get('http://localhost:8082/assessments/v1/assessment').then(result => setassessments(result?.data))
     .catch(err=>{
       console.log(err.message)
     })
-  },[])
+
+  }
 
   const PreviousPage= (event) =>{
       if(currentPage>1){
@@ -48,7 +54,6 @@ const AssessmentList = () => {
       setCurrentPage(currentPage+1);
     }
   }
-
 
   const handleClickOpen = () => {
     
@@ -63,8 +68,29 @@ const AssessmentList = () => {
   const handleUpdate= question =>{
     setEditOpen(true);
     console.log(question);
-    setQuestionProps(question);
+    setAssessmentProps(question);
      
+  }
+
+  const handleDelete= id =>{
+    setOpen(true);
+    setAssessmentIdRef(id); 
+  }
+
+
+  const DeleteHandle= (choose)=>{
+    setOpen(false);
+    if(choose){
+      axios.delete(`http://localhost:8082/assessments/v1/assessment/${assessmentIdRef}`) 
+        .then((res)=> {
+          swal({
+            title: "Question Deleted Successfully",
+            icon: "success",
+            button: "OK",
+          });
+          assessmentHandle();
+        })
+    }
   }
  
  
@@ -76,12 +102,11 @@ const AssessmentList = () => {
     return <>
     
 {
-      editopen?<EditButtonPopup question={questionProps} />:
+      editopen?<EditButtonPopup question={assessmentProps} />:
    
       
          <div>
         <Navbar></Navbar>
-        {/* <PrimarySearchAppBar></PrimarySearchAppBar> */}
          <Dialog
     open={open}
     onClose={handleClose}
@@ -98,16 +123,11 @@ const AssessmentList = () => {
     </DialogContent>
     <DialogActions>
       <Button onClick={handleClose} variant="contained" style={{backgroundColor:'black'}}>Cancel</Button>
-      <Button onClick={handleClose} variant="contained" color="error"autoFocus>
+      <Button onClick={() =>DeleteHandle(true)} variant="contained" color="error"autoFocus>
         Delete
       </Button>
     </DialogActions>
   </Dialog>
-  {/*<Navbar/>*/}
-
-    {/* <div style={{paddingTop:16}}>
-  <PrimarySearchAppBar />
-</div> */}
     <Box sx={{ width: "95%" ,paddingTop:15,paddingLeft:10}}>
       <Paper sx={{ width: "100%", mb: 2 }}>
        
@@ -149,7 +169,7 @@ const AssessmentList = () => {
               </Button>
               </Link>
               
-                <Button variant="contained" color="error" onClick={handleClickOpen}>
+                <Button variant="contained" color="error" onClick={() =>{handleDelete(assessments?.assessment_id)}}>
                   <DeleteIcon/>
                   </Button>
                 </Stack>

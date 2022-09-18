@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 import Navbar from "../components/Navbar";
 import TableHead from '@mui/material/TableHead';
 
-//----------------------------------------------------Actual function to be exported--------------------------
+
  function CreateAssessment() {
   const [dense, setDense] = React.useState(false);
   const [Questions, setQuestions]=React.useState([]);
@@ -34,13 +34,7 @@ const [data,setData]=React.useState
   )
 function handlepost(e)
  {
-  let arrayids = [];
-      stateQuestion.forEach(d => {
-        if (d.select) {
-          arrayids.push(d.id);
-          console.log(d.id);
-        }
-      });
+   
       console.log(stateQuestion);
   const requestBody = {...data,question_id:stateQuestion}
   axios.post("http://localhost:8082/assessments/v1/assessment",requestBody).then(result=>{console.log(result?.data)})
@@ -68,7 +62,7 @@ setDense(event.target.checked);
     &nbsp;&nbsp;
     <Button variant="contained"  style={{backgroundColor:'#696969'}} onClick={(e)=>handlepost(e)}>SAVE</Button>
     </div>
-{/* ---------------------Box with table, dense padding toggle and prev, next pagination buttons--------------         */} 
+
 
     <Box sx={{ width: "95%" ,paddingTop:4,paddingLeft:10}}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -78,8 +72,7 @@ setDense(event.target.checked);
               <TextField label="Assessment Name :" onChange={(event) => setData({...data,assessment_name: event.target.value})}>
               </TextField>
               <TableRow>
-                {/* <TableCell></TableCell> */}
-                <TableCell>Question</TableCell>
+                <TableCell>Questions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
