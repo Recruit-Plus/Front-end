@@ -58,18 +58,20 @@ export default function FormPropsTextFields(email,firstName,lastName) {
     }
   )
   let navigate =useNavigate();
+
   const handleshowhide = (event) => {
     const getuser = event.target.value;
     setShowhide(getuser);
     {setUserDetails({...userDetails,role:event.target.value})}
   };
-  // const [degree, setDegree] = React.useState("");
-  const handleChange = (event) => {
-    {setUserDetails({...userDetails,degree:event.target.value})}
-  };
+
+  // const handleChange = (event) => {
+  //   {setUserDetails({...userDetails,degree:event.target.value})}
+  // };
+
   const {
     register,
-    handleSubmit,
+     handleSubmit,
     formState: { errors },
   } = useForm();
   
@@ -92,9 +94,9 @@ export default function FormPropsTextFields(email,firstName,lastName) {
      }
 
  }
-  const onSubmitHandle=(data)=>{
-    console.log(data);
-  }
+  // const onSubmitHandle=(data)=>{
+  //   console.log(data);
+  // }
   return (
     <>
       <Navbar></Navbar>
@@ -145,7 +147,7 @@ export default function FormPropsTextFields(email,firstName,lastName) {
                 className="form-control"
                 onChange={(e) => handleshowhide(e)}
               >
-                <option value=""onChange={(event) => setUserDetails({...userDetails,role:event.target.value})}>---role---</option>
+                <option value=""  >---role---</option>
                 <option value="candidate"onChange={(event) => setUserDetails({...userDetails,role:event.target.value})}>candidate</option>
                 <option value="admin"onChange={(event) => setUserDetails({...userDetails,role:event.target.value})}>Admin</option>
               </select>
@@ -159,7 +161,7 @@ export default function FormPropsTextFields(email,firstName,lastName) {
                       <Select
                         
                         label="degree"
-                        onChange={handleChange}
+                        //onChange={handleChange}
                       >
                         <MenuItem value="">
                           <em>None</em>
@@ -250,7 +252,7 @@ export default function FormPropsTextFields(email,firstName,lastName) {
                       }}
                     
                     >
-                      proceed to take test
+                      Login
                     </Button>
                 
                   </div>
