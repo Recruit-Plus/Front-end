@@ -102,7 +102,7 @@ const AssessmentList = () => {
     return <>
     
 {
-      editopen?<EditButtonPopup question={assessmentProps} />:
+      editopen?<EditButtonPopup assessment={assessmentProps} />:
    
       
          <div>
