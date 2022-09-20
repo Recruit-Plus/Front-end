@@ -23,23 +23,41 @@ const TakeAssessments = (assessmentId) => {
   const CurrentQuestion= Questions?.slice(firstIndex,lastIndex);
   const totalPages = Math.ceil(Questions?.length/Questionsperpage);
   const assessment_id=location.state.assessment_id.assessment_id;
+  const [QuesAnswer,setQuesAnswer]=React.useState(["",[]]);
   const [reset ,SetReset]=React.useState(true);
+  const [Answers, setAnswers]=React.useState([]);
+  // let Answers=[];
+  const [QuestionId, setQuestionId]=React.useState("");
   let questionLength=Questions.length;
-  const [questionIndex, setQuestionIndex]=React.useState(0);
+  const [userResponses,setUserResponses]= React.useState({
+    user_id: window.localStorage.getItem("userId"),
+    assessment_id:assessment_id,
+    responseSubmitted:[],
+    Time_taken: 0,
+  })
+  const [response, setResponse] = React.useState([{
+    questionId:"",
+    answer_submitted: [""]
+  }])
   React.useEffect(()=>{
 
     axios.get(`http://localhost:8082/assessments/v1/assessment/questions/${assessment_id}`).then(res =>setQuestions(res?.data))
     .catch(err => console.log(err));
   },[])
+  function handleAnswer(event,id){
+    setAnswers([...Answers,event.target.value]);
+    setQuestionId(id);
+  }
   function resetAnswer(){
     SetReset(false);
  }
-
    function handleClose(){
     setfinish(false);
    }
    function handleClickOpen(){
     setfinish(true);
+    console.log(Answers);
+    console.log(response);
    }
    const PreviousPage= (event) =>{
     if(Currentpage==1){
@@ -49,12 +67,20 @@ const TakeAssessments = (assessmentId) => {
       setcurrentpage(Currentpage-1);
     }
 }
-const NextPage = (event) =>{
+const NextPage = () =>{
   if(Currentpage==questionLength){
+    console.log(Answers);
+    setResponse([{...response,questionId:QuestionId,answer_submitted:Answers}]);
+    setAnswers("");
+    console.log(response);
     alert("Reached to last question");
   }
   else{
     setcurrentpage(Currentpage+1);
+    console.log(Answers);
+    setResponse([{...response,questionId:QuestionId,answer_submitted:Answers}]);
+    console.log(response);
+    setAnswers("");
   }
 }
     return <>
@@ -167,27 +193,28 @@ const NextPage = (event) =>{
              CurrentQuestion?.map((questions,index ) => (
           <Table>
         <TableRow
-   
+
             key={index}
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-        >
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
     
              <TableCell component="th" scope="row" >
               {questions?.question}
+
             </TableCell>
         </TableRow>
         <TableRow>
         
           <TableCell>
    <FormControl>
-    {questions.type=="MCQ"?
+    {questions.type=="mcq"?
     <div>
    {questions?.choices.map((option) => (
     <RadioGroup
       aria-labelledby="demo-radio-buttons-group-label"
-      name="radio-buttons-group">
+      name="radio-buttons-group"
+      onChange={(event)=> handleAnswer(event,questions.question_id)}>
        {option.length!=0?
-      <FormControlLabel value={option} control={<Radio />} label={option}/>:null
+      <FormControlLabel value={option} control={<Radio />} label={option} />:null
        }
     </RadioGroup>
     ))}
@@ -206,15 +233,13 @@ const NextPage = (event) =>{
    </TableBody>     
             </Table>
         </TableContainer>
-        </Paper>
-        <Button onClick={resetAnswer}>Reset Answer <RestartAltIcon/></Button> 
+        </Paper> 
         <div style={{ float: "left" ,paddingTop:90,paddingRight:700}}>
           <Stack spacing={20} direction='row'>
           <Button onClick={PreviousPage}  style={{float: "left"}}>Prev</Button>
           <Button onClick={NextPage}  style={{float: "right"}}>Next</Button>
           </Stack>
-        </div>
-     
+        </div>     
     </Box>
      </Grid>
     </Grid>
