@@ -200,7 +200,7 @@ export default function EnhancedTable(props) {
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={type}
-                       
+                        label=" Difficulty level"
                         onChange={handleChange2}>
                           <MenuItem value="MCQ">MCQ</MenuItem>
                           <MenuItem value="Fill in the blank">Fill in the blank</MenuItem>

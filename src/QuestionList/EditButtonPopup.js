@@ -33,7 +33,7 @@ export default function EditButtonPopup({question}) {
       duration:duration,
       score:score,
       answer:ans,
-      created_by:created,
+      created_by:"",
       last_modified_by:window.localStorage.getItem("user")
     }
   )
@@ -111,7 +111,7 @@ export default function EditButtonPopup({question}) {
     <Container >
       <Stack>
         <p  style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'1rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'100%'}}>Question</p>
-        {question.type=="MCQ"?
+        {question.type=="mcq"?
         <Stack>
         <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'0.8rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'100%'}}>Option 1</p>
 
@@ -133,7 +133,7 @@ export default function EditButtonPopup({question}) {
         <form>
         <TextField id ='question' fullWidth label="Question " variant='outlined' defaultValue={question.question} onChange={(event) => setData({...data,question: event.target.value})}
                 style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
-        {question.type=="MCQ"?
+        {question.type=="mcq"?
         <Stack><TextField  fullWidth label="Option 1" defaultValue={question.choices[0]}  onChange={(event) => setoption1(event.target.value)}
           style={{margin:'0.8rem auto ',color:'black',backgroundColor:'white'}}></TextField>
         <TextField  fullWidth label="Option 2" defaultValue={question.choices[1]}  onChange={(event) => setoption2(event.target.value)} 

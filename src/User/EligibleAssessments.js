@@ -41,7 +41,7 @@ const EligibleAssessments =()=>{
           <Table
             sx={{ minWidth: 1000 , maxwidth :1000 }}
             aria-labelledby="tableTitle"
-    
+            //size={dense ? "small" : "medium"}
           >
            
             <TableBody>
