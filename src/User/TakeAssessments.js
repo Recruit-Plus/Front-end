@@ -4,8 +4,6 @@ import {Link} from "react-router-dom";
 import { Button ,Typography,AppBar,Box,Toolbar,Grid,Stack,RadioGroup,Radio,FormControlLabel,FormControl,TextField,Input,
   DialogActions,DialogContentText,DialogContent,DialogTitle,Dialog,TableBody,TableCell,TableRow,Table,Paper,TableContainer}from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import PersonIcon from '@mui/icons-material/Person';
-import TimerIcon from '@mui/icons-material/Timer';
 import Instructions from './Instructions';
 import Divider from '@mui/material/Divider';
 import { useLocation } from "react-router-dom";
@@ -13,29 +11,23 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import  './takeassessment.css';
 import axios from 'axios';
 
-//  function createTest(Question,option1,option2,option3,option4){
-//     return {Question ,option1,option2,option3,option4};
-//  }
-//  const question=[
-//   createTest("Which component is used   debug and execute the java programs?","JRE", "JIT","JDK","JVM")
-  
-// ];
+
 const TakeAssessments = (assessmentId) => {
   const location = useLocation();
   const [finish,setfinish]=React.useState(false);
-  // const[Questions,setQuestion]=React.useState(0);
   const[Questionsperpage,setquestionsperpage]=React.useState(1);
   const[Currentpage,setcurrentpage]=React.useState(1);
   const[Questions,setQuestions]=React.useState([]);
   const lastIndex=Currentpage*Questionsperpage;
   const firstIndex=lastIndex-Questionsperpage;
-  const CurrentQuestion=Questions && Questions?.slice(firstIndex,lastIndex);
+  const CurrentQuestion= Questions?.slice(firstIndex,lastIndex);
   const totalPages = Math.ceil(Questions?.length/Questionsperpage);
   const assessment_id=location.state.assessment_id.assessment_id;
   const [reset ,SetReset]=React.useState(true);
   let questionLength=Questions.length;
   const [questionIndex, setQuestionIndex]=React.useState(0);
   React.useEffect(()=>{
+
     axios.get(`http://localhost:8082/assessments/v1/assessment/questions/${assessment_id}`).then(res =>setQuestions(res?.data))
     .catch(err => console.log(err));
   },[])
@@ -53,7 +45,7 @@ const TakeAssessments = (assessmentId) => {
     if(Currentpage==1){
       alert("Reached to first question");
     }
-    else if(Currentpage>1){
+    else{
       setcurrentpage(Currentpage-1);
     }
 }
@@ -61,7 +53,7 @@ const NextPage = (event) =>{
   if(Currentpage==questionLength){
     alert("Reached to last question");
   }
-  else if(Currentpage < Currentpage+1){
+  else{
     setcurrentpage(Currentpage+1);
   }
 }
@@ -79,8 +71,9 @@ const NextPage = (event) =>{
         <DialogContent >
           <DialogContentText id="alert-dialog-description">
          
-          <Typography gutterBottom><h6>You still have 5 unanswered questions. </h6>  </Typography> 
-          <Typography gutterBottom ><h6> Do You  want to end the test.</h6></Typography> 
+          
+          <Typography ><h6> Do You  want to end the test?</h6></Typography> 
+          <Typography ><h6>Once submitted you cannot retake! </h6>  </Typography> 
            
            
           </DialogContentText>
@@ -145,7 +138,7 @@ const NextPage = (event) =>{
      <Box sx={{ width: "95%" ,paddingTop:3,paddingLeft:10}}>
     
      <Paper sx={{ width: "100%", mb: 2 ,paddingBottom:4}}>
-      {Questions?.length===0 ?
+      {Questions?.length==0 ?
         <div style={{ float: "left"  }}>
          Question {totalPages}  
          </div>
@@ -187,13 +180,13 @@ const NextPage = (event) =>{
         
           <TableCell>
    <FormControl>
-    {questions.type=="mcq"?
+    {questions.type=="MCQ"?
     <div>
    {questions?.choices.map((option) => (
     <RadioGroup
       aria-labelledby="demo-radio-buttons-group-label"
       name="radio-buttons-group">
-       {option.length!==0?
+       {option.length!=0?
       <FormControlLabel value={option} control={<Radio />} label={option}/>:null
        }
     </RadioGroup>
