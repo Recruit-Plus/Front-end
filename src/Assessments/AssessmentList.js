@@ -1,9 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {Dialog,DialogTitle,DialogContent,DialogContentText,DialogActions,IconButton ,Paper,Box,Table,TableBody,TableCell,TableContainer,alpha,
         TableRow,TableSortLabel,Toolbar,Typography,Checkbox,Tooltip,FormControlLabel,Switch,Stack,Button} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import EditIcon from '@mui/icons-material/Edit';
 import Navbar from "../components/Navbar";
 import EditButtonPopup from "../QuestionList/EditButtonPopup";
@@ -13,6 +14,7 @@ import swal from 'sweetalert';
 
 
 const AssessmentList = () => {
+  let navigate=useNavigate();
     const [order, setOrder] = React.useState("asc");
   const [selected, setSelected] = React.useState([]);
   const [open, setOpen] = React.useState(false);
@@ -92,6 +94,11 @@ const AssessmentList = () => {
         })
     }
   }
+
+  const handleResult=(assessment_id)=>{
+    console.log(assessment_id);
+    navigate('/Dashboard',{state:{assess_id:{assessment_id}}});
+  }
  
  
   
@@ -162,7 +169,14 @@ const AssessmentList = () => {
               </TableCell>
               
               <TableCell >
+              
               <Stack spacing={2} direction="row">
+              
+              <Button variant="outlined" style={{backgroundColor:'black',color:'white'}} onClick={() =>{handleResult(assessments?.assessment_id)}}
+ >
+                <LeaderboardIcon/>
+              </Button>
+             
                <Link to='/editassessment'>
               <Button variant="outlined" style={{backgroundColor:'black',color:'white'}} onClick={() =>{handleUpdate(assessments)}}>
                 <EditIcon/>   {/* This you can see infront of every question */ }
@@ -172,6 +186,11 @@ const AssessmentList = () => {
                 <Button variant="contained" color="error" onClick={() =>{handleDelete(assessments?.assessment_id)}}>
                   <DeleteIcon/>
                   </Button>
+                  
+
+                 
+              
+           
                 </Stack>
               </TableCell>
             </TableRow>
