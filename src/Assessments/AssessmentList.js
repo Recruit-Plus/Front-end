@@ -53,9 +53,11 @@ const AssessmentList = () => {
   }
 
   const NextPage = (event) =>{
+    if(currentPage<totalPages){
     if(currentPage < currentPage+1){
       setCurrentPage(currentPage+1);
     }
+  }
   }
 
   const handleClickOpen = () => {
