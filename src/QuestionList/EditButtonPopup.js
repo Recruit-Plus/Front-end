@@ -11,6 +11,8 @@ export default function EditButtonPopup({question}) {
   const[option2,setoption2] = React.useState(question.choices[1]);
   const[option3,setoption3] = React.useState(question.choices[2]);
   const[option4,setoption4] = React.useState(question.choices[3]);
+  console.log(question);
+  console.log(question.topic);
   const[topic,setTopic] = React.useState(question.topics);
   const[type,setType] = React.useState(question.type);
   const[level,setLevel] = React.useState(question.difficulty_level);
@@ -18,7 +20,6 @@ export default function EditButtonPopup({question}) {
   const[score,setScore] = React.useState(question.score);
   const ans =question.answer;
   const[choices,setchoice] = React.useState([]);
-  const[topics,settopics] = React.useState([]);
   const options = [option1, option2, option3, option4]
   const [valid,setvalid]=React.useState(false);
   const created=question.created_by;
@@ -26,8 +27,8 @@ export default function EditButtonPopup({question}) {
   (    
     {
       question:questionm,
-       choices:choices,
-      topic : topic,
+      choices:choices,
+      topics : topic,
       difficulty_level:level,
       type:type,
       duration:duration,
@@ -43,6 +44,7 @@ export default function EditButtonPopup({question}) {
   function Handleput(e){
    
     const requestBody = {...data,choices: options,created_by:created}
+    console.log(requestBody);
     const url='http://localhost:8081/questions/v1/question/'+questionId; // if u r running backend on port :8081 ...change url to 'http://localhost:8081/recruitPlus/questions'
     axios.put(url,requestBody).then((response) => {
       swal({

@@ -42,8 +42,8 @@ function Dashboard (assess_id,assess_name){
                <TableRow>          
                 <TableCell sx={{width: 350}}>candidate Id</TableCell>
                 <TableCell sx={{width: 250}}> Name</TableCell>
-                <TableCell sx={{width: 350}}> Email</TableCell>
-                <TableCell sx={{width: 280}}>college</TableCell>
+                <TableCell sx={{width: 330}}> Email </TableCell>
+                <TableCell sx={{width: 270}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;college</TableCell>
                 <TableCell sx={{width: 120}}>Score</TableCell>
                 <TableCell sx={{width: 120}}>Time taken</TableCell>
                 </TableRow>

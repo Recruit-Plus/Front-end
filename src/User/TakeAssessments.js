@@ -1,18 +1,16 @@
 import React from 'react';
-import {Link} from "react-router-dom";
-  import img1 from '../images/recruit+logo.png';
+import {Link ,useNavigate, useLocation } from "react-router-dom";
+import img1 from '../images/recruit+logo.png';
 import { Button ,Typography,AppBar,Box,Toolbar,Grid,Stack,RadioGroup,Radio,FormControlLabel,FormControl,TextField,Input,
-  DialogActions,DialogContentText,DialogContent,DialogTitle,Dialog,TableBody,TableCell,TableRow,Table,Paper,TableContainer}from '@mui/material';
+DialogActions,DialogContentText,DialogContent,DialogTitle,Dialog,TableBody,TableCell,TableRow,Table,Paper,TableContainer}from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import Instructions from './Instructions';
-import Divider from '@mui/material/Divider';
-import { useLocation } from "react-router-dom";
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import  './takeassessment.css';
 import axios from 'axios';
 
 
 const TakeAssessments = (assessmentId) => {
+  const navigate =useNavigate();
   const location = useLocation();
   const [finish,setfinish]=React.useState(false);
   const[Questionsperpage,setquestionsperpage]=React.useState(1);
@@ -26,7 +24,6 @@ const TakeAssessments = (assessmentId) => {
   const [QuesAnswer,setQuesAnswer]=React.useState(["",[]]);
   const [reset ,SetReset]=React.useState(true);
   const [Answers, setAnswers]=React.useState([]);
-  // let Answers=[];
   const [QuestionId, setQuestionId]=React.useState("");
   let questionLength=Questions.length;
   const [userResponses,setUserResponses]= React.useState({
@@ -40,10 +37,12 @@ const TakeAssessments = (assessmentId) => {
     answer_submitted: [""]
   }])
   React.useEffect(()=>{
-
+    handleQuestion()
+  },[])
+  const handleQuestion=()=>{
     axios.get(`http://localhost:8082/assessments/v1/assessment/questions/${assessment_id}`).then(res =>setQuestions(res?.data))
     .catch(err => console.log(err));
-  },[])
+  }
   function handleAnswer(event,id){
     setAnswers([...Answers,event.target.value]);
     setQuestionId(id);
@@ -54,10 +53,18 @@ const TakeAssessments = (assessmentId) => {
    function handleClose(){
     setfinish(false);
    }
-   function handleClickOpen(){
+   function handleOpen(){
     setfinish(true);
-    console.log(Answers);
+   }
+   function handleDelete(){
+    let responseLength=response?.length;
+    setfinish(false);
     console.log(response);
+    const requestBody={...userResponses,responseSubmitted:response};
+    console.log(requestBody);
+    axios.post('http://localhost:8083/responses/v1/user/response',requestBody).then(res =>console.log(res))
+    .catch(err => console.log(err))
+    .then(navigate("/Feedback",{state:{QuestionsAttempted:{responseLength}}}));
    }
    const PreviousPage= (event) =>{
     if(Currentpage==1){
@@ -68,19 +75,21 @@ const TakeAssessments = (assessmentId) => {
     }
 }
 const NextPage = () =>{
-  if(Currentpage==questionLength){
-    console.log(Answers);
-    setResponse([{...response,questionId:QuestionId,answer_submitted:Answers}]);
+  if(Currentpage==1){
+    setResponse([{questionId:QuestionId,answer_submitted:Answers}])
     setAnswers("");
-    console.log(response);
-    alert("Reached to last question");
+    setcurrentpage(Currentpage+1);
   }
   else{
-    setcurrentpage(Currentpage+1);
-    console.log(Answers);
-    setResponse([{...response,questionId:QuestionId,answer_submitted:Answers}]);
-    console.log(response);
+    const r= {questionId:QuestionId,answer_submitted:Answers}
+    setResponse([...response,r]);
     setAnswers("");
+    if(Currentpage<totalPages){
+      setcurrentpage(Currentpage+1);
+    }
+    else if(Currentpage==totalPages){
+    alert("Reached to last question");
+    }
   }
 }
     return <>
@@ -89,65 +98,61 @@ const NextPage = () =>{
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        style={{hieght:500}}
-      >
+        style={{hieght:500}}>
         <DialogTitle id="alert-dialog-title">
           {"Are you sure you want to end the test?"}
         </DialogTitle>
         <DialogContent >
           <DialogContentText id="alert-dialog-description">
-         
-          
           <Typography ><h6> Do You  want to end the test?</h6></Typography> 
           <Typography ><h6>Once submitted you cannot retake! </h6>  </Typography> 
-           
-           
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Link to='/Feedback'>
-        <Button align='center' style={{backgroundColor:'black',color:'white',height:40,width:140}} onClick={handleClose}>Finish Attempt</Button>
-        </Link>
-          <Button style={{height:40,width:140}}  onClick={handleClose} autoFocus>
+        <Button align='center' style={{backgroundColor:'black',color:'white',height:40,width:140}} onClick={handleDelete}>Submit</Button>
+        <Button style={{height:40,width:140}}  onClick={handleClose} autoFocus>
             Cancel
-          </Button>
+        </Button>
         </DialogActions>
-      </Dialog> 
-    <Box  style={{paddingBottom:70 }}>
-     <AppBar position="fixed"  style={{backgroundColor:'#d50000',minHeight: 20}}>
+       </Dialog> 
+       <Box  style={{ }}>
+     <AppBar position="fixed"  style={{backgroundColor:'#d50000',minHeight: 40}}>
         <Toolbar>
-        <IconButton
+          <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-          
-            <img src={img1} style={{ width:"40px",height:"40px"}} alt="img"/>
+            <img src={img1} style={{ width:"50px",height:"50px"}} alt="img"/>
           </IconButton>
-          <Divider orientation="vertical" flexItem color='white'/>
-        <Stack spacing={4} direction ='row' style={{paddingLeft:30}}>
-           <div style={{paddingTop:5}}>
-            <Button align='center' style={{backgroundColor:'#D3D3D3',color:'black',height:40,width:140}} >Instructions</Button>
-          </div>
-          <Divider orientation="vertical" flexItem color='white'/>
-          <Typography variant="h4" 
-            component="div" sx={{ flexGrow: 3}}>
+             <table> 
+            <tr>
+              <td><div className='abc'align="centre" style={{fontSize:'1.5rem',color:'white'}}>
+              <b>                                                       RECRUIT+</b>
+             </div> </td>
+            </tr>
+            <tr>
+              <td><div className='abc'align="centre" style={{fontSize:'0.8rem',color:'white'}}>
+               ONE DAY TO DAY ONE
+              </div>
+              </td>
+            </tr>
+           </table> 
+        <Typography variant="h6" 
+            component="div" sx={{ flexGrow: 1 }}>
           </Typography >
-          <Typography style={{color:'white',paddingRight:340,paddingLeft:400}}></Typography>
-           <Divider orientation="vertical" flexItem color='white'/>
-           <div style={{paddingTop:5}}>
-            <Button align='center' style={{backgroundColor:'#D3D3D3',color:'black',height:40,width:140}} onClick={handleClickOpen}>Finish Attempt</Button>
+          <div style={{paddingTop:5, paddingLeft:989}}>
+            <Button align='center' style={{backgroundColor:'#D3D3D3',color:'black',height:40,width:120}} onClick={handleOpen}>Submit</Button>
           </div>
-          </Stack>
         </Toolbar>
       </AppBar>
     </Box>
 
-    <Grid container style={{paddingTop:20,height:565}} spacing={2}>
+    <Grid container style={{paddingTop:20,height:600,width:1375}} spacing={3}>
 
-      <Grid item xs={2} style={{borderRight:'2px solid black'}} >
+      {/* <Grid item xs={2} style={{borderRight:'2px solid black'}} >
           <Box sx={{ width: "95%" ,paddingTop:3,paddingLeft:4}}>
             <Paper className='scroll' sx={{ height:"100%",width: "85%", mb: 2 ,paddingBottom:4}}>
             {Questions.map((question,index) => (
@@ -158,28 +163,26 @@ const NextPage = () =>{
             </Paper>
          </Box>
        
-      </Grid>
+      </Grid> */}
      
      <Grid  item xs={10}>
-     <Box sx={{ width: "95%" ,paddingTop:3,paddingLeft:10}}>
+     <Box sx={{ width: 1345 ,paddingTop:12,paddingLeft:4}}>
     
-     <Paper sx={{ width: "100%", mb: 2 ,paddingBottom:4}}>
+     <Paper sx={{ width: 1310, mb: 2 ,paddingBottom:4}}>
       {Questions?.length==0 ?
         <div style={{ float: "left"  }}>
-         Question {totalPages}  
+         Question {totalPages} 
          </div>
         :
         <div style={{ float: "left" ,paddingLeft:10,paddingTop:4}}>
-        <h6>Question  {Currentpage}  </h6> 
+        <h5>Question  {Currentpage} </h5> 
           </div>}
      </Paper>
     
       <Paper sx={{ width: "100%", mb: 2}}>
-
-        
         <TableContainer>
           <Table
-            sx={{ minWidth: 600 , maxwidth :600 }}
+            sx={{ minWidth: 580 , maxwidth :600 }}
             aria-labelledby="tableTitle"
            
           >
@@ -197,9 +200,9 @@ const NextPage = () =>{
             key={index}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
     
-             <TableCell component="th" scope="row" >
-              {questions?.question}
-
+             <TableCell component="th" scope="row">
+              <div  style={{fontSize:'1.2rem'}}>{questions?.question}</div>
+             
             </TableCell>
         </TableRow>
         <TableRow>
@@ -222,7 +225,7 @@ const NextPage = () =>{
     :
     <TextField
     label="Answer"
-    onChange={(event)=>console.log(event.target.value)}
+    onChange={(event)=>handleAnswer(event,questions.question_id)}
   />
     }
   </FormControl>
@@ -236,10 +239,14 @@ const NextPage = () =>{
         </Paper> 
         <div style={{ float: "left" ,paddingTop:90,paddingRight:700}}>
           <Stack spacing={20} direction='row'>
-          <Button onClick={PreviousPage}  style={{float: "left"}}>Prev</Button>
-          <Button onClick={NextPage}  style={{float: "right"}}>Next</Button>
+           {Currentpage==totalPages?
+          <Button variant ='outlined' className='button' style={{backgroundColor:'black',color:'white',fontSize:'1rem'}} onClick={NextPage}>Save</Button>
+            :
+          <Button variant ='outlined' className='button' style={{backgroundColor:'black',color:'white',fontSize:'1rem'}} onClick={NextPage}>Save &amp; Next</Button>
+           }
           </Stack>
-        </div>     
+        </div>   
+        <div style={{ float: "right" ,paddingBottom:20,paddingLeft:620}}>Question {Currentpage} of {totalPages}</div>  
     </Box>
      </Grid>
     </Grid>

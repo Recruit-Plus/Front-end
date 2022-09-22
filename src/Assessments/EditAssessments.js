@@ -57,6 +57,8 @@ function EditAssessments (assess_id, assess_name) {
   const assessment_name=location.state.assess_name.assessment_name;
   const [questions,setQuestions] = React.useState([]);
   const [questionIdRef , setQuestionIdRef]=React.useState();
+  const [score,setScore]=React.useState();
+  const [duration,setDuration]=React.useState();
   React.useEffect(()=>{
     handleQuestions()
   },[])
@@ -64,13 +66,18 @@ function EditAssessments (assess_id, assess_name) {
     axios.get(`http://localhost:8082/assessments/v1/assessment/questions/${assessment_id}`).then(res =>setQuestions(res?.data))
       .catch(err => console.log(err));
   }
-    const handleClickOpen = (id) => {
+    const handleClickOpen = (id,scr,dura) => {
       setOpen(true);
       setQuestionIdRef(id);
+      setScore(scr);
+      setDuration(dura);
     };
     const handleDelete = () => {
       setOpen(false);
-      axios.delete(`http://localhost:8082/assessments/v1/assessment/${assessment_id}/question/${questionIdRef}`)
+      axios.delete(`http://localhost:8082/assessments/v1/assessment/${assessment_id}/question/${questionIdRef}`,{
+        params:{
+          score,duration
+        }})
       .then((res)=> {
         swal({
           title: "Question Deleted Successfully",
@@ -153,7 +160,7 @@ function EditAssessments (assess_id, assess_name) {
                 <h6>{question?.question}</h6>
               </TableCell>
               <TableCell component="th" scope="row">
-                <Button variant="contained" style={{backgroundColor:'black'}} onClick={()=>handleClickOpen(question?.question_id)}>
+                <Button variant="contained" style={{backgroundColor:'black'}} onClick={()=>handleClickOpen(question?.question_id,question?.score,question?.duration)}>
                   <DeleteIcon/>
                 </Button>
               </TableCell>
