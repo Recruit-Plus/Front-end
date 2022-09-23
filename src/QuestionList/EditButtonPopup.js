@@ -58,11 +58,11 @@ export default function EditButtonPopup({question}) {
     <div style={{paddingTop:'50px'}}>
        <Stack spacing={85} direction='row'>
               <div></div>
-      <div style={{paddingTop:'50px'}}>
+      <div style={{paddingTop:'30px'}}>
         <Button style={{backgroundColor:'black',color:'white'}} onClick={(e)=>Handleput(e)}>Update </Button>
     </div>
 </Stack>
-    <Grid container style={{paddingTop:20}} spacing={2}>  <Grid item lg={3} >
+    <Grid container style={{paddingTop:10}} spacing={2}>  <Grid item lg={3} >
     <Box 
     style={{width:'100%',border:'2px solid black',height:'100%',backgroundColor:'#f8f8f8',margin:'0.6rem auto 0 auto',paddingTop:40}}>
     <Grid container>

@@ -47,6 +47,10 @@ const TakeAssessments = (assessmentId) => {
     setAnswers([...Answers,event.target.value]);
     setQuestionId(id);
   }
+  function handleFillAnswer(event,id){
+    setAnswers([event.target.value]);
+    setQuestionId(id);
+  }
   function resetAnswer(){
     SetReset(false);
  }
@@ -66,30 +70,22 @@ const TakeAssessments = (assessmentId) => {
     .catch(err => console.log(err))
     .then(navigate("/Feedback",{state:{QuestionsAttempted:{responseLength}}}));
    }
-   const PreviousPage= (event) =>{
-    if(Currentpage==1){
-      alert("Reached to first question");
-    }
-    else{
-      setcurrentpage(Currentpage-1);
-    }
-}
+  
 const NextPage = () =>{
   if(Currentpage==1){
     setResponse([{questionId:QuestionId,answer_submitted:Answers}])
     setAnswers("");
-    setcurrentpage(Currentpage+1);
   }
   else{
     const r= {questionId:QuestionId,answer_submitted:Answers}
     setResponse([...response,r]);
     setAnswers("");
-    if(Currentpage<totalPages){
-      setcurrentpage(Currentpage+1);
-    }
-    else if(Currentpage==totalPages){
-    alert("Reached to last question");
-    }
+  }
+  if(Currentpage<totalPages){
+    setcurrentpage(Currentpage+1);
+  }
+  else if(Currentpage==totalPages){
+  alert("Reached to last question");
   }
 }
     return <>
@@ -225,7 +221,7 @@ const NextPage = () =>{
     :
     <TextField
     label="Answer"
-    onChange={(event)=>handleAnswer(event,questions.question_id)}
+    onChange={(event)=>handleFillAnswer(event,questions.question_id)}
   />
     }
   </FormControl>

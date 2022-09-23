@@ -11,7 +11,7 @@ import Navbar from './Navbar';
 const HomePage = () => {
     return  <>
     {/* <Navbar/> */}
-    <div className="HomePage">
+    <div className="HomePage" style={{width:1300, paddingLeft:12}}>
     <img
     src={Bgimg}
     style={{ marginTop: "15%", display: "inline-block;" , width:"43%",height:"55%",paddingRight:10}}

@@ -95,7 +95,7 @@ function EditAssessments (assess_id, assess_name) {
             style={{color:'#111111'}}
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            {assessment_name}
+            {assessment_name}&nbsp;&nbsp;Assessment
           </Typography>
             <div style={{paddingLeft:'20px'}}>
               <Link to='/assessmentlist'>

@@ -134,14 +134,6 @@ function EditAssessQuestion(a_id,a_name){
             });
           });
           }
-
-
-
-
-
-
-
-
     return<>
 
     <Navbar></Navbar>
@@ -210,11 +202,9 @@ function EditAssessQuestion(a_id,a_name){
                 </div>
                 <div style={{paddingTop:'10px',paddingLeft:'80px'}}>
       <Link to='/assessmentlist'>
-        <Button style={{background:'#BEBEBE',color:'#000000',paddingLeft:'5px',paddingRight:'5px'}} variant="contained">Close</Button>
+        <Button style={{background:'#696969',paddingLeft:'5px',paddingRight:'5px'}} variant="contained">Close</Button>
       </Link>
-    &nbsp;&nbsp;
-
-    &nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;
     <Link to='/assessmentlist'>
     <Button variant="contained"  style={{backgroundColor:'#696969'}} onClick={(e)=>handleput(e)}>SAVE</Button>
     </Link>

@@ -29,7 +29,7 @@ function Dashboard (assess_id){
                 <TableRow alignItem = 'center' style={{width:'100%'}}>
                     <TableCell>
                         <div align='center'>
-                    <h3>Leaderboard</h3>
+                    <h3>Leaderboard for </h3>
                     </div>
                     </TableCell>
                 </TableRow>

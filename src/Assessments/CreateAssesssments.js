@@ -234,10 +234,10 @@ setDense(event.target.checked);
    
 
 
-    <Box sx={{ width: "95%" ,paddingTop:4,paddingLeft:10}}>
+    <Box sx={{ width: "95%" ,paddingTop:1,paddingLeft:10}}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 250 }} aria-label="simple table">
+          <Table sx={{ minWidth: 250 }} aria-label="simple table" size={dense ? "small" : "medium"}>
             <TableHead>
               <Stack direction="row" paddingTop="6px" >
               <TextField label="Assessment   Name" onChange={(event) => setData({...data,assessment_name: event.target.value})}>
@@ -296,7 +296,7 @@ setDense(event.target.checked);
                     )
                   }}
                   />
-            {questions.question}
+            &nbsp;&nbsp;{questions.question}
                   </TableCell>
                 </TableRow>
               ),) } 
