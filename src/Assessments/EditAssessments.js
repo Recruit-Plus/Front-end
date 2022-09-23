@@ -1,85 +1,72 @@
 import React from 'react';
+import axios from 'axios';
 import {Dialog,DialogTitle,DialogContent,DialogContentText,DialogActions,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,
     styled,AppBar,Box,Toolbar,Typography,InputBase,Button} from '@mui/material';
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from '@mui/icons-material/Delete';
-import Navbar from '../components/Navbar';
-import {Link} from 'react-router-dom';
-
-function createData(name, calories, fat, carbs, protein) {
-return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-createData('Automatic type conversion is possible in which of the possible cases?'),
-createData('Who invented Java Programming?'),
-createData('Which statement is true about Java?'),
-createData('Which component is used to compile, debug and execute the java program…'),
-createData('Which environment variable is used to set the java path?'),
-createData('What is not the use of “this” keyword in Java?'),
-createData('Which of the following is a type of polymorphism in Java Programming?'),
-createData('What is Truncation in Java?'),
-];
+import {Link, useLocation} from 'react-router-dom';
+import swal from 'sweetalert';
+import { useNavigate } from 'react-router-dom';
 
 
-const Search = styled("div")(({ theme }) => ({
-position: "relative",
-borderRadius: theme.shape.borderRadius,
-backgroundColor:'#BEBEBE',
-"&:hover": {
-  backgroundColor: '#BEBEBE',
-},
-marginLeft: 0,
-width: "100%",
-[theme.breakpoints.up("sm")]: {
-  marginLeft: theme.spacing(1),
-  width: "auto"
-}
-}));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-padding: theme.spacing(0, 2),
-height: "100%",
-position: "absolute",
-pointerEvents: "none",
-display: "flex",
-alignItems: "center",
-justifyContent: "center"
-}));
+function EditAssessments (assess_id, assess_name) {
+  const location = useLocation();
+  const [open, setOpen] = React.useState(false);
+  const assessment_id=location.state.assess_id.assessment_id;
+  const assessment_name=location.state.assess_name.assessment_name;
+  const [questions,setQuestions] = React.useState([]);
+  const [questionIdRef , setQuestionIdRef]=React.useState();
+  const [score,setScore]=React.useState();
+  const [duration,setDuration]=React.useState();
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-color: "inherit",
-"& .MuiInputBase-input": {
-  padding: theme.spacing(1, 1, 1, 0),
-  // vertical padding + font size from searchIcon
-  paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-  transition: theme.transitions.create("width"),
-  width: "100%",
-  color:'#000000',
-  [theme.breakpoints.up("sm")]: {
-    width: "25ch",
-    "&:focus": {
-      width: "20ch"
-    }
+  let navigate=useNavigate();
+  React.useEffect(()=>{
+    handleQuestions()
+  },[])
+  const handleQuestions=()=>{
+    axios.get(`http://localhost:8082/assessments/v1/assessment/questions/${assessment_id}`).then(res =>setQuestions(res?.data))
+      .catch(err => console.log(err));
   }
-}
-}));
-const EditAssessments = (assessment) => {
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-      
-      setOpen(true);
-    };
-    const handleClose = () => {
+
+  const handleAssessment=(assessment_id,assessment_name)=>{
+    navigate("/edit",{state:{a_id:{assessment_id},a_name:{assessment_name}}})
+    //console.log(a_id)
+  }
+
+  const handleClickOpen = (id,scr,dura) => {
+    setOpen(true);
+    setQuestionIdRef(id);
+    setScore(scr);
+    setDuration(dura);
+  };
+
+    
+  const handleDelete = () => {
+    setOpen(false);
+    axios.delete(`http://localhost:8082/assessments/v1/assessment/${assessment_id}/question/${questionIdRef}`,{
+      params:{
+        score,duration
+      }})
+    .then((res)=> {
+      swal({
+        title: "Question Deleted Successfully",
+        icon: "success",
+        button: "OK",
+      });
+      handleQuestions();
+    })
+    .catch(err => console.log(err));
+  };
+    const handleClose=()=>{
       setOpen(false);
-    };
+    }
     return <>
     <Dialog
     open={open}
     onClose={handleClose}
     aria-labelledby="alert-dialog-title"
-    aria-describedby="alert-dialog-description"
-  >
+    aria-describedby="alert-dialog-description">
     <DialogTitle id="alert-dialog-title">
       {"Are you sure?"}
     </DialogTitle>
@@ -90,26 +77,17 @@ const EditAssessments = (assessment) => {
     </DialogContent>
     <DialogActions>
       <Button onClick={handleClose} variant="contained" style={{backgroundColor:'black'}}>Cancel</Button>
-      <Button onClick={handleClose} variant="contained" color="error"autoFocus>
+      <Button onClick={handleDelete} variant="contained" color="error"autoFocus>
         Delete
       </Button>
     </DialogActions>
   </Dialog>
   <div style={{paddingTop:'75px'}}>
-    {/* <Navbar></Navbar> */}
     <div>
     <Box sx={{ flexGrow: 1 }} style={{background:'#ffffff'}}>
       <AppBar position="static" >
         <Toolbar style={{background:'#eeeeee',paddingRight:'20px'}}>
-            <div style={{paddingLeft:'20px'}}>
-              <Link to='/assessmentlist'>
-            <Button style={{background:'#BEBEBE',color:'#000000',paddingLeft:'5px',paddingRight:'5px'}} variant="contained">Close</Button>
-            </Link>
-            </div>
-            <div style={{paddingLeft:'20px'}}>
-            <Button style={{background:'#BEBEBE',color:'#000000'}} variant="contained">Add Question</Button>
-            </div>
-          <Typography
+        <Typography
             variant="h6"
             noWrap
             component="div"
@@ -117,19 +95,16 @@ const EditAssessments = (assessment) => {
             style={{color:'#111111'}}
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            Java Assessment
+            {assessment_name}
           </Typography>
-          <div style={{paddingRight:'20px'}}>
-            <Search>
-                <SearchIconWrapper>
-                <SearchIcon style={{color:'#111111'}}/>
-                </SearchIconWrapper>
-                <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-                />
-            </Search>
-          </div>
+            <div style={{paddingLeft:'20px'}}>
+              <Link to='/assessmentlist'>
+            <Button style={{background:'#BEBEBE',color:'#000000',paddingLeft:'5px',paddingRight:'5px'}} variant="contained">Close</Button>
+            </Link>&nbsp;&nbsp;
+            <Button style={{background:'#BEBEBE',color:'#000000'}} variant="contained" onClick={()=>handleAssessment(assessment_id,assessment_name)}>Add Question</Button>
+            </div>
+       
+        
         </Toolbar>
       </AppBar>
     </Box>
@@ -138,16 +113,15 @@ const EditAssessments = (assessment) => {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableBody>
-          {rows.map((row) => (
+          {questions?.map((question, index) => (
             <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+              key={index}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell component="th" scope="row">
-                <h6>{row.name}</h6>
+                <h6>{question?.question}</h6>
               </TableCell>
               <TableCell component="th" scope="row">
-                <Button variant="contained" style={{backgroundColor:'black'}} onClick={handleClickOpen}>
+                <Button variant="contained" style={{backgroundColor:'black'}} onClick={()=>handleClickOpen(question?.question_id,question?.score,question?.duration)}>
                   <DeleteIcon/>
                 </Button>
               </TableCell>
@@ -158,8 +132,10 @@ const EditAssessments = (assessment) => {
       </Table>
     </TableContainer>
     </div>
-    </div></>;
+    </div>
+    </>;
 }
 
 
 export default EditAssessments;
+

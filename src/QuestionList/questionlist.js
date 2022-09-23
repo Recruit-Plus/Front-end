@@ -9,6 +9,7 @@ import {Link} from "react-router-dom";
 import EditButtonPopup from "./EditButtonPopup";
 import EditIcon from '@mui/icons-material/Edit';
 import swal from 'sweetalert';
+import { Height } from "@mui/icons-material";
 
 export default function EnhancedTable(props) {
   const [selected, setSelected] = React.useState([]);
@@ -81,9 +82,11 @@ export default function EnhancedTable(props) {
       }
   }
   const NextPage = (event) =>{
+    if(currentPage<totalPages){
     if(currentPage < currentPage+1){
       setCurrentPage(currentPage+1);
     }
+  }
   }
   const handleClickOpen = () => {
     
@@ -153,14 +156,14 @@ export default function EnhancedTable(props) {
   
     <div style={{paddingTop:75}}>
     <AppBar position="static" style={{ background: '#D3D3D3' }}>
-        <Toolbar>
+        <Toolbar style={{height:75}}>
           <Stack Stack spacing={65} direction='row'>
             <div>
-              <Stack Stack spacing={4} direction='row'>
+              <Stack   direction='row'>
                 <div className="mx-3">
                   <Box sx={{ minWidth: 200 , maxHeight:47}}>
-                    <FormControl sx={{  width: 250 }}>
-                      <InputLabel id="demo-multiple-name-label" style={{color:'black'}}>Topic</InputLabel>
+                    <FormControl sx={{  width: 250}}>
+                      <InputLabel id="demo-multiple-name-label" style={{color:'black' }}>Topic</InputLabel>
                       <Select
                       labelId="demo-multiple-name-label"
                       id="demo-multiple-name"
@@ -193,12 +196,13 @@ export default function EnhancedTable(props) {
                   </Box>
                 </div>
                 <div className="mx-3">
-                  <Box sx={{ minWidth: 200, maxHeight:47}}>
+                  <Box sx={{ minWidth: 200 , border: '1px solid #DDD', maxHeight:47}}>
                     <FormControl fullWidth>
                       <InputLabel id="demo-simple-select-label" style={{color:'black'}}>Type</InputLabel>
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
+                        label="Type"
                         value={type}
                        
                         onChange={handleChange2}>
@@ -208,14 +212,14 @@ export default function EnhancedTable(props) {
                     </FormControl>
                   </Box>
                 </div>
-                <div>
-                  <Button onClick={handleSearch}>
-                    <SearchIcon></SearchIcon>
+                <div style={{paddingTop:8,paddingRight:290 }}>
+                  <Button onClick={handleSearch} style={{color: "#000000"}}>
+                    <SearchIcon ></SearchIcon>
                   </Button>
                 </div>
-                <div className="container" align='right'>
+                <div className="container" align='right' style={{paddingTop:8}}>
                   <Link to='/Addquestion'>
-                    <Button variant="contained" alignItems="right" onClick={handleClickOpen} style={{backgroundColor: "#000000",}} >
+                    <Button variant="contained" alignItems="right" onClick={handleClickOpen} style={{backgroundColor: "#000000"}} >
                     Add  questions
                     </Button>
                   </Link>
