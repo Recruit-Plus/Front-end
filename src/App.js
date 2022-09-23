@@ -17,12 +17,12 @@ import NoRole from './components/NoRole';
 import Feedback from './User/Feedback';
 import Dashboard from './Assessments/Dashboard';
 
-
 import {
   BrowserRouter as Router,
   Route,
   Routes
 } from "react-router-dom";
+import EditAssessQuestion from './Assessments/EditAssessQuestions';
 
 function App() {
  return (
@@ -48,6 +48,7 @@ function App() {
     <Route path='/instructions' element={<Instructions/>}/>
     <Route path='/Feedback' element={<Feedback/>}/>
     <Route path='/Dashboard' element={<Dashboard/>}/>
+    <Route path='/edit' element={<EditAssessQuestion/>}></Route>
   </Routes>
     </>  
 );

@@ -3,11 +3,12 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import PropTypes from 'prop-types';
 import {Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Paper,Typography,Button,autocompleteClasses,styled ,CssBaseline, 
-      Container,Radio,RadioGroup,Stack,FormControlLabel,Box,TextField,Grid,IconButton, TableCell} from '@mui/material';
+      Container,Radio,RadioGroup,Stack,FormControlLabel,Box,TextField,Grid,IconButton, TableCell, TableRow} from '@mui/material';
 import {OutlinedInput ,InputLabel ,MenuItem,FormControl,Select,AppBar,Table} from "@mui/material"
 import Navbar from '../components/Navbar';
 import swal from 'sweetalert';
 import CloseIcon from '@mui/icons-material/Close';
+import { width } from '@mui/system';
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -209,10 +210,12 @@ const TopicAddHandler = (e) => {
           </Button>
         </DialogActions>
       </BootstrapDialog>
-        <Grid container style={{paddingTop:60}} spacing={2}> {/* After navbar you can see two part left and right
+        <Grid container style={{paddingTop:54}} spacing={2}> {/* After navbar you can see two part left and right
                           imported that component in grid so you want to change something go to that component*/ }
         <Grid item lg={3} >
       <Box style={{borderRight:'4px solid #d50000',height:'100%',paddingRight:20,width:'100%'}} >
+        <Paper>
+          <div>
      
         <Item>
         <div className='container my-3' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Topic</div>
@@ -222,9 +225,9 @@ const TopicAddHandler = (e) => {
         </TableCell>
         <TableCell>
         <div className="mx-3">
-                  <Box sx={{ minWidth: 200 , maxHeight:55}}>
-                    <FormControl sx={{  width: 190 }}>
-                      <InputLabel id="demo-multiple-name-label" style={{color:'black'}}>Topic</InputLabel>
+                  {/* <Box sx={{ minWidth: 200 , maxHeight:35}}> */}
+                    <FormControl sx={{  width: 240 }}>
+                      <InputLabel id="demo-multiple-name-label" style={{color:'black' }}>Topic</InputLabel>
                       <Select
                       labelId="demo-multiple-name-label"
                       id="demo-multiple-name"
@@ -239,12 +242,12 @@ const TopicAddHandler = (e) => {
                         ))}
                       </Select>
                     </FormControl>
-                 </Box>
+                 {/* </Box> */}
                 </div>
                 </TableCell>
               </Table>
             </Item>
-    <Item style={{paddingTop:1 ,paddingBottom:1}}>
+    <Item style={{paddingTop:0 ,paddingBottom:0}}>
       <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Difficulty level</div>
           <div align='left' >
             <FormControl>
@@ -253,16 +256,17 @@ const TopicAddHandler = (e) => {
                 defaultValue="female"
                 name="radio-buttons-group"
                 id='  difficulty_level'
+                
               >
-            <FormControlLabel  value='Easy' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Easy" style={{color:'black'}}/>
-            <FormControlLabel  value='Medium' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Medium" style={{color:'black'}}/>
-            <FormControlLabel   value='Hard' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Hard" style={{color:'black'}}/>
+            <FormControlLabel  value='Easy' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Easy" style={{color:'black',paddingLeft:'90px'}}/>
+            <FormControlLabel  value='Medium' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Medium" style={{color:'black',paddingLeft:'90px'}}/>
+            <FormControlLabel   value='Hard' onChange={(event) => setData({...data,difficulty_level:event.target.value})} control={<Radio />} label="Hard" style={{color:'black',paddingLeft:'90px'}}/>
             </RadioGroup>
             </FormControl>
         </div>
             </Item>
 
-            <Item style={{paddingTop:0,paddingBottom:0.5}}>
+            <Item style={{paddingTop:0,paddingBottom:0}}>
               <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Type</div>
               <div align='left' >
                   <FormControl>
@@ -273,29 +277,37 @@ const TopicAddHandler = (e) => {
                       id='type'      
                     >
                     <FormControlLabel value='MCQ' onChange={(event) => setData({...data,type:event.target.value})}  
-                     control={<Radio />} label="MCQ" style={{color:'black'}}/>
+                     control={<Radio />} label="MCQ" style={{color:'black',paddingLeft:'90px'}}/>
                     <FormControlLabel value='Fill in the blank' onChange={(event) => setData({...data,type:event.target.value})}   
-                    control={<Radio/>} label="Fill in the blank" style={{color:'black'}}/>
+                    control={<Radio/>} label="Fill in the blank" style={{color:'black',paddingLeft:'90px'}}/>
                     </RadioGroup>
                   </FormControl>  
               </div>
             </Item>
-            <Item style={{paddingTop:0.2 ,paddingBottom:1}}>
-            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Max Duration</div>
-            <div align='center' >
-            <TextField id ='duration' inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} onChange={(event) => setData({...data,duration: event.target.value})} />
-            </div>
-            </Item>
-            <Item style={{paddingTop:0.2,paddingBottom:1}}>
+            <Stack direction='row'>
+              <TableRow>
+            <Item style={{paddingTop:0,paddingBottom:0}} >
+              <TableCell>
+            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Duration</div>
+   
+            <TextField  label=' '  style={{paddingTop:4,paddingBottom:0}} id ='duration' inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} onChange={(event) => setData({...data,duration: event.target.value})} />
+            </TableCell>
+            <TableCell>
+           
+         
             <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} > Score </div>
-            <div align='center' >
-            <TextField id ='score' inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} onChange={(event) => setData({...data,score: event.target.value})} />
-            </div>
+            
+            <TextField id ='score'label=' ' style={{paddingTop:4,paddingBottom:0}} inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}  onChange={(event) => setData({...data,score: event.target.value})} />
+            </TableCell>
             </Item>
+            </TableRow>
+            </Stack>
+            </div>
+            </Paper>
           </Box> 
         </Grid>
         <Grid item lg={9}>
-         <div style={{paddingTop:25,paddingBottom:1}}>
+         <div style={{paddingTop:35,paddingBottom:1}}>
         <Box>
               <Stack spacing={36} direction='row'>
             <div></div>
@@ -312,7 +324,8 @@ const TopicAddHandler = (e) => {
       </div>
       <Box 
         style={{width:'100%',height:'80%',margin:'0.8rem auto 0 auto',paddingLeft:30,paddingRight:3,paddingBottom:3,paddingTop:10}}>
-           <Paper  sx={{ height:"100%",width: "95%", mb: 2 ,paddingBottom:4,paddingTop:4}}>
+           <Paper  sx={{ height:"475px",width: "900px", mb: 2 ,paddingBottom:4,paddingTop:4}}>
+            <Stack direction="column">
         <Grid container>
         <Grid item xs={2} >
         <Container >
@@ -332,13 +345,13 @@ const TopicAddHandler = (e) => {
       </Grid>
       <Grid item xs={8}>
         <Container styles={{borderRight:'2px solid black',paddingLeft:60}}>    
-          <Stack>
-            <form >
-            <TextField id ='question' fullWidth label="Question " variant='outlined'  onChange={(event) => setData({...data,question: event.target.value})}
+          <Stack sx={{width:700}}>
+            <form  >
+            <TextField id ='question' fullWidth label="Question "   onChange={(event) => setData({...data,question: event.target.value})}
             style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
              {data.type=="MCQ"?
             <Stack><TextField  fullWidth label="Option 1"   onChange={(event) => setoption1(event.target.value)}
-              style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
+              style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white' ,width:'100%'}}></TextField>
             <TextField  fullWidth label="Option 2"   onChange={(event) => setoption2(event.target.value)}
               style={{margin:'0.5rem auto ',color:'black',backgroundColor:'white'}}></TextField>
             <TextField  fullWidth label="Option 3"   onChange={(event) => setoption3(event.target.value)}
@@ -346,7 +359,7 @@ const TopicAddHandler = (e) => {
             <TextField  fullWidth label="Option 4"   onChange={(event) => setoption4(event.target.value)}
               style={{margin:'0.9rem auto ',color:'black',backgroundColor:'white'}}></TextField>
           
-              <FormControl sx={{width:570}}>
+              <FormControl sx={{width:700}}>
               <InputLabel id="demo-multiple-name-label" style={{color:'black'}}>Answer</InputLabel>
                       <Select
                       labelId="demo-multiple-name-label"
@@ -371,6 +384,7 @@ const TopicAddHandler = (e) => {
         </Container>
         </Grid>
       </Grid>
+      </Stack>
       </Paper>
     </Box>
   </Grid>

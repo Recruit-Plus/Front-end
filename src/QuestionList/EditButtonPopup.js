@@ -27,7 +27,7 @@ export default function EditButtonPopup({question}) {
     {
       question:questionm,
        choices:choices,
-      topic : topic,
+      topics: topic,
       difficulty_level:level,
       type:type,
       duration:duration,
@@ -76,7 +76,7 @@ export default function EditButtonPopup({question}) {
 
         <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'1rem 0.4rem ',transition:'0.3s linear all',padding:'0.5rem',width:'100%'}}>Score</p>
 
-        <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'1rem 0.4rem ',transition:'0.3s linear all',padding:'0.8rem',width:'100%'}}>Duration</p>
+        <p style={{fontSize:'1rem',color:'white',border:'2px solid #696969',backgroundColor:'#696969',cursor:'pointer',margin:'1rem 0.4rem ',transition:'0.3s linear all',padding:'0.5rem',width:'100%'}}>Duration</p>
         
       </Stack>
    </Container>
