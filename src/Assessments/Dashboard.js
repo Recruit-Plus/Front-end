@@ -3,11 +3,11 @@ import { useLocation} from 'react-router-dom';
 import {Paper,Box,Table,TableBody,TableCell,TableContainer,TableRow} from "@mui/material";
 import axios from 'axios';
 
-function Dashboard (assess_id){
-  const [assessments, setassessments]=React.useState([]);
+function Dashboard (assess_id,assess_name){
   const location = useLocation();
   const [results,setResults]=React.useState([]);
   const assessment_id=location.state.assess_id.assessment_id;
+  const assessment_name=location.state.assess_name.assessment_name;
   
 
   console.log(results);
@@ -29,7 +29,7 @@ function Dashboard (assess_id){
                 <TableRow alignItem = 'center' style={{width:'100%'}}>
                     <TableCell>
                         <div align='center'>
-                    <h3>Dashboard for assessment</h3>
+                    <h3>Dashboard for assessment {assessment_name}</h3>
                     </div>
                     </TableCell>
                 </TableRow>
@@ -38,26 +38,29 @@ function Dashboard (assess_id){
                     <h5>No Results Available!!!</h5>
                 </TableCell>
                  :
-                 results?.map((result,index) => (
-                <div>
-                <TableRow >          
-                <TableCell style={{width:'200px'}}>candidate Id</TableCell>
-                <TableCell style={{width:'300px'}}> Name</TableCell>
-                <TableCell style={{width:'300px'}}> Email</TableCell>
-                <TableCell style={{width:'300px'}}>College Name</TableCell>
-                <TableCell style={{width:'200px'}}>Score</TableCell>
-                <TableCell style={{width:'200px'}}>Time taken</TableCell>
+                 <div>
+               <TableRow>          
+                <TableCell sx={{width: 350}}>candidate Id</TableCell>
+                <TableCell sx={{width: 250}}> Name</TableCell>
+                <TableCell sx={{width: 330}}> Email </TableCell>
+                <TableCell sx={{width: 270}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;college</TableCell>
+                <TableCell sx={{width: 120}}>Score</TableCell>
+                <TableCell sx={{width: 120}}>Time taken</TableCell>
                 </TableRow>
-                <TableRow >          
-                <TableCell>{result.user_id}</TableCell>
-                <TableCell >{result.user_name}</TableCell>
-                <TableCell > {result.email}</TableCell>
-                <TableCell >{result.college_name}</TableCell>
-                <TableCell >{result.score}</TableCell>
-                <TableCell >{result.Time_taken}</TableCell>
+                 {results?.map((result,index) => (
+                <div>
+                <TableRow key={index}>          
+                <TableCell sx={{width: 300}}>{result.user_id}</TableCell>
+                <TableCell sx={{width: 230}}>{result.user_name}</TableCell>
+                <TableCell sx={{width: 300}}> {result.email}</TableCell>
+                <TableCell sx={{width: 250}}>{result.college_name}</TableCell>
+                <TableCell sx={{width: 110}}>{result.score}</TableCell>
+                <TableCell sx={{width: 110}}>{result.Time_taken}</TableCell>
                 </TableRow>
                 </div>
              ),) } 
+             </div> 
+             }
             </TableBody>
           </Table>
         </TableContainer>

@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { Divider,Typography,Stack,Box,IconButton,Toolbar,AppBar } from '@mui/material';
 import img1 from '../images/recruit+logo.png';
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
@@ -36,7 +36,9 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
   }));
   
-const Feedback = () => {
+const Feedback = (QuestionsAttempted) => {
+  const location = useLocation();
+  const Questions_attempted=location.state.QuestionsAttempted.responseLength;
     return <>
      <Container>
     <box>
@@ -45,7 +47,7 @@ const Feedback = () => {
     <div>
     <div style={{paddingTop : 10}} align="left">
     <h5>       Quiz Summary</h5>
-    <div style={{paddingTop : 10}}> Number of Questions Attempted:</div>
+    <div style={{paddingTop : 10}}> Number of Questions Attempted:     {Questions_attempted}</div>
           Time Taken :
     </div>
     </div>
