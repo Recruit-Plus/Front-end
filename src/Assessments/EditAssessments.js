@@ -10,11 +10,12 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-function EditAssessments (assess_id, assess_name) {
+function EditAssessments (assess_id, assess_name, assess_questions) {
   const location = useLocation();
   const [open, setOpen] = React.useState(false);
   const assessment_id=location.state.assess_id.assessment_id;
   const assessment_name=location.state.assess_name.assessment_name;
+  const assessment_questions=location.state.assess_questions.assessment_questions;
   const [questions,setQuestions] = React.useState([]);
   const [questionIdRef , setQuestionIdRef]=React.useState();
   const [score,setScore]=React.useState();
@@ -29,9 +30,8 @@ function EditAssessments (assess_id, assess_name) {
       .catch(err => console.log(err));
   }
 
-  const handleAssessment=(assessment_id,assessment_name)=>{
-    navigate("/edit",{state:{a_id:{assessment_id},a_name:{assessment_name}}})
-    //console.log(a_id)
+  const handleAssessment=(assessment_id,assessment_name, assessment_questions)=>{
+    navigate("/edit",{state:{a_id:{assessment_id},a_name:{assessment_name}, a_questions:{assessment_questions}}})
   }
 
   const handleClickOpen = (id,scr,dura) => {
@@ -101,7 +101,7 @@ function EditAssessments (assess_id, assess_name) {
               <Link to='/assessmentlist'>
             <Button style={{background:'#BEBEBE',color:'#000000',paddingLeft:'5px',paddingRight:'5px'}} variant="contained">Close</Button>
             </Link>&nbsp;&nbsp;
-            <Button style={{background:'#BEBEBE',color:'#000000'}} variant="contained" onClick={()=>handleAssessment(assessment_id,assessment_name)}>Add Question</Button>
+            <Button style={{background:'#BEBEBE',color:'#000000'}} variant="contained" onClick={()=>handleAssessment(assessment_id,assessment_name,assessment_questions)}>Add Questions</Button>
             </div>
        
         

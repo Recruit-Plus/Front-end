@@ -8,27 +8,24 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useLocation } from "react-router-dom";
 import {Link} from 'react-router-dom';
 import swal from "sweetalert";
-function EditAssessQuestion(a_id,a_name){
+function EditAssessQuestion(a_id,a_name,a_questions){
     const location = useLocation();
   
   const assessment_id=location.state.a_id.assessment_id;
   const assessment_name=location.state.a_name.assessment_name;
+  const assessment_questions=location.state.a_questions.assessment_questions;
   const [loading, setLoading] =React.useState(true);
-  //const [stateQuestion, setQuestionState] = React.useState([]);
- 
     const [Questions, setQuestions]=React.useState([]);
-
     const [difficulty_level, setDifficulty_level] = React.useState("");
     const [type, setType] = React.useState("");
     const [topicName, setTopicName] = React.useState([]);
     const [Topics,setTopics]=React.useState([]);
     const [open, setOpen] = React.useState(false);
-    
     const [assessQuestions,setAssessQuestions]=React.useState([]);
+    const [actualQuestions,setActualQuestions]=React.useState([]);
     const [Score,setScore]=React.useState(0);
     const [Duration,setDuration]=React.useState(0);
     const [users,setUsers]=React.useState([]);
-    
     const [data,setData]=React.useState
   (    
     {
@@ -45,17 +42,19 @@ function EditAssessQuestion(a_id,a_name){
 
 
     React.useEffect(() => {  
-        console.log(assessment_id)
         handleQuestions()
         questionHandle()
         topicHandler()
       },[loading]);
 
       const questionHandle= () => {
-        axios.get('http://localhost:8081/questions/v1/').then((result) =>setQuestions(result?.data?.content))
+        axios.get('http://localhost:8081/questions/v1/').then((result) =>setActualQuestions(result?.data?.content))
         .catch(err=>{
           console.log(err.message);
-        })
+        }) 
+        var ques=[];
+      ques = actualQuestions.filter( obj => !assessment_questions.some( obj2 => obj.question_id === obj2 ));
+      setQuestions(ques);
       }
   
       const topicHandler=()=>{
@@ -91,7 +90,6 @@ function EditAssessQuestion(a_id,a_name){
       const handleSearch=()=>{
 
         topics=topicName.join();
-        console.log(topics,difficulty_level,type);
         axios.get('http://localhost:8081/questions/v1/search',{
           params:{
             topics,type,difficulty_level
@@ -121,9 +119,6 @@ function EditAssessQuestion(a_id,a_name){
           };
 
           function handleput(e) {
-            
-
-            //console.log(stateQuestion);
             const requestBody = {...data,question_id:assessQuestions,score:Score,duration:Duration}
             const url='http://localhost:8082/assessments/v1/assessment/'+assessment_id;
             axios.put(url,requestBody).then((response)=>{
@@ -262,8 +257,6 @@ function EditAssessQuestion(a_id,a_name){
                       setScore(Score-questions.score);
                       setDuration(Duration-questions.duration);
                     }
-                    console.log(assessQuestions);
-                    
                   }}
                   />
                  {questions.question}

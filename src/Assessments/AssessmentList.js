@@ -70,9 +70,9 @@ const AssessmentList = () => {
   };
 
 
-  const handleUpdate= (assessment_id, assessment_name)=>{
+  const handleUpdate= (assessment_id, assessment_name, assessment_questions)=>{
     setEditOpen(true);
-    navigate("/editassessment",{state:{assess_id:{assessment_id}, assess_name:{assessment_name}}})
+    navigate("/editassessment",{state:{assess_id:{assessment_id}, assess_name:{assessment_name}, assess_questions:{assessment_questions}}})
   }
   const handleDelete= id =>{
     setAssessmentIdRef(id); 
@@ -169,7 +169,7 @@ const AssessmentList = () => {
               <Button variant="outlined" style={{backgroundColor:'#37474F',color:'white'}} onClick={() =>{handleResult(assessments?.assessment_id,assessments?.assessment_name)}}>
                 <LeaderboardIcon/>
               </Button>
-             <Button variant="outlined" style={{backgroundColor:'black',color:'white'}} onClick={() =>{handleUpdate(assessments?.assessment_id,assessments?.assessment_name)}}>
+             <Button variant="outlined" style={{backgroundColor:'black',color:'white'}} onClick={() =>{handleUpdate(assessments?.assessment_id,assessments?.assessment_name,assessments?.question_id)}}>
                 <EditIcon/>  
               </Button>            
               <Button variant="contained" color="error" onClick={() =>{handleDelete(assessments?.assessment_id)}}>
