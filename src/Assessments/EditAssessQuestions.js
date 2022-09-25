@@ -250,20 +250,23 @@ function EditAssessQuestion(a_id,a_name){
                     <input
                   type="checkbox"
                   value={questions.question_id}
-                  
                   onChange={e => {
-                    console.log(assessQuestions);
-                    console.log(Score);
-                    console.log(Duration);
                     let value = e.target.value;
-                    assessQuestions.push(value);
-                    setScore(Score+questions.score);
+                    if(e.target.checked==true){ 
+                      assessQuestions.push(value);
+                      setScore(Score+questions.score);
                     setDuration(Duration+questions.duration);
-                    
+                    }
+                    else{
+                      setAssessQuestions(assessQuestions.filter(ele => ele !== value))
+                      setScore(Score-questions.score);
+                      setDuration(Duration-questions.duration);
+                    }
+                    console.log(assessQuestions);
                     
                   }}
                   />
-            {questions.question}
+                 {questions.question}
                   </TableCell>
                 </TableRow>
               ),) } 

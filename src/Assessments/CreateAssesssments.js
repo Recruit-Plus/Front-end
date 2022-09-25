@@ -290,13 +290,16 @@ setDense(event.target.checked);
                   type="checkbox"
                   value={questions.question_id}
                   onChange={e => {
-                    let value = e.target.value; 
-                    setQuestionState(
-                      stateQuestion=>[...stateQuestion,value],
-                    )
+                    let value = e.target.value;
+                    if(e.target.checked==true){ 
+                    stateQuestion.push(value);
+                    }
+                    else{
+                    setQuestionState(stateQuestion.filter(ele => ele !== value))
+                    }
                   }}
                   />
-            &nbsp;&nbsp;{questions.question}
+                 &nbsp;&nbsp;{questions.question}
                   </TableCell>
                 </TableRow>
               ),) } 

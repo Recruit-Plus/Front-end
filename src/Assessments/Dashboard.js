@@ -3,11 +3,11 @@ import { useLocation} from 'react-router-dom';
 import {Paper,Box,Table,TableBody,TableCell,TableContainer,TableRow} from "@mui/material";
 import axios from 'axios';
 
-function Dashboard (assess_id){
-  const [assessments, setassessments]=React.useState([]);
+function Dashboard (assess_id,assess_name){
   const location = useLocation();
   const [results,setResults]=React.useState([]);
   const assessment_id=location.state.assess_id.assessment_id;
+  const assessment_name=location.state.assess_name.assessment_name;
   
 
   console.log(results);
@@ -29,7 +29,7 @@ function Dashboard (assess_id){
                 <TableRow alignItem = 'center' style={{width:'100%'}}>
                     <TableCell>
                         <div align='center'>
-                    <h3>Leaderboard for </h3>
+                    <h3> {assessment_name} Assessment Leaderboard</h3>
                     </div>
                     </TableCell>
                 </TableRow>

@@ -26,6 +26,7 @@ const TakeAssessments = (assessmentId) => {
   const [Answers, setAnswers]=React.useState([]);
   const [QuestionId, setQuestionId]=React.useState("");
   let questionLength=Questions.length;
+  var selectedValue;
   const [userResponses,setUserResponses]= React.useState({
     user_id: window.localStorage.getItem("userId"),
     assessment_id:assessment_id,
@@ -88,6 +89,9 @@ const NextPage = () =>{
   alert("Reached to last question");
   }
 }
+const handleReSet=()=>{
+ 
+}
     return <>
         <Dialog
         open={finish}
@@ -140,7 +144,7 @@ const NextPage = () =>{
             component="div" sx={{ flexGrow: 1 }}>
           </Typography >
           <div style={{paddingTop:5, paddingLeft:989}}>
-            <Button align='center' style={{backgroundColor:'#D3D3D3',color:'black',height:40,width:120}} onClick={handleOpen}>Submit</Button>
+            <Button align='center' style={{backgroundColor:'#D3D3D3',color:'black',height:40,width:100}} onClick={handleOpen}>Submit</Button>
           </div>
         </Toolbar>
       </AppBar>
@@ -210,13 +214,14 @@ const NextPage = () =>{
    {questions?.choices.map((option) => (
     <RadioGroup
       aria-labelledby="demo-radio-buttons-group-label"
-      name="radio-buttons-group"
+      class="choose"
       onChange={(event)=> handleAnswer(event,questions.question_id)}>
        {option.length!=0?
-      <FormControlLabel value={option} control={<Radio />} label={option} />:null
+      <FormControlLabel value={option}  control={<Radio />} label={option} />:null
        }
     </RadioGroup>
     ))}
+    <Button onClick={()=>handleReSet()} style={{color:"black"}}><RestartAltIcon/></Button>
     </div>
     :
     <TextField
