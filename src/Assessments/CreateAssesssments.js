@@ -186,6 +186,7 @@ setDense(event.target.checked);
                               value={difficulty_level}
                               label=" Difficulty level"
                               onChange={handleChange1}>
+                                <MenuItem value={null}></MenuItem>
                                 <MenuItem value="Easy">Easy</MenuItem>
                                 <MenuItem value="Medium">Medium</MenuItem>
                                 <MenuItem value="Hard">Hard</MenuItem>
@@ -204,6 +205,7 @@ setDense(event.target.checked);
                         value={type}
                        
                         onChange={handleChange2}>
+                          <MenuItem value={null}></MenuItem>
                           <MenuItem value="MCQ">MCQ</MenuItem>
                           <MenuItem value="Fill in the blank">Fill in the blank</MenuItem>
                       </Select>
@@ -230,10 +232,6 @@ setDense(event.target.checked);
         </Toolbar>
       </AppBar>
     </div>
-   
-   
-
-
     <Box sx={{ width: "95%" ,paddingTop:1,paddingLeft:10}}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <TableContainer component={Paper}>
@@ -269,8 +267,7 @@ setDense(event.target.checked);
                     </FormControl>
                     </Box>
                     <Box sx={{ paddingTop:"4px",paddingRight:"3px"}}>
-                    {/* <Button  onClick={handleUser} style={{backgroundColor:'grey',color:'white',fontSize:'0.9rem',width:10,height:50}}>OK</Button> */}
-                    <DoneSharpIcon onClick={handleUser} style={{backgroundColor:'black',color:'white',width:55,height:45,paddingTop:'5px'}}></DoneSharpIcon>
+                      <DoneSharpIcon onClick={handleUser} style={{backgroundColor:'black',color:'white',width:55,height:45,paddingTop:'5px'}}></DoneSharpIcon>
                     </Box>
               </Stack>
               <TableRow>

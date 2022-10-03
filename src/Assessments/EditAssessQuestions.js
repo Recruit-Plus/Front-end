@@ -166,6 +166,7 @@ function EditAssessQuestion(a_id,a_name,a_questions){
                               value={difficulty_level}
                               label=" Difficulty level"
                               onChange={handleChange1}>
+                                <MenuItem value={null}></MenuItem>
                                 <MenuItem value="Easy">Easy</MenuItem>
                                 <MenuItem value="Medium">Medium</MenuItem>
                                 <MenuItem value="Hard">Hard</MenuItem>
@@ -184,6 +185,7 @@ function EditAssessQuestion(a_id,a_name,a_questions){
                         value={type}
                        
                         onChange={handleChange2}>
+                          <MenuItem value={null}></MenuItem>
                           <MenuItem value="MCQ">MCQ</MenuItem>
                           <MenuItem value="Fill in the blank">Fill in the blank</MenuItem>
                       </Select>
@@ -259,7 +261,7 @@ function EditAssessQuestion(a_id,a_name,a_questions){
                     }
                   }}
                   />
-                 {questions.question}
+                 &nbsp;&nbsp;&nbsp;{questions.question}
                   </TableCell>
                 </TableRow>
               ),) } 

@@ -48,7 +48,6 @@ const Feedback = (QuestionsAttempted) => {
     <div style={{paddingTop : 10}} align="left">
     <h5>       Quiz Summary</h5>
     <div style={{paddingTop : 10}}> Number of Questions Attempted:     {Questions_attempted}</div>
-          Time Taken :
     </div>
     </div>
     <div style={{paddingTop : 50}}><h5>How would you rate your experience</h5></div>

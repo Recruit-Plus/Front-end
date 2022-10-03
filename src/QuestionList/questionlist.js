@@ -59,7 +59,6 @@ export default function EnhancedTable(props) {
     .catch(err=>{
       console.log(err.message)
     })
-
   }
   const handleChange = (event) => {
     const {
@@ -100,14 +99,6 @@ export default function EnhancedTable(props) {
     setQuestionProps(question);
      
   }
-  // const handleSelectAllClick = (event) => {
-  //   if (event.target.checked) {
-  //     const newSelecteds = Questions.map((n) => n.name);
-  //     setSelected(newSelecteds);
-  //     return;
-  //   }
-  //   setSelected([]);
-  // };
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
   };
@@ -132,7 +123,7 @@ export default function EnhancedTable(props) {
   return (
     <>
     {
-          editopen?<EditButtonPopup question={questionProps} />:
+        editopen?<EditButtonPopup question={questionProps} />:
          <div>
          <Dialog
     open={open}
@@ -171,7 +162,7 @@ export default function EnhancedTable(props) {
                       value={topicName}
                       onChange= {handleChange}
                       input={<OutlinedInput label="Topic" />}
-                      >
+                      > 
                         {Topics?.map((topics,id) => (
                         <MenuItem key={id} value={topics.topic}>{topics.topic}</MenuItem>
                         ))}
@@ -188,6 +179,7 @@ export default function EnhancedTable(props) {
                               value={difficulty_level}
                               label=" Difficulty level"
                               onChange={handleChange1}>
+                                <MenuItem value={null}></MenuItem>
                                 <MenuItem value="Easy">Easy</MenuItem>
                                 <MenuItem value="Medium">Medium</MenuItem>
                                 <MenuItem value="Hard">Hard</MenuItem>
@@ -206,6 +198,7 @@ export default function EnhancedTable(props) {
                         value={type}
                        
                         onChange={handleChange2}>
+                           <MenuItem value={null}></MenuItem>
                           <MenuItem value="MCQ">MCQ</MenuItem>
                           <MenuItem value="Fill in the blank">Fill in the blank</MenuItem>
                       </Select>

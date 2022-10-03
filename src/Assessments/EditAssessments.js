@@ -15,7 +15,7 @@ function EditAssessments (assess_id, assess_name, assess_questions) {
   const [open, setOpen] = React.useState(false);
   const assessment_id=location.state.assess_id.assessment_id;
   const assessment_name=location.state.assess_name.assessment_name;
-  const assessment_questions=location.state.assess_questions.assessment_questions;
+  const [assessment_questions,setAssessment_questions]=React.useState(location.state.assess_questions.assessment_questions);
   const [questions,setQuestions] = React.useState([]);
   const [questionIdRef , setQuestionIdRef]=React.useState();
   const [score,setScore]=React.useState();
@@ -55,6 +55,7 @@ function EditAssessments (assess_id, assess_name, assess_questions) {
         button: "OK",
       });
       handleQuestions();
+      setAssessment_questions(assessment_questions.filter(ele => ele !== questionIdRef));
     })
     .catch(err => console.log(err));
   };
@@ -95,7 +96,7 @@ function EditAssessments (assess_id, assess_name, assess_questions) {
             style={{color:'#111111'}}
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            {assessment_name}&nbsp;&nbsp;Assessment
+            {assessment_name}
           </Typography>
             <div style={{paddingLeft:'20px'}}>
               <Link to='/assessmentlist'>

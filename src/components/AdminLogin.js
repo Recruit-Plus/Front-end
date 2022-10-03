@@ -2,7 +2,6 @@ import React from 'react';
 import {Link}from 'react-router-dom';
 import {Button,TableRow, TableCell} from '@mui/material';
 import img2 from '../images/AdminHome.jpeg';
-import Navbar from './Navbar';
 import  './App.css';
 import {useLocation} from 'react-router-dom';
 
@@ -11,14 +10,13 @@ const AdminLogin = (firstName,lastName) => {
     const f_name=location.state.firstName.first_name;
     const l_name=location.state.lastName.last_name;
     return <>
-      <Navbar/>
       <div><br></br>
         <TableRow>
             <TableCell><div  ><img src={img2} width={500} height={500} style={{marginTop: "12%", display: "inline-block;" , width:"80%",height:"80%",borderRadius:"90px"}}></img></div></TableCell>
             <TableCell>
                 <div className='body'><br></br>
                     <span className='text1' align='center' style={{fontSize:'45px'}}>Welcome {f_name} {l_name}!</span><br></br>
-                    <span align='center' className='text'>Easily create quizzes to test <br></br>student's knowledge and track their performance</span>
+                    <span align='center' className='text'>Easily create assessments to test <br></br>student's knowledge and track their performance</span>
                 <div className='wrapper'>
                 <div className='icon'>
                     <Link to='/questionlist'>

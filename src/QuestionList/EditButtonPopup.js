@@ -1,9 +1,9 @@
 import React from 'react'
-import {Link, Navigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { Button ,Box, Grid,TextField,Stack,Container} from '@mui/material';
-import swal from 'sweetalert'
-import Navbar from '../components/Navbar';
+import swal from 'sweetalert';
+import QuestionList from './questionlist';
 export default function EditButtonPopup({question}) {
   const[questionId,setQuestionId] = React.useState(question.question_id);
   const[questionm,setquestionm] = React.useState(question.question);
@@ -17,6 +17,7 @@ export default function EditButtonPopup({question}) {
   const[duration,setDuration] = React.useState(question.duration);
   const[score,setScore] = React.useState(question.score);
   const ans =question.answer;
+  const [list,setList] = React.useState(false);
   const[choices,setchoice] = React.useState([]);
   const[topics,settopics] = React.useState([]);
   const options = [option1, option2, option3, option4]
@@ -50,11 +51,11 @@ export default function EditButtonPopup({question}) {
         icon: "success",
         button: "OK",
       });
-    });  
+    }).then(setList(true));  
   }
   return (
     <>
-    <Navbar/>
+    { list? <QuestionList/>:
     <div style={{paddingTop:'50px'}}>
        <Stack spacing={85} direction='row'>
               <div></div>
@@ -157,6 +158,7 @@ export default function EditButtonPopup({question}) {
     </Grid>
     </Grid>
     </div>
+}
     </>
   )
 }

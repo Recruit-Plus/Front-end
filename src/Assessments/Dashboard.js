@@ -29,7 +29,7 @@ function Dashboard (assess_id,assess_name){
                 <TableRow alignItem = 'center' style={{width:'100%'}}>
                     <TableCell>
                         <div align='center'>
-                    <h3> {assessment_name} Assessment Leaderboard</h3>
+                    <h3> {assessment_name} Leaderboard</h3>
                     </div>
                     </TableCell>
                 </TableRow>
@@ -41,30 +41,25 @@ function Dashboard (assess_id,assess_name){
                 
                 <div>
                 <TableRow >          
-                <TableCell style={{width:'300px',fontWeight:'bold'}}>Candidate Id</TableCell>
-                <TableCell style={{width:'400px',fontWeight:'bold'}}> Name</TableCell>
-                <TableCell style={{width:'400px',fontWeight:'bold'}}> Email</TableCell>
-                <TableCell style={{width:'200px',fontWeight:'bold'}}>College Name</TableCell>
-                <TableCell style={{width:'200px',fontWeight:'bold'}}>Score</TableCell>
-                <TableCell style={{width:'200px',fontWeight:'bold'}}>Time taken</TableCell>
+                <TableCell style={{fontWeight:'bold'}}>Candidate Id</TableCell>
+                <TableCell style={{fontWeight:'bold',paddingLeft:'210px'}}> Name</TableCell>
+                <TableCell style={{fontWeight:'bold',paddingLeft:'160px'}}> Email</TableCell>
+                <TableCell style={{fontWeight:'bold',paddingLeft:'240px'}}>College Name</TableCell>
+                <TableCell style={{fontWeight:'bold',paddingLeft:'80px'}}>Score</TableCell>
+                <TableCell style={{fontWeight:'bold',paddingLeft:'80px'}}></TableCell>
                 </TableRow>
-              
-                
-
                 {results?.map((result,index) =>(
                   <div>
-                
                 <TableRow key={index}>          
                 <TableCell style={{width:'200px'}}>{result.user_id}</TableCell>
-                <TableCell style={{width:'300px'}}>{result.user_name}</TableCell>
+                <TableCell style={{width:'300px',paddingLeft:'100px'}}>{result.user_name}</TableCell>
                 <TableCell style={{width:'300px'}}> {result.email}</TableCell>
                 <TableCell style={{width:'150px'}}>{result.college_name}</TableCell>
-                <TableCell style={{width:'100px'}}>{result.score}</TableCell>
-                <TableCell style={{width:'200px'}}>{result.Time_taken}</TableCell>
+                <TableCell style={{width:'100px',paddingLeft:'50px'}}>{result.score}</TableCell>
+                <TableCell style={{width:'100px',paddingLeft:'50px'}}></TableCell>
                 </TableRow>
                 </div>
-                
-             ),) 
+                ),) 
              } 
              </div>
              }

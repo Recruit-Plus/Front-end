@@ -17,7 +17,7 @@ const CandidateLogin = (firstName,lastName) => {
         <TableRow>
             <TableCell><div  ><img src={img2} width={500} height={500} style={{marginTop: "15%", display: "inline-block;" , width:"120%",height:"150%"}}></img></div></TableCell>
             <TableCell>
-                <div className='body'><br></br>
+                <div className='body' style={{paddingLeft:60}}><br></br>
                 <span className='text1' align='center' style={{fontSize:'45px'}}>Welcome {f_name} {l_name}!</span>
                 
                 <br></br>

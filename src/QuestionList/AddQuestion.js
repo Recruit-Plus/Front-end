@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import PropTypes from 'prop-types';
 import {Dialog,DialogActions,DialogContent,DialogContentText,DialogTitle,Paper,Typography,Button,autocompleteClasses,styled ,CssBaseline, 
@@ -8,7 +8,6 @@ import {OutlinedInput ,InputLabel ,MenuItem,FormControl,Select,AppBar,Table} fro
 import Navbar from '../components/Navbar';
 import swal from 'sweetalert';
 import CloseIcon from '@mui/icons-material/Close';
-import { width } from '@mui/system';
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -86,6 +85,8 @@ const Feed= (props) => {     //main function
   const[category,setCategory]=React.useState([]);
   const options = [option1, option2, option3, option4]
  const[invalid,setinvalid]=React.useState(false);
+ let navigate =useNavigate();
+ const [list,setList] =React.useState(false);
  const [answers,setanswers]=React.useState([]);
  const [data,setData]=React.useState
   (    
@@ -122,6 +123,7 @@ const Feed= (props) => {     //main function
   };
  function handlepost(e)
  {
+  setList(true);
   var c=/^[a-zA-Z]*$/;
   if
   (data.question.length==0  || data.type.length==0
@@ -148,9 +150,7 @@ const Feed= (props) => {     //main function
     })
   }
   else{
-    console.log(answers);
-  const requestBody = {...data,choices: options,topics:category,answer:answers}
-  console.log(requestBody);
+  const requestBody = {...data,choices: options,topics:category,answer:answers};
   axios.post("http://localhost:8081/questions/v1/question",requestBody).then(result=>{console.log(result?.data)})
   .alert(swal({
     title: "Question added Successfully",
@@ -159,6 +159,9 @@ const Feed= (props) => {     //main function
      
     button:"OK"
   }));
+  if(list){
+  navigate('/questionlist');
+  }
 }
  }
 const TopicAddHandler = (e) => {
@@ -182,7 +185,6 @@ const TopicAddHandler = (e) => {
   }  
   return (
     <>
-    <Navbar/>
 <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
@@ -288,7 +290,7 @@ const TopicAddHandler = (e) => {
               <TableRow>
             <Item style={{paddingTop:0,paddingBottom:0}} >
               <TableCell>
-            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Duration</div>
+            <div className='container' style={{backgroundColor:'#d50000',fontSize:'1.2rem',color:'white'}} >Time(mins)</div>
    
             <TextField  label=' '  style={{paddingTop:4,paddingBottom:0}} id ='duration' inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }} onChange={(event) => setData({...data,duration: event.target.value})} />
             </TableCell>
@@ -315,10 +317,8 @@ const TopicAddHandler = (e) => {
                 <Button variant="contained" style={{backgroundColor:'#696969'} }
                 >Close</Button>
               </Link>
-           <Link to='/questionlist'>
               <Button variant="contained"  style={{backgroundColor:'#696969'}} onClick={(e)=>handlepost(e)}
                   >SAVE</Button>
-          </Link>
           </Stack>
         </Box>
       </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useRef} from 'react';
 import {Link ,useNavigate, useLocation } from "react-router-dom";
 import img1 from '../images/recruit+logo.png';
 import { Button ,Typography,AppBar,Box,Toolbar,Grid,Stack,RadioGroup,Radio,FormControlLabel,FormControl,TextField,Input,
@@ -25,8 +25,7 @@ const TakeAssessments = (assessmentId) => {
   const [reset ,SetReset]=React.useState(true);
   const [Answers, setAnswers]=React.useState([]);
   const [QuestionId, setQuestionId]=React.useState("");
-  let questionLength=Questions.length;
-  var selectedValue;
+  const radioRef = useRef();
   const [userResponses,setUserResponses]= React.useState({
     user_id: window.localStorage.getItem("userId"),
     assessment_id:assessment_id,
@@ -47,6 +46,7 @@ const TakeAssessments = (assessmentId) => {
   function handleAnswer(event,id){
     setAnswers([...Answers,event.target.value]);
     setQuestionId(id);
+    console.log(event.target.checked);
   }
   function handleFillAnswer(event,id){
     setAnswers([event.target.value]);
@@ -64,7 +64,6 @@ const TakeAssessments = (assessmentId) => {
    function handleDelete(){
     let responseLength=response?.length;
     setfinish(false);
-    console.log(response);
     const requestBody={...userResponses,responseSubmitted:response};
     console.log(requestBody);
     axios.post('http://localhost:8083/responses/v1/user/response',requestBody).then(res =>console.log(res))
@@ -90,7 +89,14 @@ const NextPage = () =>{
   }
 }
 const handleReSet=()=>{
- 
+  // console.log(radioRef.current.checked);
+  // radioRef.current.checked = false;
+  // var v=document.getElementsByClassName("choose");
+  // console.log(v[0].checked);
+  // console.log(document.getElementById("option"));
+  // let v=document.querySelectorAll('.choose');
+  // console.log(v);
+  // v.forEach(value => console.log(value));
 }
     return <>
         <Dialog
@@ -123,51 +129,30 @@ const handleReSet=()=>{
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
-          >
+            sx={{ mr: 2 }}>
             <img src={img1} style={{ width:"50px",height:"50px"}} alt="img"/>
           </IconButton>
-             <table> 
+          <table> 
             <tr>
               <td><div className='abc'align="centre" style={{fontSize:'1.5rem',color:'white'}}>
               <b>                                                       RECRUIT+</b>
-             </div> </td>
+             </div></td>
             </tr>
             <tr>
               <td><div className='abc'align="centre" style={{fontSize:'0.8rem',color:'white'}}>
                ONE DAY TO DAY ONE
-              </div>
-              </td>
+              </div></td>
             </tr>
-           </table> 
-        <Typography variant="h6" 
-            component="div" sx={{ flexGrow: 1 }}>
-          </Typography >
+          </table> 
           <div style={{paddingTop:5, paddingLeft:989}}>
             <Button align='center' style={{backgroundColor:'#D3D3D3',color:'black',height:40,width:100}} onClick={handleOpen}>Submit</Button>
           </div>
         </Toolbar>
       </AppBar>
     </Box>
-
-    <Grid container style={{paddingTop:20,height:600,width:1375}} spacing={3}>
-
-      {/* <Grid item xs={2} style={{borderRight:'2px solid black'}} >
-          <Box sx={{ width: "95%" ,paddingTop:3,paddingLeft:4}}>
-            <Paper className='scroll' sx={{ height:"100%",width: "85%", mb: 2 ,paddingBottom:4}}>
-            {Questions.map((question,index) => (
-              <div style={{ float: "left" ,paddingLeft:50,paddingTop:6}}>
-              <Box  width={35} height={35} style={{backgroundColor:'black',borderRadius:30}}><h6 align="center" style={{color:'white',paddingTop:6}}>{index +1}</h6></Box>   
-              </div>
-               ))}
-            </Paper>
-         </Box>
-       
-      </Grid> */}
-     
+    <Grid container style={{paddingTop:20,height:600,width:1375}} spacing={3}>     
      <Grid  item xs={10}>
-     <Box sx={{ width: 1345 ,paddingTop:12,paddingLeft:4}}>
-    
+     <Box sx={{ width: 1345 ,paddingTop:8,paddingLeft:4}}>
      <Paper sx={{ width: 1310, mb: 2 ,paddingBottom:4}}>
       {Questions?.length==0 ?
         <div style={{ float: "left"  }}>
@@ -178,15 +163,11 @@ const handleReSet=()=>{
         <h5>Question  {Currentpage} </h5> 
           </div>}
      </Paper>
-    
-      <Paper sx={{ width: "100%", mb: 2}}>
+     <Paper sx={{ width: "100%", mb: 2}}>
         <TableContainer>
           <Table
             sx={{ minWidth: 580 , maxwidth :600 }}
-            aria-labelledby="tableTitle"
-           
-          >
-           
+            aria-labelledby="tableTitle">
            <TableBody>
                 {Questions?.length===0 ?
                 <TableCell style={{width:'100%'}} >   
@@ -194,63 +175,52 @@ const handleReSet=()=>{
               </TableCell>
               :
              CurrentQuestion?.map((questions,index ) => (
-          <Table>
-        <TableRow
-
-            key={index}
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-    
-             <TableCell component="th" scope="row">
-              <div  style={{fontSize:'1.2rem'}}>{questions?.question}</div>
-             
-            </TableCell>
-        </TableRow>
-        <TableRow>
-        
-          <TableCell>
-   <FormControl>
-    {questions.type=="MCQ"?
-    <div>
-   {questions?.choices.map((option) => (
-    <RadioGroup
-      aria-labelledby="demo-radio-buttons-group-label"
-      class="choose"
-      onChange={(event)=> handleAnswer(event,questions.question_id)}>
-       {option.length!=0?
-      <FormControlLabel value={option}  control={<Radio />} label={option} />:null
-       }
-    </RadioGroup>
-    ))}
-    <Button onClick={()=>handleReSet()} style={{color:"black"}}><RestartAltIcon/></Button>
-    </div>
-    :
-    <TextField
-    label="Answer"
-    onChange={(event)=>handleFillAnswer(event,questions.question_id)}
-  />
-    }
-  </FormControl>
-  </TableCell>
-    </TableRow>
-    </Table>
-  ),) } 
-   </TableBody>     
-            </Table>
-        </TableContainer>
-        </Paper> 
-        <div style={{ float: "left" ,paddingTop:90,paddingRight:700}}>
-          <Stack spacing={20} direction='row'>
-           {Currentpage==totalPages?
+            <Table>
+              <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell component="th" scope="row">
+               <div  style={{fontSize:'1.2rem'}}>{questions?.question}</div>
+              </TableCell>
+              </TableRow>
+              <TableRow>
+               <TableCell>
+                <FormControl>
+                 {questions.type=="MCQ"?
+                  <div>
+                    {questions?.choices.map((option) => (
+                    <RadioGroup aria-labelledby="demo-radio-buttons-group-label" className="choose"
+                     onChange={(event)=> handleAnswer(event,questions.question_id)}>
+                     {option.length!=0?
+                      <FormControlLabel ref={radioRef} value={option} control={<Radio />} label={option} defaultChecked={false} />:null
+                     }
+                    </RadioGroup>
+                    ))}
+                    <Button onClick={()=>handleReSet()} style={{color:"black"}}><RestartAltIcon/></Button>
+                  </div>
+                 :
+                  <TextField label="Answer" onChange={(event)=>handleFillAnswer(event,questions.question_id)}/>
+                 }
+               </FormControl>
+             </TableCell>
+           </TableRow>
+           </Table>
+           ),) } 
+          </TableBody>     
+        </Table>
+      </TableContainer>
+    </Paper> 
+    <div style={{ float: "left" ,paddingTop:80,paddingRight:700}}>
+      <Stack spacing={20} direction='row'>
+        {Currentpage==totalPages?
           <Button variant ='outlined' className='button' style={{backgroundColor:'black',color:'white',fontSize:'1rem'}} onClick={NextPage}>Save</Button>
             :
           <Button variant ='outlined' className='button' style={{backgroundColor:'black',color:'white',fontSize:'1rem'}} onClick={NextPage}>Save &amp; Next</Button>
-           }
-          </Stack>
-        </div>   
-        <div style={{ float: "right" ,paddingBottom:20,paddingLeft:620}}>Question {Currentpage} of {totalPages}</div>  
+        }
+      </Stack>
+    </div>   
+    <div style={{ float: "right" ,paddingBottom:5,paddingLeft:620}}>Question {Currentpage} of {totalPages}</div>  
     </Box>
-     </Grid>
     </Grid>
+  </Grid>
 
 
     </>;

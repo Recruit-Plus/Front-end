@@ -86,7 +86,7 @@ const AssessmentList = () => {
       axios.delete(`http://localhost:8082/assessments/v1/assessment/${assessmentIdRef}`) 
         .then((res)=> {
           swal({
-            title: "Question Deleted Successfully",
+            title: "Assessment Deleted Successfully",
             icon: "success",
             button: "OK",
           });

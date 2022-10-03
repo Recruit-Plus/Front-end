@@ -24,28 +24,25 @@ export default function ControlledCheckbox(assessmentId,assessmentDuration,asses
   return (
     <>
     <container>
-    <div style={{ paddingTop: 88,paddingBottom: "20px"  }}>
+    <div style={{ paddingTop: 80,paddingBottom: "20px"  }}>
               <h1 style={{
                 color: "red", display: 'flex', justifyContent: 'center', alignItems: 'center',
               }}>General Instructions</h1>
-            </div>
-             <div className='my-1 mx-2'>
              <ul >
                <h4>Your assessment does not start until you click "Proceed to take test"</h4>
-               <h4>Assessments are timed ,and when the time runs out ,your quiz will auto-submit.</h4>
                <h4>Only open your assessment when you are ready to complete it from start to finish.</h4>
                <h4>Make sure there is a reliable internet connection.</h4>
-               <h4>When you begin your assessment ,your quiz will open in full screen mode.If you exit fullscreen or reload your assessment your test will auto-submit.</h4>
-               <h4>When your quiz auto-submits,all the answers you have already selected will be submitted and graded.</h4>
-               <h4>To prevent your test from auto-submitting ,you need to complete your assessment before the time runs out.</h4>
+               <h4>Click on "Save &amp; next"/"next" to save your responses. If not your responses wil not be saved.</h4>
+               <h4>Once you click on "Save &amp; next"/"next", you cannot go to the previous question,so make sure before you click.</h4>
+               <h4>Your test will not be auto-submitted. Once you are done with the assessment make sure to click on "Submit".</h4>
              </ul>
            </div>
            <box>
-           <div className='my-1 mx-5' align= "left"style={{ paddingTop: "10px" }}>
+           <div className='my-1 mx-5' align= "left">
               <h4>Assessment Name: {assessment_name}</h4>
-              <h4>Time Limit: {assessment_duration}</h4>
+              <h4>Time Limit: {assessment_duration} minutes</h4>
               <h4>Total Questions: {assessment_length}</h4>
-              <h4>Allowed attempts:01</h4>
+              <h4>Allowed attempts: 01</h4>
             </div>
             </box>
             <container>
