@@ -1,18 +1,21 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import {Dialog,DialogTitle,DialogContent,DialogContentText,DialogActions,IconButton ,Paper,Box,Table,TableBody,TableCell,TableContainer,alpha,
         TableRow,TableSortLabel,Toolbar,Typography,Checkbox,Tooltip,FormControlLabel,Switch,Stack,Button} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import EditIcon from '@mui/icons-material/Edit';
 import Navbar from "../components/Navbar";
 import EditButtonPopup from "../QuestionList/EditButtonPopup";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import swal from 'sweetalert';
+import EditAssessments from './EditAssessments';
 
 
 
 const AssessmentList = () => {
+  let navigate=useNavigate();
     const [order, setOrder] = React.useState("asc");
   const [selected, setSelected] = React.useState([]);
   const [open, setOpen] = React.useState(false);
@@ -26,7 +29,7 @@ const AssessmentList = () => {
   const firstIndex = lastIndex - assessmentsPerPage;
   const currentassessments = assessments && assessments.slice(firstIndex,lastIndex);
   const totalPages = Math.ceil(assessments?.length/assessmentsPerPage);
-  const [assessmentProps, setAssessmentProps] =React.useState(false);
+  const [assessmentId, setAssessmentId] =React.useState();
   const [editopen, setEditOpen] = React.useState(false);
   const [assessmentIdRef, setAssessmentIdRef] =React.useState();
   
@@ -50,9 +53,11 @@ const AssessmentList = () => {
   }
 
   const NextPage = (event) =>{
+    if(currentPage<totalPages){
     if(currentPage < currentPage+1){
       setCurrentPage(currentPage+1);
     }
+  }
   }
 
   const handleClickOpen = () => {
@@ -65,16 +70,13 @@ const AssessmentList = () => {
   };
 
 
-  const handleUpdate= question =>{
+  const handleUpdate= (assessment_id, assessment_name)=>{
     setEditOpen(true);
-    console.log(question);
-    setAssessmentProps(question);
-     
+    navigate("/editassessment",{state:{assess_id:{assessment_id}, assess_name:{assessment_name}}})
   }
-
   const handleDelete= id =>{
-    setOpen(true);
     setAssessmentIdRef(id); 
+    setOpen(true);
   }
 
 
@@ -92,6 +94,11 @@ const AssessmentList = () => {
         })
     }
   }
+
+  const handleResult=(assessment_id, assessment_name)=>{
+    console.log(assessment_id);
+    navigate('/Dashboard',{state:{assess_id:{assessment_id}, assess_name:{assessment_name}}});
+  }
  
  
   
@@ -100,13 +107,7 @@ const AssessmentList = () => {
   };
 
     return <>
-    
-{
-      editopen?<EditButtonPopup assessment={assessmentProps} />:
-   
-      
          <div>
-        <Navbar></Navbar>
          <Dialog
     open={open}
     onClose={handleClose}
@@ -162,23 +163,22 @@ const AssessmentList = () => {
               </TableCell>
               
               <TableCell >
-              <Stack spacing={2} direction="row">
-               <Link to='/editassessment'>
-              <Button variant="outlined" style={{backgroundColor:'black',color:'white'}} onClick={() =>{handleUpdate(assessments)}}>
-                <EditIcon/>   {/* This you can see infront of every question */ }
-              </Button>
-              </Link>
               
-                <Button variant="contained" color="error" onClick={() =>{handleDelete(assessments?.assessment_id)}}>
-                  <DeleteIcon/>
-                  </Button>
-                </Stack>
+              <Stack spacing={2} direction="row">
+              
+              <Button variant="outlined" style={{backgroundColor:'#37474F',color:'white'}} onClick={() =>{handleResult(assessments?.assessment_id,assessments?.assessment_name)}}>
+                <LeaderboardIcon/>
+              </Button>
+             <Button variant="outlined" style={{backgroundColor:'black',color:'white'}} onClick={() =>{handleUpdate(assessments?.assessment_id,assessments?.assessment_name)}}>
+                <EditIcon/>  
+              </Button>            
+              <Button variant="contained" color="error" onClick={() =>{handleDelete(assessments?.assessment_id)}}>
+                <DeleteIcon/>
+              </Button>
+            </Stack>
               </TableCell>
             </TableRow>
-                
-            
              ),) } 
-              
             </TableBody>
           </Table>
         </TableContainer>
@@ -200,10 +200,9 @@ const AssessmentList = () => {
       />
     </Box>
   </div>
-}
+
     </>;
 }
-
 
 
 export default AssessmentList;

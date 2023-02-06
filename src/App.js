@@ -5,7 +5,6 @@ import EditButtonPopup from './QuestionList/EditButtonPopup';
 import HomePage from './components/HomePage';
 import AdminLogin from './components/AdminLogin';
 import Sign_up from './components/SignUp';
-//import Login from './components/Login';
 import Navbar from './components/Navbar';
 import CreateAssesssments from './Assessments/CreateAssesssments';
 import EditAssessments from './Assessments/EditAssessments';
@@ -16,6 +15,9 @@ import CandidateLogin from './components/CandidateLogin';
 import EligibleAssessments from './User/EligibleAssessments';
 import NoRole from './components/NoRole';
 import Feedback from './User/Feedback';
+import Dashboard from './Assessments/Dashboard';
+
+
 import {
   BrowserRouter as Router,
   Route,
@@ -38,7 +40,6 @@ function App() {
     <Route path='/role' element={<NoRole/>}/>
     <Route path='/signup' element={ <Sign_up/>}/>
     <Route path='/homepage' element={ <HomePage/>}/>
-    {/* <Route path='/login' element={ <Login/>}/> */}
     <Route path='/EligibleAssessments' element={ <EligibleAssessments/>}/>
     <Route path='/TakeAssessments' element={ <TakeAssessments/>}/>
     <Route path='/assessmentlist' element={ <AssessmentList/>}/>
@@ -46,6 +47,7 @@ function App() {
     <Route path='/editassessment' element={<EditAssessments/>}/>
     <Route path='/instructions' element={<Instructions/>}/>
     <Route path='/Feedback' element={<Feedback/>}/>
+    <Route path='/Dashboard' element={<Dashboard/>}/>
   </Routes>
     </>  
 );
